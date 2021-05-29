@@ -1,0 +1,27 @@
+@import "../../assets/scss/core/variables";
+
+.action-border {
+  border-left: 1px solid;
+  border-color: $brand-gray;
+}
+
+.color-otus-architect-gray {
+  color: $brand-gray;
+}
+
+.settings-route-active {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background-color: $brand-primary;
+}
+
+.if-active {
+  margin-top: -2px;
+  color: $brand-black !important;
+}
+
+.fio-padding {
+  padding-top: 7px;
+}

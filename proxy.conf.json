@@ -1,0 +1,44 @@
+{
+    "/backend-bg/api/bg/*": {
+        "target": "http://lab.expertdwh.ru:9006",
+        "secure": false,
+        "loglevel": "debug",
+        "pathRewrite": {
+            "^/backend-bg/api/bg" : "/api"
+        }
+    },
+    "/backend-bg/api/sign/*": {
+        "target": "http://lab.expertdwh.ru:9006",
+        "secure": false,
+        "loglevel": "debug",
+        "pathRewrite": {
+            "^/backend-bg/api/sign" : "/api"
+        }
+    },
+    "/backend-bg/api/person/management/*": {
+        "target": "http://lab.expertdwh.ru:9004",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/backend-bg/api/person" : ""
+        }
+    },
+    "/backend-bg/api/person/*": {
+        "target": "http://lab.expertdwh.ru:9004",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/backend-bg/api/person" : "/api"
+        }
+    },
+    "/backend-bg/api/references/*": {
+        "target": "http://lab.expertdwh.ru:9005",
+        "secure": false,
+        "loglevel": "debug",
+        "pathRewrite": {
+            "^/backend-bg/api/references" : "/api"
+        }
+    }
+}

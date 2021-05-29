@@ -1,0 +1,50 @@
+<div class="bg-white container-fluid row no-margin no-padding">
+    <div class="spacer-panel"></div>
+    <div class="new-application-form">
+        <otus-architect-go-to-welcome title="{{'Назад'}}" route="{{'/'}}"></otus-architect-go-to-welcome>
+        <form [formGroup]="fg" role="form" autocomplete="off">
+            <div class="container-fluid main-top-padding">
+                <div class="row">
+                    <h1 class="card-title col-md-12">Банковская гарантия</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 small-padding">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Номер закупки</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="contractRegistryNumber">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row response-last-row" *ngIf="lastError">
+                    <div class="col-md-12 response-last-error">
+                        <table>
+                            <tr>
+                                <td class="icon-wrapper">
+                                    <i class="material-icons response-icon">error_outline</i>
+                                </td>
+                                <td>
+                                    <span class="response-text">
+                                        {{lastError.detail ? lastError.detail : lastError.summary}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!isCreatingFinApplication">
+                    <button mat-raised-button class="btn btn-primary btn-lg next-btn" (click)="createFinApplication()">
+                        Далее
+                    </button>
+                </div>
+                <div class="row" *ngIf="isCreatingFinApplication">
+                    <div class="col-md-12">
+                        <otus-architect-center-spinner></otus-architect-center-spinner>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="spacer-panel"></div>
+</div>

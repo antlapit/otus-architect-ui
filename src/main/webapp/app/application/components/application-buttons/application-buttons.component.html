@@ -1,0 +1,18 @@
+<div class="row height-54">
+    <div class="col-md-12 app-btn-column container-fluid" [ngClass]="{'app-btn-column-border': border}">
+        <div class="row no-margin">
+            <div class="col-md-4">
+                <a class="pointer app-btn-btn-icon" (click)="goBack()">
+                    <img src="assets/img/back.svg">
+                    <span class="app-btn-title">{{title}}</span>
+                </a>
+            </div>
+            <div class="col-md-8 action-buttons">
+                <a class="pointer app-btn-btn-action-icon" matTooltip="Отозвать" *ngIf="application.canRevoke"
+                   (click)="revoke()">
+                    <img src="assets/img/backpay.svg">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

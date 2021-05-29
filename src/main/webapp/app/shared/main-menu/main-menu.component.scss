@@ -1,0 +1,10 @@
+@import "../../assets/scss/core/variables";
+@import "../../assets/scss/core/mixins";
+
+.full-height {
+    height: 100%;
+}
+
+.main-menu-item {
+    @include font-roboto-13(500);
+}

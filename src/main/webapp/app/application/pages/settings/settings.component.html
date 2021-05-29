@@ -1,0 +1,34 @@
+<div class="bg-white container-fluid row no-margin no-padding">
+    <div class="spacer-panel"></div>
+    <div class="settings">
+        <div class="container-fluid main-top-padding">
+            <div class="row">
+                <h1 class="card-title col-md-12 dashboard-header-padding">Личный кабинет</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-tab-group (selectedTabChange)="navigateTo($event)" #tabs>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <span class="settings-tab">Профиль</span>
+                            </ng-template>
+                            <div class="main-top-padding">
+                                <otus-architect-user-profile-panel></otus-architect-user-profile-panel>
+                            </div>
+                        </mat-tab>
+                        <mat-tab></mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer-panel"></div>
+</div>
+
+<div class="otus-architect-dashboard-width">
+    <div class="container-fluid">
+        <div class="row">
+
+        </div>
+    </div>
+</div>

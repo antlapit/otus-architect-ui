@@ -1,0 +1,21 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.stage {
+  border-radius: 16px;
+  padding: 6px 16px;
+  background-color: $brand-white-dirty;
+  color: $brand-black;
+  @include font-roboto-13(400);
+
+  &.active {
+    background-color: $brand-background-gray;
+    color: $brand-white;
+    @include font-roboto-13(500);
+  }
+}
+
+.generic-stage {
+  margin-left: 16px;
+  white-space: nowrap;
+}

@@ -1,0 +1,147 @@
+<h3>Закупка</h3>
+<div class="container-fluid" *ngIf="!isLoadingContract; else loadingContract">
+    <ng-container *ngIf="!contract">
+        <p>Данные формы не найдены</p>
+    </ng-container>
+    <ng-container *ngIf="contract">
+        <div class="row">
+            <div class="col-md-12">
+                <otus-architect-contract-view-card [contract]="contract"
+                                        [loading]="isLoadingContract"
+                                        [editable]="true"
+                                        (changes)="onContractChange($event)"
+                                        *ngIf="!contract.contractFillingRequired"
+                ></otus-architect-contract-view-card>
+                <otus-architect-contract-form-edit [contract]="contract"
+                                        [loading]="isLoadingContract"
+                                        (changes)="onContractChange($event)"
+                                        *ngIf="contract.contractFillingRequired"
+                ></otus-architect-contract-form-edit>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<ng-template #loadingContract>
+    <otus-architect-center-spinner></otus-architect-center-spinner>
+</ng-template>
+<div class="main-top-padding">
+    <h3>Гарантия</h3>
+</div>
+<form [formGroup]="fg">
+    <div class="container-fluid otus-architect-form">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Сумма гарантии, &#8381;</mat-label>
+                    <input matInput type="text" placeholder=""
+                           [errorStateMatcher]="matcher"
+                           formControlName="limit"
+                           currencyMask
+                    >
+                    <ng-container
+                            *ngIf="fg.controls.limit.invalid && (fg.controls.limit.dirty || fg.controls.limit.touched)">
+                        <mat-error *ngIf="fg.controls.limit.errors.max">Максимальная сумма
+                            - {{(fg.controls.multiplier.value ? maxLimit : maxInputLimit) | number:'0.2-2'}} &#8381;
+                        </mat-error>
+                        <mat-error *ngIf="fg.controls.limit.errors.min">Минимальная сумма
+                            - {{minLimit | number:'0.2-2'}} &#8381;
+                        </mat-error>
+                    </ng-container>
+
+                </mat-form-field>
+            </div>
+            <div class="col-md-6 checkbox-wrapper">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value=""
+                               formControlName="multiplier">Увеличить сумму в 1,5 раза
+                        <span class="form-check-sign">
+                            <span class="check"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Вид гарантии</mat-label>
+                    <mat-select formControlName="kind">
+                        <mat-option *ngFor="let kind of kinds"
+                                    [value]="kind.value">{{kind.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Дата начала гарантии</mat-label>
+                    <input matInput [matDatepicker]="startDateDatePicker" placeholder=""
+                           [errorStateMatcher]="matcher"
+                           formControlName="startDate"
+                           [min]="minGuaranteeStartDate"
+                           (input)="onDateChange($event, true, fg.controls.startDate)">
+                    <mat-datepicker-toggle matSuffix [for]="startDateDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDateDatePicker></mat-datepicker>
+                    <ng-container
+                            *ngIf="fg.controls.startDate.invalid && (fg.controls.startDate.dirty || fg.controls.startDate.touched)">
+                        <mat-error *ngIf="fg.controls.startDate.value < minGuaranteeStartDate">
+                            Дата не может быть в прошлом.
+                        </mat-error>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Дата окончания гарантии</mat-label>
+                    <input matInput [matDatepicker]="endDateDatePicker" placeholder=""
+                           [errorStateMatcher]="matcher"
+                           formControlName="endDate"
+                           [min]="minGuaranteeEndDate" [max]="maxGuaranteeEndDate"
+                           (input)="onDateChange($event, true, fg.controls.endDate)">
+                    <mat-datepicker-toggle matSuffix [for]="endDateDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDateDatePicker></mat-datepicker>
+                    <ng-container
+                            *ngIf="fg.controls.endDate.invalid && (fg.controls.endDate.dirty || fg.controls.endDate.touched)">
+                        <mat-error *ngIf="fg.controls.endDate.value > maxGuaranteeEndDate || fg.controls.endDate.value < minGuaranteeEndDate">
+                            Допустимые даты {{calcMinGuaranteeEndDate() |
+                            date:'dd.MM.yyyy'}} - {{calcMaxGuaranteeEndDate() | date:'dd.MM.yyyy'}}
+                        </mat-error>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="main-top-padding">
+    <h3>Доставка оригинала</h3>
+</div>
+<div class="container-fluid" *ngIf="!isLoadingDeliveryInfo; else loadingDeliveryInfo">
+    <ng-container *ngIf="!deliveryInfo">
+        <p>Данные формы не найдены</p>
+    </ng-container>
+    <ng-container *ngIf="deliveryInfo">
+        <div class="row">
+            <div class="col-md-12">
+                <otus-architect-delivery-info-form-edit [deliveryInfo]="deliveryInfo"
+                                             [loading]="isLoadingDeliveryInfo"
+                                             (changes)="onDeliveryInfoChange($event)"
+                                             [enableFillLater]="true"
+                                             [typeEditable]="true"
+                ></otus-architect-delivery-info-form-edit>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<ng-template #loadingDeliveryInfo>
+    <otus-architect-center-spinner></otus-architect-center-spinner>
+</ng-template>
+<div class="container-fluid main-top-padding">
+    <div class="row">
+        <button mat-raised-button class="btn btn-primary btn-lg next-btn" (click)="processForm()">
+            Далее
+        </button>
+    </div>
+</div>
+

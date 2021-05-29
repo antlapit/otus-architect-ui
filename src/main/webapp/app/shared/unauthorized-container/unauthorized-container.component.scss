@@ -1,0 +1,25 @@
+.unauthorized-form-panel {
+    width: 900px !important;
+    padding: 40px 60px !important;
+}
+
+.unauthorized-promo-panel {
+    width: 540px !important;
+}
+
+.unauthorized-main-content {
+    padding: 180px 200px 250px !important;
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+    .unauthorized-promo-panel {
+        display: none;
+    }
+    .unauthorized-form-panel {
+        width: 768px !important;
+        padding: 0 24px !important;
+    }
+    .unauthorized-main-content {
+        padding: 280px 116px 352px !important;
+    }
+}

@@ -1,0 +1,29 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.person-fio {
+  @include font-roboto-15(500);
+  color: $brand-black-light;
+}
+
+.person-field-title {
+  @include font-roboto-13(400);
+  color: $brand-gray;
+  margin: 0 !important;
+}
+
+.person-field-value {
+  @include font-roboto-13(400);
+  color: $brand-black;
+  margin: 0 !important;
+}
+
+.spacer {
+  border-bottom: 1px solid $brand-gray;
+}
+
+.person-notify {
+  @include font-roboto-15(500);
+  color: $brand-black;
+  margin: 0 !important;
+}

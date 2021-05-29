@@ -1,0 +1,60 @@
+<div class="main-top-padding">
+    <h3>Бенефициары</h3>
+    <span class="ben-subtitle">
+        Укажите бенефициарного владельца с большей долей владения (ключевого собственника)
+    </span>
+</div>
+<div class="container-fluid main-top-padding" *ngIf="!isLoadingPersons">
+    <ng-container *ngIf="!persons">
+        <p>Данные формы не найдены</p>
+    </ng-container>
+    <ng-container *ngIf="persons">
+        <ng-container *ngFor="let person of persons.beneficiaries; let i = index">
+            <div class="row" [ngClass]="{'main-top-padding': i > 0, 'person-separator': i > 0}">
+                <div class="col-md-12">
+                    <h5>Бенефициар №{{i + 1}}</h5>
+                </div>
+                <div class="col-md-12">
+                    <otus-architect-person-form-edit
+                            [person]="person"
+                            [loading]="isLoadingPersons"
+                            (changes)="onChangePerson($event)"
+                            [deletable]="personJustCreated(person)"
+                            (deleteEvent)="onDeletePerson($event)"
+                            [minPercent]="25"
+                    ></otus-architect-person-form-edit>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
+<div class="container-fluid main-top-padding" *ngIf="isCreatingPerson || isLoadingPersons">
+    <div class="row">
+        <div class="col-md-12">
+            <otus-architect-center-spinner></otus-architect-center-spinner>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="!isLoadingPersons && !isCreatingPerson">
+    <div class="container-fluid" *ngIf="beneficiariesWasEmpty">
+        <div class="row">
+            <div class="col-md-12 add-person-btn">
+                <a (click)="addNewBeneficiary()" class="pointer">
+                    <h4><i class="material-icons add-person-btn-icon">add</i>
+                        Добавить бенефициара
+                    </h4>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid main-top-padding">
+        <div class="row">
+            <button mat-raised-button class="btn btn-primary btn-lg next-btn" (click)="goBack()">
+                Назад
+            </button>
+            <button mat-raised-button class="btn btn-primary btn-lg next-btn margin-next-btn" (click)="processForm()">
+                Далее
+            </button>
+        </div>
+    </div>
+</ng-container>

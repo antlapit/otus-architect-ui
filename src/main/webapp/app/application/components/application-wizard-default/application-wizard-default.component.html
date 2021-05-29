@@ -1,0 +1,23 @@
+<div class="main-top-padding">
+    <h3>Закупка</h3>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <otus-architect-contract-view-card [contract]="contract"
+                                    [loading]="isLoadingContract"></otus-architect-contract-view-card>
+        </div>
+    </div>
+</div>
+<div class="main-top-padding">
+    <h3>Гарантия</h3>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <otus-architect-bg-view-card [application]="selectedFinApplication"
+                              [loading]="false"
+            ></otus-architect-bg-view-card>
+        </div>
+    </div>
+</div>

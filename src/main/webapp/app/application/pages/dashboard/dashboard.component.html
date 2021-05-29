@@ -1,0 +1,57 @@
+<div class="bg-light-blue container-fluid row no-margin no-padding">
+    <div class="spacer-panel"></div>
+    <div class="otus-architect-dashboard-width">
+        <div class="container-fluid">
+            <div class="row">
+                <h1 class="card-title col-md-6 dashboard-header-padding">
+                    Банковские гарантии
+                </h1>
+                <div class="col-md-3 dashboard-contract-label-padding"
+                     *ngIf="userRoles && userRoles.includes('ROLE_AGENT')">
+                </div>
+            </div>
+            <div class="row">
+                <button mat-raised-button class="btn btn-primary btn-lg dashboard-btn" (click)="createNew()">
+                    Новая заявка
+                </button>
+                <button mat-raised-button class="btn btn-secondary btn-lg dashboard-btn margin-dashboard-btn"
+                        (click)="createNew()">
+                    Получить проект
+                </button>
+                <button mat-raised-button class="btn btn-secondary btn-lg dashboard-btn margin-dashboard-btn"
+                        (click)="createNew()">
+                    Проверить заявку
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12 dashboard-tab-padding">
+                    <mat-tab-group (selectedTabChange)="navigateTo($event)" #tabs class="dashboard-tabs">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <span class="dashboard-tab">Заявки</span>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab></mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer-panel"></div>
+</div>
+<div class="bg-white container-fluid row no-margin no-padding last-element-on-page">
+    <div class="spacer-panel"></div>
+    <div class="otus-architect-dashboard-width">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <otus-architect-application-list
+                            *ngIf="!selectedTab || selectedTab === 'applications'"
+                            [userRoles]="userRoles"
+                    ></otus-architect-application-list>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer-panel"></div>
+</div>

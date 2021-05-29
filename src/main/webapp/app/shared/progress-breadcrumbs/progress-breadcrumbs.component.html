@@ -1,0 +1,7 @@
+<ng-container *ngIf="stages">
+    <div class="breadcrumb-flat">
+        <a [ngClass]="calcStepClass(stageTab)" [ngStyle]="{'width': calcWidth(getStageTitle(stageTab)) + '%'}"
+           *ngFor="let stageTab of stages" [matTooltip]="getStageTitle(stageTab)">{{getStageTitle(stageTab)}}</a>
+    </div>
+
+</ng-container>

@@ -1,0 +1,43 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.wizard-steps {
+  padding-left: 48px;
+}
+
+.wizard-steps .mat-list-item {
+  height: 44px !important;
+}
+
+.step {
+
+  padding-left: 24px;
+  border-left: 2px solid;
+
+  &.active-step {
+    @include font-roboto-13(500);
+    color: $brand-black-light;
+    border-left-color: $brand-primary;
+  }
+
+  &.completed-step {
+    @include font-roboto-13(400);
+    color: $brand-gray;
+    border-left-color: $brand-primary-light;
+  }
+
+  &.future-step {
+    @include font-roboto-13(400);
+    color: $brand-gray;
+    border-left-color: $brand-primary-light;
+  }
+}
+
+.step-wrapper .material-icons {
+  vertical-align: bottom !important;
+}
+
+.completed-icon {
+  margin-left: 13px;
+  color: $brand-success;
+}

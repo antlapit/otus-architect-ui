@@ -1,0 +1,364 @@
+<div class="container-fluid person-form-edit">
+    <div class="row" *ngIf="loading">
+        <div class="col-md-12">
+            <otus-architect-center-spinner></otus-architect-center-spinner>
+        </div>
+    </div>
+    <ng-container *ngIf="!loading">
+        <ng-container *ngIf="!_person">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="person-form-name">Данные формы не найдены</p>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="_person">
+            <form [formGroup]="fg" role="form" autocomplete="off">
+                <div class="row">
+                    <div [ngClass]="{'col-md-8': showPercent, 'col-md-12': !showPercent}">
+                        <mat-form-field appearance="fill">
+                            <mat-label>ФИО</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 small-padding" *ngIf="showPercent">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Доля владения</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="percent">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Дата рождения</mat-label>
+                            <input matInput placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="birthDate"
+                                   [min]="minBirthDate"
+                                   [max]="maxBirthDate"
+                                   [matDatepicker]="birthDatePicker"
+                                   (input)="onDateChange($event, false, fg.controls.birthDate)"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #birthDatePicker></mat-datepicker>
+                            <ng-container
+                                    *ngIf="fg.controls.birthDate.invalid && (fg.controls.birthDate.dirty || fg.controls.birthDate.touched)">
+                                <mat-error
+                                        *ngIf="fg.controls.birthDate.value > maxBirthDate || fg.controls.birthDate.value < minBirthDate">
+                                    Допустимые даты {{minBirthDate |
+                                    date:'dd.MM.yyyy'}} - {{maxBirthDate | date:'dd.MM.yyyy'}}
+                                </mat-error>
+                            </ng-container>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 subheader">
+                        <h5>Документ, удостоверяющий личность</h5>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Вид документа</mat-label>
+                            <mat-select formControlName="regDocumentTypeId" disabled="true">
+                                <mat-option *ngFor="let identityDocumentType of identityDocumentTypes"
+                                            [value]="identityDocumentType.id">{{identityDocumentType.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Серия</mat-label>
+                            <input matInput type="text" placeholder="{{fg.controls.resident.value ? '00 00': ''}}"
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="series"
+                                   [imask]="fg.controls.resident.value ? {mask:  '00 00'} : null">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 small-padding">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Номер</mat-label>
+                            <input matInput type="text" placeholder="{{fg.controls.resident.value ? '000000': ''}}"
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="number"
+                                   [imask]="fg.controls.resident.value ? {mask: '000000'} : null">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div [ngClass]="{'col-md-6': fg.controls.resident.value, 'col-md-12': !fg.controls.resident.value}">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Дата выдачи</mat-label>
+                            <input matInput [matDatepicker]="issueDatePicker" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="issueDate"
+                                   [max]="maxIssueDate"
+                                   (input)="onDateChange($event, true, fg.controls.issueDate)"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="issueDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #issueDatePicker></mat-datepicker>
+                            <ng-container
+                                    *ngIf="fg.get('issueDate').invalid && (fg.get('issueDate').dirty || fg.get('issueDate').touched)">
+                                <mat-error *ngIf="fg.get('issueDate').hasError('issueDateLessBirthDate')">
+                                    Дата рождения больше даты выдачи паспорта
+                                </mat-error>
+                                <mat-error *ngIf="fg.controls.issueDate.value > maxIssueDate">
+                                    Дата должна быть в прошлом
+                                </mat-error>
+                            </ng-container>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 small-padding" [ngClass]="{'hidden': !fg.controls.resident.value}">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Код подразделения</mat-label>
+                            <input matInput type="text" placeholder="{{fg.controls.resident.value ? '000-000': ''}}"
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="codeDivision"
+                                   [imask]="fg.controls.resident.value ? {mask:  '000-000'} : null">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Кем выдан</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="issuedBy">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Место рождения</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="placeOfBirth">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <otus-architect-address-autocomplete label="Адрес регистрации"
+                                                  [group]="fg.controls.regAddress"
+                                                  [ngClass]="{'width-percent-100': true}"></otus-architect-address-autocomplete>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 checkbox-wrapper">
+                        <div class="form-check equal-address">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value=""
+                                       formControlName="equalAddress">Адрес регистрации совпадает с
+                                фактическим местонахождением
+                                <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" formGroupName="factAddress" [ngClass]="{'hidden': fg.controls.equalAddress.value}">
+                    <div class="col-md-12">
+                        <otus-architect-address-autocomplete label="Адрес фактического местонахождения"
+                                                  [group]="fg.controls.factAddress"
+                                                  [ngClass]="{'width-percent-100': true}"></otus-architect-address-autocomplete>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': fg.controls.resident.value}">
+                    <div class="col-md-12 subheader">
+                        <h5>Данные об иностранном гражданине</h5>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Страна</mat-label>
+                            <mat-select formControlName="citizenshipId">
+                                <mat-option *ngFor="let country of countries"
+                                            [value]="country.id">{{country.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 checkbox-wrapper" [ngClass]="{'hidden': migrationCardNotRequired}">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value=""
+                                       formControlName="migrationCardPresented">Есть миграционная карта
+                                <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': migrationCardValueNotRequired}">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Серия миграционной карты</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="migrationCardSeries">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Номер миграционной карты</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="migrationCardNumber">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Дата начала пребывания</mat-label>
+                            <input matInput [matDatepicker]="migrationCardFromDatePicker" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="migrationCardFromDate"
+                                   (input)="onDateChange($event, true, fg.controls.migrationCardFromDate)">
+                            <mat-datepicker-toggle matSuffix
+                                                   [for]="migrationCardFromDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #migrationCardFromDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 small-padding">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Дата окончания пребывания</mat-label>
+                            <input matInput [matDatepicker]="migrationCardToDatePicker" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="migrationCardToDate"
+                                   (input)="onDateChange($event, true, fg.controls.migrationCardToDate)">
+                            <mat-datepicker-toggle matSuffix [for]="migrationCardToDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #migrationCardToDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': migrationCardAbsenceNotRequired}">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Причина отсутствия миграционной карты</mat-label>
+                            <mat-select formControlName="migrationCardAbsenceReasonTemplate">
+                                <mat-option *ngFor="let reason of docAbsenceReasons"
+                                            [value]="reason.title">{{reason.title}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12" [ngClass]="{'hidden': migrationCardIsTemplate}">
+                        <mat-form-field appearance="fill" class="material-textarea">
+                            <mat-label>Другая причина отсутствия миграционной карты</mat-label>
+                            <textarea matInput type="text" placeholder=""
+                                      rows="4"
+                                      [errorStateMatcher]="matcher"
+                                      formControlName="migrationCardAbsenceReason"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': visaNotRequired}">
+                    <div class="col-md-12 checkbox-wrapper">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value=""
+                                       formControlName="visaPresented">Есть документ, подтверждающий
+                                проживание/пребывание в РФ
+                                <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': visaValueNotRequired}">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Вид документа</mat-label>
+                            <mat-select formControlName="visaDocumentTypeId">
+                                <mat-option *ngFor="let type of confirmStayDocumentTypes"
+                                            [value]="type.id">{{type.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Серия документа</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="visaSeries">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Номер документа</mat-label>
+                            <input matInput type="text" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="visaNumber">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Начало срока действия</mat-label>
+                            <input matInput [matDatepicker]="visaFromDatePicker" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="visaFromDate"
+                                   (input)="onDateChange($event, true, fg.controls.visaFromDate)">
+                            <mat-datepicker-toggle matSuffix [for]="visaFromDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #visaFromDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 small-padding">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Окончание срока действия</mat-label>
+                            <input matInput [matDatepicker]="visaToDatePicker" placeholder=""
+                                   [errorStateMatcher]="matcher"
+                                   formControlName="visaToDate"
+                                   (input)="onDateChange($event, true, fg.controls.visaToDate)">
+                            <mat-datepicker-toggle matSuffix [for]="visaToDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #visaToDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" [ngClass]="{'hidden': visaAbsenceNotRequired}">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Причина отсутствия документа</mat-label>
+                            <mat-select formControlName="visaAbsenceReasonTemplate">
+                                <mat-option *ngFor="let reason of docAbsenceReasons"
+                                            [value]="reason.title">{{reason.title}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12" [ngClass]="{'hidden': visaAbsenceIsTemplate}">
+                        <mat-form-field appearance="fill" class="material-textarea">
+                            <mat-label>Другая причина отсутствия документа</mat-label>
+                            <textarea matInput type="text" placeholder=""
+                                      rows="4"
+                                      [errorStateMatcher]="matcher"
+                                      formControlName="visaAbsenceReason"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 person-edit-controls-container" *ngIf="deletable">
+                        <a (click)="delete()" class="person-delete-btn-title pointer" *ngIf="!deleting">
+                            <i class="material-icons person-delete-btn">delete_outline</i>
+                            Удалить
+                        </a>
+                        <ng-container *ngIf="deleting">
+                            <span class="person-delete-btn-title">Удаляется</span>
+                            <otus-architect-center-spinner [diameter]="30"></otus-architect-center-spinner>
+                        </ng-container>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+    </ng-container>
+</div>

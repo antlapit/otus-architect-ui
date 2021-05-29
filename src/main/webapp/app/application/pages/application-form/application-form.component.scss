@@ -1,0 +1,16 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.application-form {
+  width: 824px;
+}
+
+.base-comment {
+  color: $brand-black;
+  @include font-roboto-13(400);
+  height: auto !important;
+}
+
+.application-info {
+  @include font-roboto-13(400);
+}

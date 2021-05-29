@@ -1,0 +1,46 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.input-with-slider {
+  width: 100%;
+  line-height: 8px;
+}
+
+.input-with-slider .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.input-with-slider .mat-form-field-underline {
+  display: none;
+}
+
+.input-with-slider .mat-slider {
+  width: 100%;
+  padding: 0;
+}
+
+.input-with-slider .mat-slider-horizontal {
+  height: 12px;
+  top: -16px;
+}
+
+.input-with-slider .mat-slider-horizontal .mat-slider-wrapper {
+  height: 4px;
+  top: 15px;
+  left: 4px;
+  right: 4px;
+}
+
+.input-with-slider .mat-slider-track-background,
+.input-with-slider .mat-slider:hover .mat-slider-track-background {
+  background-color: $brand-secondary;
+}
+
+.input-with-slider .mat-slider-thumb {
+  border: 4px white !important;
+}
+
+.input-with-slider .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+  border-color: white;
+  background-color: $brand-primary;
+}

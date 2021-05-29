@@ -1,0 +1,81 @@
+<h3>Клиент</h3>
+<div class="container-fluid" *ngIf="!isLoadingFinApplicationForm; else loadingFinApplicationForm">
+    <ng-container *ngIf="!selectedFinApplicationForm">
+        <p>Данные формы не найдены</p>
+    </ng-container>
+    <ng-container *ngIf="selectedFinApplicationForm">
+        <div class="row">
+            <div class="col-md-12">
+                <otus-architect-fin-application-view-card [form]="selectedFinApplicationForm"
+                                               [loading]="isLoadingFinApplicationForm"
+                                               [showFields]="['inn', 'regAddress']"
+                ></otus-architect-fin-application-view-card>
+            </div>
+        </div>
+        <div class="row main-top-padding">
+            <div class="col-md-12">
+                <otus-architect-fin-application-form-edit
+                        [form]="selectedFinApplicationForm"
+                        [loading]="isLoadingFinApplicationForm"
+                        (changes)="onChangeFinApplicationForm($event)"
+                ></otus-architect-fin-application-form-edit>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<ng-template #loadingFinApplicationForm>
+    <otus-architect-center-spinner></otus-architect-center-spinner>
+</ng-template>
+<div class="main-top-padding">
+    <h3>Контактное лицо</h3>
+</div>
+<div class="container-fluid" *ngIf="!isLoadingContactInfo; else loadingContactInfo">
+    <ng-container *ngIf="!contactInfo">
+        <p>Данные формы не найдены</p>
+    </ng-container>
+    <ng-container *ngIf="contactInfo">
+        <div class="row">
+            <div class="col-md-12">
+                <otus-architect-contact-form-edit [contactInfo]="contactInfo"
+                                       [loading]="isLoadingContactInfo"
+                                       (changes)="onChangeContactInfo($event)"
+                ></otus-architect-contact-form-edit>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<ng-template #loadingContactInfo>
+    <otus-architect-center-spinner></otus-architect-center-spinner>
+</ng-template>
+<ng-container *ngIf="!!selectedFinApplicationForm && !selectedFinApplicationForm.ip">
+    <div class="main-top-padding">
+        <h3>Руководитель</h3>
+    </div>
+    <div class="container-fluid" *ngIf="!isLoadingPersons; else loadingHead">
+        <ng-container *ngIf="!persons">
+            <p>Данные формы не найдены</p>
+        </ng-container>
+        <ng-container *ngIf="persons">
+            <div class="row">
+                <div class="col-md-12">
+                    <otus-architect-person-form-edit
+                            [person]="persons.head"
+                            [loading]="isLoadingPersons"
+                            (changes)="onChangePerson($event)"
+                            [deletable]="false"
+                    ></otus-architect-person-form-edit>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-template #loadingHead>
+        <otus-architect-center-spinner></otus-architect-center-spinner>
+    </ng-template>
+</ng-container>
+<div class="container-fluid main-top-padding" *ngIf="!isLoadingPersons && !isLoadingContactInfo">
+    <div class="row">
+        <button mat-raised-button class="btn btn-primary btn-lg next-btn" (click)="processForm()">
+            Далее
+        </button>
+    </div>
+</div>

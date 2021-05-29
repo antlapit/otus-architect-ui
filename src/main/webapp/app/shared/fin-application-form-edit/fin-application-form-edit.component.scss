@@ -1,0 +1,65 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.fin-application-form-edit {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.fin-application-form-edit .row {
+  margin: 0;
+}
+
+.view-spacer {
+  border-top: 1px solid $brand-secondary;
+  padding-top: 15px;
+}
+
+.fin-application-form {
+  border: 1px solid $brand-secondary;
+  border-radius: 6px;
+  padding: 16px 24px !important;
+}
+
+.fin-application-form-field-title {
+  color: $brand-gray;
+  @include font-roboto-13(400);
+  margin-block-start: 0em !important;
+  margin-block-end: 0em !important;
+}
+
+.fin-application-form-field-value {
+  color: $brand-black;
+  @include font-roboto-13(400);
+  margin-block-start: 0em !important;
+  margin-block-end: 0.5em !important;
+}
+
+.fin-application-form-name {
+  color: $brand-black;
+  @include font-roboto-15(500);
+  margin-block-start: 0em !important;
+  margin-block-end: 0.5em !important;
+}
+
+.fin-application-edit-controls-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.fin-application-delete-btn-title {
+  color: $brand-black;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.fin-application-delete-btn {
+  color: $brand-gray;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.subheader {
+  padding: 16px 0;
+}

@@ -1,0 +1,15 @@
+<div class="row" class="simple-file-not-editable">
+    <div class="col-md-12 file-main">
+        <div class="row">
+            <div class="col-md-11">
+                <span class="file-name">{{ file.name }}</span>
+                <span class="file-size">{{ formatSize(file.size) }}</span>
+            </div>
+            <div class="col-md-1 align-end">
+                <a (click)="downloadFile(file)" class="pointer">
+                    <i class="material-icons file-icon" matTooltip="Скачать файл">save_alt</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

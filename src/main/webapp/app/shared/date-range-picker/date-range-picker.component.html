@@ -1,0 +1,35 @@
+<div class="date-range-picker-btn-wrapper">
+    <button mat-button [matMenuTriggerFor]="dateRangeMenu"
+            (onMenuOpen)="menuOpened = true"
+            (onMenuClose)="menuOpened = false"
+            class="date-range-picker-btn">
+        <ng-container *ngIf="selectedDateRangeItem.type !== 'CUSTOM'; else customPeriod">
+            {{selectedDateRangeItem.title}} {{selectedDateRangeItem.type !== 'ALL' ? '*' : ''}}
+        </ng-container>
+        <ng-template #customPeriod>
+            {{_dateFrom | date:'dd.MM.yyyy'}} - {{_dateTo | date:'dd.MM.yyyy'}}
+        </ng-template>
+        <i class="material-icons">{{menuOpened ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+    </button>
+</div>
+<mat-menu #dateRangeMenu="matMenu" yPosition="below" overlapTrigger="false" class="date-range-menu">
+    <ng-container *ngFor="let item of items">
+        <button mat-menu-item *ngIf="item.type !== 'CUSTOM'" (click)="selectItem(item.type)" class="date-range-menu-item">
+        <span class="date-range-menu-item-content">
+            <span class="date-range-item-title">{{item.title}}</span>
+            <i class="material-icons date-range-selected-item-icon" *ngIf="item.type === selectedDateRangeItem?.type">done</i>
+        </span>
+        </button>
+    </ng-container>
+    <div class="custom-date-range-wrapper">
+        <mat-form-field appearance="fill">
+            <input matInput
+                   placeholder="Выбрать период"
+                   [satDatepicker]="picker"
+                   [formControl]="customDateControl"
+                   (click)="$event.stopPropagation()">
+            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+        </mat-form-field>
+    </div>
+</mat-menu>

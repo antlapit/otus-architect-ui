@@ -1,0 +1,6 @@
+# robotstxt.org/
+
+User-agent: *
+Disallow: /api/person/user
+Disallow: /api/person/authenticate
+Disallow: /api/person/management/

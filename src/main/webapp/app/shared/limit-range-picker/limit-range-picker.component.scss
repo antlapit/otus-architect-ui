@@ -1,0 +1,142 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.limit-range-picker-btn {
+  @include font-roboto-13(500);
+  height: 54px !important;
+  color: $brand-gray;
+}
+
+.limit-range-picker-btn-wrapper {
+  padding: .4375em 0;
+}
+
+.limit-range-menu {
+  min-width: 300px !important;
+  width: 300px !important;
+  padding-top: 24px;
+  overflow: hidden !important;
+  box-shadow: 0 0 12px 0 rgba(80, 97, 140, 0.16);
+  background-color: #ffffff;
+}
+
+.limit-range-menu-item {
+  height: 40px !important;
+}
+
+.limit-range-item-wrapper .material-icons {
+  vertical-align: middle !important;
+}
+
+.limit-range-item-title {
+  padding-left: 0;
+}
+
+.limit-range-clear-button {
+  text-align: center;
+  @include font-roboto-13(500);
+  color: $brand-gray !important;
+  padding: 12px 0 12px;
+  width: 100% !important;
+}
+
+.limit-range-clear-wrapper {
+  border-top: 1px solid rgba(80, 97, 140, 0.16);
+}
+
+.limit-range-input-padding-left {
+  padding-left: 24px !important;
+}
+
+.limit-range-input-padding-right {
+  padding-right: 24px !important;
+}
+
+.limit-range-input-wrapper {
+  width: 100% !important;
+}
+
+.limit-single-input-wrapper .mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 6px !important;
+  height: 36px !important;
+  padding: 0px 8px 0px !important;
+}
+
+.limit-single-input-wrapper .mat-form-field-appearance-fill,
+.limit-single-input-wrapper .mat-input-element {
+  @include font-roboto-13(500);
+  color: $brand-black;
+}
+
+.limit-single-input-wrapper {
+  width: 115px !important;
+}
+
+.limit-range-slider .ng5-slider {
+  margin-top: 19px;
+}
+
+.limit-range-slider .ng5-slider .ng5-slider-bar {
+  background: $brand-secondary;
+  height: 4px;
+}
+
+.limit-range-slider .ng5-slider .ng5-slider-selection {
+  background: $brand-primary;
+}
+
+/*.limit-range-slider .ng5-slider .ng5-slider-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto; !* to remove the default positioning *!
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}*/
+
+.limit-range-slider .ng5-slider .ng5-slider-pointer {
+  background: #fff;
+  width: 24px;
+  height: 24px;
+  top: -10px;
+  border-radius: 12px;
+}
+
+.limit-range-slider .ng5-slider .ng5-slider-pointer:after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  border-radius: 8px;
+  background: $brand-primary;
+}
+
+.ng5-slider .ng5-slider-pointer:hover:after {
+  background-color: $brand-primary !important;
+}
+
+.limit-range-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+  background: $brand-primary;
+}
+
+.limit-range-slider .ng5-slider .ng5-slider-pointer.ng5-slider-active:after {
+  background-color: $brand-primary;;
+}
+
+.limit-fields-separator-wrapper-cell {
+  width: 22px;
+}
+
+.limit-fields-separator-wrapper {
+  padding-top: 18px;
+  padding-left: 8px;
+}
+
+.limit-fields-separator {
+  width: 6px;
+  height: 1px;
+  background-color: $brand-black !important;
+}

@@ -1,0 +1,7 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.phone-link {
+    @include font-roboto-15(500);
+    color: $brand-black-light;
+}

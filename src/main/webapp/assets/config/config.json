@@ -1,0 +1,28 @@
+{
+  "application": {
+    "name": "BG",
+    "mode": "CORPORATE",
+    "bank": {
+      "title": "Anton Lapitskii",
+      "contacts": {
+        "phone": "+7 777 77 77"
+      }
+    },
+    "order": {
+      "minLimit": 0,
+      "maxInputLimit": 20000000,
+      "maxLimit": 30000000,
+      "calcLimitStep": 1000,
+      "calcInitLimit": 10000,
+      "rate": 0.035,
+      "maxDays": 1097,
+      "minDays": 1,
+      "calcDaysStep": 1,
+      "calcInitDays": 1
+    }
+  },
+  "backend": {
+    "host": "http://otus-architect-dev:4200"
+  },
+  "stickHeader": "DEV"
+}

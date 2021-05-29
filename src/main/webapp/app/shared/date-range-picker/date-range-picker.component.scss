@@ -1,0 +1,57 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.date-range-picker-btn {
+  @include font-roboto-13(500);
+  height: 54px !important;
+  color: $brand-gray;
+}
+
+.date-range-picker-btn-wrapper {
+  padding: .4375em 0;
+}
+
+.date-range-menu {
+  width: 200px !important;
+  overflow: hidden !important;
+  box-shadow: 0 0 12px 0 rgba(80, 97, 140, 0.16);
+  background-color: #ffffff;
+}
+
+.date-range-menu-item {
+  height: 40px !important;
+}
+
+.date-range-menu-item-content .material-icons {
+  vertical-align: middle !important;
+}
+
+.date-range-item-title {
+  padding-left: 0;
+  @include font-roboto-15();
+  color: $brand-black-light;
+}
+
+.date-range-selected-item-icon {
+  margin-left: 18px;
+  font-size: 15px;
+  color: $brand-success;
+}
+
+.custom-date-range-wrapper {
+  height: 40px !important;
+  padding: 0 0 0 8px !important;
+}
+
+.custom-date-range-wrapper .mat-form-field-appearance-fill,
+.custom-date-range-wrapper .mat-input-element {
+  @include font-roboto-13(500);
+  color: $brand-black;
+}
+
+.custom-date-range-wrapper .mat-form-field-flex {
+  border-radius: 0 !important;
+  background-color: white !important;
+  height: 40px !important;
+  padding: 0 0 0 8px !important;
+}

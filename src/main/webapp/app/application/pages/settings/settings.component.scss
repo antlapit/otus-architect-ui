@@ -1,0 +1,11 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.settings-tab {
+  @include font-roboto-15(500, 0.5px);
+  text-transform: uppercase !important;
+}
+
+.settings {
+  width: 550px;
+}

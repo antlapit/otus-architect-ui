@@ -1,0 +1,136 @@
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+  line-height: 1.5em;
+}
+
+
+h1, .h1 {
+    font-family: 'bebas';
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: $font-size-h1;
+    line-height: 0.8;
+    letter-spacing: normal;
+    margin-bottom: 24px !important;
+}
+h2, .h2 {
+    font-family: 'bebas';
+    font-size: $font-size-h2;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+}
+h3, .h3 {
+    height: 24px;
+    font-family: 'bebas';
+    font-size: $font-size-h3;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.96;
+    letter-spacing: normal;
+}
+h4, .h4{
+    height: 24px;
+    font-family: 'Roboto';
+    font-size: $font-size-h4;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    margin-bottom: 0px;
+}
+h5, .h5 {
+    font-family: 'Roboto';
+    font-size: $font-size-h5;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.54;
+    letter-spacing: normal;
+}
+h6, .h6{
+    font-family: 'Roboto';
+    font-size: $font-size-h6;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: $brand-black;
+}
+
+.font-otus-architect-roboto-medium-13 {
+    @include font-roboto-13(500);
+}
+
+.font-otus-architect-roboto-regular-13 {
+    @include font-roboto-13(400);
+}
+
+.font-otus-architect-roboto-regular-11 {
+    @include font-roboto-11(400);
+}
+
+.title,
+.card-title,
+.info-title,
+.footer-brand,
+.footer-big h5,
+.footer-big h4,
+.media .media-heading{
+    //font-weight: $font-weight-extra-bold;
+    // font-family: $font-family-serif;
+
+    &,
+    a{
+        color: $black-color;
+        text-decoration: none;
+    }
+}
+
+.card-blog .card-title{
+    font-weight: $font-weight-extra-bold;
+}
+
+h2.title{
+    margin-bottom: $margin-base * 2;
+}
+
+.description,
+.card-description,
+.footer-big p{
+    color: $gray-light;
+}
+
+.text-warning {
+  color: $brand-warning !important;
+}
+.text-primary {
+  color: $brand-primary !important;
+}
+.text-danger {
+  color: $brand-danger !important;
+}
+.text-success {
+  color: $brand-success !important;
+}
+.text-info {
+  color: $brand-info !important;
+}
+.text-rose{
+    color: $brand-rose !important;
+}
+.text-gray{
+    color: $gray-color !important;
+}

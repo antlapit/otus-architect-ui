@@ -1,0 +1,27 @@
+<div class="container-fluid" *ngIf="selectedFinApplication">
+    <div class="row">
+        <div class="wizard-form-width container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <otus-architect-application-wizard-bg
+                            [finApplication]="selectedFinApplication"
+                            *ngIf="selectedFinApplication.formStatus === 'BG'"></otus-architect-application-wizard-bg>
+                    <otus-architect-application-wizard-company
+                            [finApplication]="selectedFinApplication"
+                            *ngIf="selectedFinApplication.formStatus === 'COMPANY'"></otus-architect-application-wizard-company>
+                    <otus-architect-application-wizard-beneficiaries
+                            [finApplication]="selectedFinApplication"
+                            *ngIf="selectedFinApplication.formStatus === 'BENEFICIARIES'"></otus-architect-application-wizard-beneficiaries>
+                    <otus-architect-application-wizard-default
+                            [finApplication]="selectedFinApplication"
+                            *ngIf="!selectedFinApplication.formStatus"></otus-architect-application-wizard-default>
+                </div>
+            </div>
+        </div>
+        <div class="spacer-panel">
+            <otus-architect-application-wizard-steps
+                    [finApplication]="selectedFinApplication"
+            ></otus-architect-application-wizard-steps>
+        </div>
+    </div>
+</div>

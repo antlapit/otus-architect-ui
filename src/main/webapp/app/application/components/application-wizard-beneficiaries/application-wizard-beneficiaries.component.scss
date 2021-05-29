@@ -1,0 +1,35 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.person-separator {
+  border-top: 1px solid $brand-gray;
+  margin-top: 5px;
+}
+
+.margin-next-btn {
+  margin-left: 10px !important;
+}
+
+.ben-subtitle {
+  color: $brand-gray;
+  @include font-roboto-13(400);
+}
+
+.add-person-btn {
+  margin-top: 20px;
+  padding: 16px 24px !important;
+  border: 1px solid $brand-gray;
+  border-radius: 6px;
+}
+
+.add-person-btn a {
+  text-align: center;
+}
+
+.add-person-btn h4 {
+  font-weight: 400;
+}
+
+.add-person-btn-icon {
+  color: $brand-gray;
+}

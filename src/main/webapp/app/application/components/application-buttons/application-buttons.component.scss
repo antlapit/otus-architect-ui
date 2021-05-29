@@ -1,0 +1,52 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.app-btn-wrapper.row, .app-btn-wrapper .row {
+  margin: 0 !important;
+}
+
+.app-btn-btn-icon {
+  color: $brand-gray !important;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.app-btn-btn-icon .material-icons {
+  vertical-align: bottom !important;
+}
+
+.app-btn-btn-action-icon {
+  color: $brand-gray !important;
+  text-transform: uppercase;
+  font-size: 24px;
+  margin-left: 16px;
+}
+
+.app-btn-btn-action-icon .material-icons {
+  vertical-align: bottom !important;
+}
+
+.app-btn-title {
+  @include font-roboto-13(500, 0.5px);
+  color: $brand-gray;
+  padding-left: 10px;
+}
+
+.app-btn-column {
+  padding-left: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.app-btn-column-border {
+  border-bottom: 1px solid $brand-gray;
+}
+
+.button-spacer {
+  border-left: 1px solid;
+  border-color: $brand-gray;
+}
+
+.action-buttons {
+  text-align: right;
+}

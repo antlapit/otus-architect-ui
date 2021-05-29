@@ -1,0 +1,122 @@
+<div class="login-form login-form-width">
+    <form class="form" method="" action="" role="form" autocomplete="off" (keyup.enter)="proceedLogin()">
+        <div class="card card-login card-hidden no-border">
+            <div class="card-header">
+                <div class="row go-to-welcome">
+                    <div class="col-md-12 no-margin no-padding"
+                         *ngIf="loginState && loginState.emailConfirmed">
+                        <span class="mail-confirmed-wrapper">
+                            <i class="material-icons confirm-icon">done</i>
+                            <span class="mail-confirmed">Ваш адрес электронной почты был успешно подтвержден.</span>
+                        </span>
+                    </div>
+                    <div class="col-md-12 go-back-column" *ngIf="loginState && loginState.status !== 'INITIAL'">
+                        <span class="pointer go-back-btn-icon" (click)="reloadState()">
+                            <img src="assets/img/back.svg">
+                            <span class="go-back-title">НАЗАД</span>
+                        </span>
+                    </div>
+                </div>
+
+                <h2 class="card-title font-48">
+                    <ng-container *ngIf="!loginState || loginState.status === 'INITIAL'">Вход в личный кабинет
+                    </ng-container>
+                    <ng-container *ngIf="loginState && loginState.status === 'SMS'">Код подтверждения</ng-container>
+                    <ng-container *ngIf="loginState && loginState.status === 'REGISTER'">Профиль пользователя
+                    </ng-container>
+                    <ng-container *ngIf="loginState && loginState.status === 'EMAIL_CONFIRMATION'">Подтверждение почты
+                    </ng-container>
+                </h2>
+                <span class="sms-sh" *ngIf="loginState && loginState.status === 'SMS'">Мы отправили вам код подтверждения на номер:&nbsp;
+                    <span class="sms-sh-black">{{fg.controls.phoneNumber.value | phonesecure}}</span>
+                </span>
+                <span class="email-sh" *ngIf="loginState && loginState.status === 'EMAIL_CONFIRMATION'">
+                    Пожалуйста, подтвердите свой адрес электронной почты, нажав на ссылку, отправленную на&nbsp;
+                    <span class="email-sh-black">{{loginState.loginData.email}}</span>
+                    в случае если письмо не пришло, то проверьте папку «Спам»
+                </span>
+            </div>
+            <div class="card-body main-card ">
+                <form [formGroup]="fg" role="form" autocomplete="off">
+                    <div class="container-fluid">
+                        <ng-container *ngIf="!loginState || loginState.status === 'INITIAL'">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-tab-group (selectedTabChange)="changeRole($event)">
+                                        <mat-tab label="АГЕНТ"></mat-tab>
+                                        <mat-tab label="КЛИЕНТ"></mat-tab>
+                                        <mat-tab></mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                            </div>
+                            <div class="row padding-top-12">
+                                <div class="col-md-12">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Номер телефона</mat-label>
+                                        <input matInput type="text" placeholder="+7(000) 000-00-00"
+                                               formControlName="phoneNumber"
+                                               [imask]="{mask: '+{7}(000) 000-00-00'}">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="loginState && loginState.status === 'SMS'">
+                            <div class="row padding-top-12">
+                                <div class="col-md-12">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Код подтверждения</mat-label>
+                                        <input matInput type="text" placeholder=""
+                                               formControlName="loginCode" [minlength]="loginState.loginCodeLength"
+                                               [maxlength]="loginState.loginCodeLength"
+                                               style="letter-spacing: 0.3em">
+                                        <mat-spinner matSuffix *ngIf="isAuthenticating" mode="indeterminate"
+                                                     diameter="17"></mat-spinner>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="loginState && loginState.status === 'REGISTER'">
+                            <div class="row">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>ФИО</mat-label>
+                                    <input matInput type="text"
+                                           formControlName="name">
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>E-mail</mat-label>
+                                    <input matInput type="text" email
+                                           formControlName="email">
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="input-group"
+                         *ngIf="loginState && loginState.captchaRequired && captchaEnabled && captchaKey && !isAuthenticating">
+                        <re-captcha (resolved)="processCaptchaResponse($event)" [siteKey]="captchaKey"></re-captcha>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <span class="person-data-label" *ngIf="loginState && loginState.status === 'REGISTER'">После заполнения данных, вам необходимо подтвердить адрес электронной почты</span>
+
+                <ng-container
+                        *ngIf="loginState && (loginState.status === 'SMS' || loginState.status === 'EMAIL_CONFIRMATION')">
+                    <span class="request-code-label"
+                          *ngIf="milliSecondToRetry > 0">Запросить {{loginState.status === 'SMS' ? 'код' : ''}} повторно через: {{retryCounter$ | async | date:'mm:ss'}}</span>
+                    <span *ngIf="milliSecondToRetry <= 0" class="request-new-code-wrapper">
+                        <a class="request-new-code pointer"
+                           (click)="requestLoginCode()">Запросить {{loginState.status === 'SMS' ? 'код' : ''}} повторно</a>
+                    </span>
+                </ng-container>
+
+                <button mat-raised-button class="btn btn-primary btn-lg login-next-btn" (click)="proceedLogin()"
+                        *ngIf="!loginState || loginState.status !== 'EMAIL_CONFIRMATION'"
+                        [disabled]="!fg.valid">
+                    Далее
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

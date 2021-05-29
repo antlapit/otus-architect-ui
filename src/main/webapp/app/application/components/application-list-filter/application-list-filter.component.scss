@@ -1,0 +1,11 @@
+@import "../../../../assets/scss/core/variables";
+@import "../../../../assets/scss/core/mixins";
+
+.application-list-filters-row {
+  padding: 0 !important;
+}
+
+.application-query-filter-wrapper .mat-form-field-appearance-fill,
+.application-query-filter-wrapper .mat-input-element {
+  @include font-roboto-13(400);
+}

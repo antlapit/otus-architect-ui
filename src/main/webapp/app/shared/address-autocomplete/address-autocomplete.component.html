@@ -1,0 +1,17 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{label}}</mat-label>
+    <input type="text" placeholder="" aria-label="Number" matInput
+           [formControl]="group.controls.value"
+           [matAutocomplete]="auto"
+           autocomplete="off"
+    >
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                      (optionSelected)='selectOption($event.option.value)'>
+        <mat-option *ngFor="let option of options"
+                    style="height: 60px; line-height: 18px"
+                    [value]="option">
+            {{ option }}
+        </mat-option>
+    </mat-autocomplete>
+    <mat-spinner matSuffix *ngIf="loading" mode="indeterminate" diameter="17"></mat-spinner>
+</mat-form-field>

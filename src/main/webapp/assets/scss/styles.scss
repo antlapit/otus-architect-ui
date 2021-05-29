@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+    
+.formlabel {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: left;
+    color: #7c909b;
+}
+
+.stand-info-message {
+    text-align: center;
+    position: fixed;
+    font-weight: bold;
+    background-color: #FFC90E;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    z-index: 20;
+}

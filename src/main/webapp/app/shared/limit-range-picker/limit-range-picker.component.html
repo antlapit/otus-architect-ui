@@ -1,0 +1,59 @@
+<div class="limit-range-picker-btn-wrapper">
+    <button mat-button [matMenuTriggerFor]="limitRangeMenu"
+            (onMenuOpen)="menuOpened = true"
+            (onMenuClose)="menuOpened = false"
+            (menuOpened)="afterMenuOpened($event)"
+            class="limit-range-picker-btn">
+        Сумма гарантии {{(_from > _min || _to < _max) ? '*' : ''}}
+        <i class="material-icons">{{menuOpened ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+    </button>
+</div>
+<mat-menu #limitRangeMenu="matMenu" yPosition="below" overlapTrigger="false" class="limit-range-menu">
+    <div class="container-fluid">
+        <div class="row limit-range-menu-item">
+            <table class="limit-range-input-wrapper">
+                <tr>
+                    <td class="limit-single-input-wrapper limit-range-input-padding-left">
+                        <mat-form-field appearance="fill">
+                            <input matInput type="text" placeholder=""
+                                   [formControl]="fromControl"
+                                   currencyMask
+                                   [options]="currencyMaskConfig"
+                                   (click)="$event.stopPropagation()"
+                            >
+                        </mat-form-field>
+                    </td>
+                    <td class="limit-fields-separator-wrapper-cell">
+                        <div class="limit-fields-separator-wrapper">
+                            <div class="limit-fields-separator">&nbsp;</div>
+                        </div>
+                    </td>
+                    <td class="limit-single-input-wrapper limit-range-input-padding-right">
+                        <mat-form-field appearance="fill">
+                            <input matInput type="text" placeholder=""
+                                   [formControl]="toControl"
+                                   currencyMask
+                                   [options]="currencyMaskConfig"
+                                   (click)="$event.stopPropagation()"
+                            >
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row limit-range-menu-item limit-range-input-padding-left limit-range-input-padding-right limit-range-slider">
+            <ng5-slider
+                    [(value)]="_from"
+                    [(highValue)]="_to"
+                    [options]="sliderOptions"
+                    (click)="$event.stopPropagation()"
+                    (valueChange)="changeLeftSliderValue($event)"
+                    (highValueChange)="changeRightSliderValue($event)"
+                    [manualRefresh]="manualRefresh"
+            ></ng5-slider>
+        </div>
+        <div class="row limit-range-menu-item limit-range-clear-wrapper">
+            <span (click)="clearRange()" class="pointer limit-range-clear-button">Сбросить</span>
+        </div>
+    </div>
+</mat-menu>

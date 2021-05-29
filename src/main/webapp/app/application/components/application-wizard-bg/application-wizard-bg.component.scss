@@ -1,0 +1,21 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.target-use-cases {
+  color: $brand-black;
+  @include font-roboto-15(500);
+}
+
+.field-title {
+  color: $brand-gray;
+  @include font-roboto-15(400);
+  margin-block-start: 0em !important;
+  margin-block-end: 0em !important;
+}
+
+.field-value {
+  color: $brand-black;
+  @include font-roboto-15(400);
+  margin-block-start: 0em !important;
+  margin-block-end: 0.5em !important;
+}

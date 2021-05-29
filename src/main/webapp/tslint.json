@@ -1,0 +1,23 @@
+{
+    "extends": "../../../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            [
+                "app",
+                "otus-architect"
+            ],
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            [
+                "app",
+                "otus-architect"
+            ],
+            "kebab-case"
+        ]
+    }
+}

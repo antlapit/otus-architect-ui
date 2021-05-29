@@ -1,0 +1,36 @@
+<form [formGroup]="fg">
+    <div class="container-fluid">
+        <div class="row application-list-filters-row">
+            <div class="col-md-12">
+                <otus-architect-application-stage-tabs
+                        [activeStage]="fg.controls.stage"
+                        (selectStageEvent)="onSelectStageEvent($event)"></otus-architect-application-stage-tabs>
+            </div>
+        </div>
+        <div class="row application-list-filters-row">
+            <otus-architect-date-range-picker (onChangeDateRange)="onChangeDateRange($event)"
+                                   [datePickerType]="fg.controls.datePickerType.value"
+                                   [dateFrom]="fg.controls.dateFrom.value"
+                                   [dateTo]="fg.controls.dateTo.value"
+            ></otus-architect-date-range-picker>
+            <otus-architect-limit-range-picker (onChangeLimitRange)="onChangeLimitRange($event)"
+                                    [from]="fg.controls.limitFrom.value"
+                                    [to]="fg.controls.limitTo.value"
+                                    [max]="maxLimit"
+                                    [min]="minLimit"
+            ></otus-architect-limit-range-picker>
+            <div class="application-query-filter-wrapper">
+                <mat-form-field floatLabel="never">
+                    <mat-label>Поиск</mat-label>
+                    <input matInput type="text" formControlName="query">
+                    <mat-icon matPrefix class="text-gray">search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+    </div>
+</form>
