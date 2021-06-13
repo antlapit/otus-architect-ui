@@ -19,7 +19,6 @@ import {EffectsModule} from '@ngrx/effects';
 import {MainViewContainerComponent} from './shared/main-view-container/main-view-container.component';
 import {UnauthorizedContainerComponent} from './shared/unauthorized-container/unauthorized-container.component';
 import {HttpModule} from '@angular/http';
-import {SimpleFormContainerComponent} from './shared/simple-form-container/simple-form-container.component';
 import {GestureConfig} from '@angular/material';
 import {TextMaskModule} from 'angular2-text-mask';
 
@@ -30,7 +29,6 @@ registerLocaleData(localeRuRu);
         AppComponent,
         MainViewContainerComponent,
         UnauthorizedContainerComponent,
-        SimpleFormContainerComponent
     ],
     imports: [
         BrowserModule,

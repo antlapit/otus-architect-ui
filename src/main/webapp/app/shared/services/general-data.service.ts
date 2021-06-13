@@ -4,7 +4,6 @@ import {AppConfigService} from '../../core/app-load/services/app-config.service'
 import {catchError} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {ProfileInfo} from '../domain/ProfileInfo';
 import {UserIdentity} from '../../core/domain/UserIdentity';
 import {Company} from '../../core/domain/Company';
 
@@ -20,16 +19,7 @@ export class GeneralDataService {
     }
 
     public getUserWorkspace(): Observable<Workspace> {
-        return this.httpClient.get<Workspace>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/workspace`)
-            .pipe(
-                catchError(err => {
-                    return of(null);
-                })
-            );
-    }
-
-    public getProfiles(): Observable<ProfileInfo> {
-        return this.httpClient.get<Workspace>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/management/info`)
+        return this.httpClient.get<Workspace>(`${((this.config || {}).backend || {}).host}/api/person/workspace`)
             .pipe(
                 catchError(err => {
                     return of(null);
@@ -38,7 +28,7 @@ export class GeneralDataService {
     }
 
     public getUserInfo(): Observable<UserIdentity> {
-        return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/user`)
+        return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/person/user`)
             .pipe(
                 catchError(err => {
                     return of(null);
@@ -47,7 +37,7 @@ export class GeneralDataService {
     }
 
     public modifyUserInfo(userInfo: any) {
-        return this.httpClient.post<UserIdentity>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/user`,
+        return this.httpClient.post<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/person/user`,
             userInfo,
             {
                 headers: {
@@ -62,7 +52,7 @@ export class GeneralDataService {
     }
 
     public getCompanyInfo() {
-        return this.httpClient.get<Company>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/company`)
+        return this.httpClient.get<Company>(`${((this.config || {}).backend || {}).host}/api/person/company`)
             .pipe(
                 catchError(err => {
                     return of(null);

@@ -12,8 +12,6 @@ import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
 import {combineLatest, Subscription} from 'rxjs';
 import {
-    defaultFinApplicationStages,
-    isLoadingDefaultFinApplicationStages,
     isLoadingFinApplication,
     isProcessingFinApplicationForm,
     isRedirectFinApplicationToRoot,
@@ -21,7 +19,7 @@ import {
     selectedFinApplication
 } from '../../redux/selectors';
 import {FinApplication} from '../../models/fin-application.model';
-import {ClearApplicationProcessed, ClearFinApplication, GetDefaultFinApplicationStages} from '../../redux/actions';
+import {ClearApplicationProcessed, ClearFinApplication} from '../../redux/actions';
 import {MatSnackBar} from '@angular/material';
 import {Location} from '@angular/common';
 import {ApplicationWizardViewComponent} from '../../components';
@@ -81,17 +79,6 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
         }));
 
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(isLoadingDefaultFinApplicationStages)),
-                this.store.pipe(select(defaultFinApplicationStages))
-            ).subscribe(([isLoadingDefaultApplicationStages, defaultApplicationStages]) => {
-                this.isLoadingApplicationStages = isLoadingDefaultApplicationStages;
-                this.defaultApplicationStages = defaultApplicationStages;
-                this.cd.detectChanges();
-            })
-        );
-
         this.all$.add(combineLatest(
                 this.store.pipe(select(isRedirectFinApplicationToRoot))
         ).subscribe(([redirect]) => {
@@ -100,19 +87,6 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
             }
             this.savedRedirectToFinApplicationRoot = redirect;
         }));
-
-        this.store.dispatch(new GetDefaultFinApplicationStages());
-    }
-
-    forceSave(finApplication: FinApplication) {
-        if (!!this.wizardViewList && this.wizardViewList.length > 0) {
-            const saved = this.wizardViewList.first.forceSave();
-            if (!saved) {
-                this.doRedirectToRoot();
-            }
-        } else {
-            this.doRedirectToRoot();
-        }
     }
 
     doRedirectToRoot() {

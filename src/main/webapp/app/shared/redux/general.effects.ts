@@ -2,29 +2,11 @@ import {GeneralDataService} from '../services/general-data.service';
 import {
     DiscardWorkspace,
     GeneralActionTypes,
-    HandleAddressSuggest,
-    HandleBankSuggest,
-    HandleCompanyInfo,
-    HandleCompanySuggest,
-    HandleConfirmStayDocumentTypes,
-    HandleCountries,
-    HandleDocAbsenceReasons,
+    HandleCategories,
     HandleError,
-    HandleIdentityDocumentTypes,
-    HandleProfileInfo,
-    HandleTaxationSystems,
     HandleUserInfo,
     HandleWorkspace,
-    LoadAddressSuggest,
-    LoadBankSuggest,
-    LoadCompanyInfo,
-    LoadCompanySuggest,
-    LoadConfirmStayDocumentTypes,
-    LoadCountries,
-    LoadDocAbsenceReasons,
-    LoadIdentityDocumentTypes,
-    LoadProfileInfo,
-    LoadTaxationSystems,
+    LoadCategories,
     LoadUserInfo,
     LoadWorkspace,
     ModifyUserInfo,
@@ -38,7 +20,6 @@ import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {filter, map, mergeMap, switchMap, tap} from 'rxjs/operators';
-import {SuggestService} from '../references/suggest.service';
 import {ServiceResponse} from '../domain/ServiceResponse';
 import {ReferencesService} from '../references/references.service';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
@@ -49,7 +30,6 @@ export class GeneralEffects {
     constructor(
         private actions$: Actions,
         private generalDataService: GeneralDataService,
-        private suggestService: SuggestService,
         private referencesService: ReferencesService,
         private router: Router,
         private store: Store<GeneralState>,
@@ -63,12 +43,7 @@ export class GeneralEffects {
         switchMap(value => [
             new LoadWorkspace(),
             new LoadUserInfo(),
-            new LoadCompanyInfo(),
-            new LoadCountries(),
-            new LoadIdentityDocumentTypes(),
-            new LoadConfirmStayDocumentTypes(),
-            new LoadDocAbsenceReasons(),
-            new LoadTaxationSystems(),
+            new LoadCategories(),
             new RedirectAfterLogin()
         ])
     );
@@ -97,24 +72,11 @@ export class GeneralEffects {
         })
     );
 
-    @Effect() loadProfileInfo$ = this.actions$.pipe(
-        ofType<LoadProfileInfo>(GeneralActionTypes.LoadProfileInfo),
-        mergeMap(() => this.generalDataService.getProfiles()),
-        map(profileInfo => new HandleProfileInfo({ profileInfo }))
-    );
-
     @Effect() loadUserInfo$ = this.actions$.pipe(
         ofType<LoadUserInfo>(GeneralActionTypes.LoadUserInfo),
         filter(action => this.authService.isAuthenticated),
         mergeMap(() => this.generalDataService.getUserInfo()),
         map(userInfo => new HandleUserInfo({ userInfo }))
-    );
-
-    @Effect() loadCompanyInfo$ = this.actions$.pipe(
-        ofType<LoadCompanyInfo>(GeneralActionTypes.LoadCompanyInfo),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap(() => this.generalDataService.getCompanyInfo()),
-        map(companyInfo => new HandleCompanyInfo({ companyInfo }))
     );
 
     @Effect() modifyUserInfo$ = this.actions$.pipe(
@@ -149,56 +111,10 @@ export class GeneralEffects {
         })
     );
 
-    @Effect() loadCompanySuggest$ = this.actions$.pipe(
-        ofType<LoadCompanySuggest>(GeneralActionTypes.LoadCompanySuggest),
-        mergeMap((action) => this.suggestService.suggestCompany(action.payload.query, action.payload.count)),
-        map((response: ServiceResponse) => new HandleCompanySuggest(response))
-    );
-
-    @Effect() loadAddressSuggest$ = this.actions$.pipe(
-        ofType<LoadAddressSuggest>(GeneralActionTypes.LoadAddressSuggest),
-        mergeMap((action) => this.suggestService.suggestAddress(action.payload.query, action.payload.count)),
-        map((response: ServiceResponse) => new HandleAddressSuggest(response))
-    );
-
-    @Effect() loadBankSuggest$ = this.actions$.pipe(
-        ofType<LoadBankSuggest>(GeneralActionTypes.LoadBankSuggest),
-        mergeMap((action) => this.suggestService.suggestBank(action.payload.query, action.payload.count)),
-        map((response: ServiceResponse) => new HandleBankSuggest(response))
-    );
-
     @Effect() loadCountries$ = this.actions$.pipe(
-        ofType<LoadCountries>(GeneralActionTypes.LoadCountries),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap((action) => this.referencesService.getCountries()),
-        map((response: ServiceResponse) => new HandleCountries(response))
+        ofType<LoadCategories>(GeneralActionTypes.LoadCategories),
+        mergeMap((action) => this.referencesService.getCategories()),
+        map((response: ServiceResponse) => new HandleCategories(response))
     );
 
-    @Effect() loadIdentityDocumentTypes$ = this.actions$.pipe(
-        ofType<LoadIdentityDocumentTypes>(GeneralActionTypes.LoadIdentityDocumentTypes),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap((action) => this.referencesService.getIdentityDocumentTypes()),
-        map((response: ServiceResponse) => new HandleIdentityDocumentTypes(response))
-    );
-
-    @Effect() loadConfirmStayDocumentTypes$ = this.actions$.pipe(
-        ofType<LoadConfirmStayDocumentTypes>(GeneralActionTypes.LoadConfirmStayDocumentTypes),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap((action) => this.referencesService.getConfirmStayDocumentTypes()),
-        map((response: ServiceResponse) => new HandleConfirmStayDocumentTypes(response))
-    );
-
-    @Effect() loadDocAbsenceReasons$ = this.actions$.pipe(
-        ofType<LoadDocAbsenceReasons>(GeneralActionTypes.LoadDocAbsenceReasons),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap((action) => this.referencesService.getDocAbsenceReasons()),
-        map((response: ServiceResponse) => new HandleDocAbsenceReasons(response))
-    );
-
-    @Effect() loadTaxationSystems$ = this.actions$.pipe(
-        ofType<LoadTaxationSystems>(GeneralActionTypes.LoadTaxationSystems),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap((action) => this.referencesService.getTaxationSystems()),
-        map((response: ServiceResponse) => new HandleTaxationSystems(response))
-    );
 }

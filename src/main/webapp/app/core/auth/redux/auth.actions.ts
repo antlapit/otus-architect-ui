@@ -8,7 +8,6 @@ export enum AuthActionTypes {
     LogoutSuccess = '[Auth] Logout Success',
     Authenticate = '[Auth] Authenticate',
     HandleAuthenticate = '[Auth] Handle Authenticate',
-    ConfirmMail = '[Auth] Confirm Mail',
     ReloadAuthenticate = '[Auth] Reload Authenticate',
 }
 
@@ -43,13 +42,6 @@ export class HandleAuthenticate implements Action {
     constructor(public response: ServiceResponse) {}
 }
 
-/** Подтверждение почты **/
-export class ConfirmMail implements Action {
-    constructor(public code: string) {}
-
-    readonly type = AuthActionTypes.ConfirmMail;
-}
-
 export class ReloadAuthenticate implements Action {
     constructor(public phoneNumber: string) {}
 
@@ -63,5 +55,4 @@ export type AuthActionsUnion =
     | LogoutSuccess
     | Authenticate
     | HandleAuthenticate
-    | ConfirmMail
     | ReloadAuthenticate;

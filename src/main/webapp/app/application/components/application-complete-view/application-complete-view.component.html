@@ -1,34 +1,13 @@
-<h3>Закупка</h3>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <otus-architect-contract-view-card [contract]="contract"
-                                    [loading]="isLoadingContract"></otus-architect-contract-view-card>
-        </div>
-    </div>
-</div>
 <div class="main-top-padding">
     <h3>Гарантия</h3>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <otus-architect-bg-view-card [application]="selectedFinApplication"
-                              [loading]="isLoadingDeliveryInfo"
-                              [deliveryInfo]="deliveryInfo"
-            ></otus-architect-bg-view-card>
-        </div>
-    </div>
-</div>
-<div class="main-top-padding">
-    <h3>Компания</h3>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <otus-architect-fin-application-view-card [form]="selectedFinApplicationForm" [loading]="isLoadingFinApplicationForm"
-                                           [showFields]="['inn', 'regAddress']"
-            ></otus-architect-fin-application-view-card>
+            <otus-architect-order-view-card [application]="selectedFinApplication"
+                                            [loading]="isLoadingDeliveryInfo"
+                                            [deliveryInfo]="deliveryInfo"
+            ></otus-architect-order-view-card>
         </div>
     </div>
 </div>

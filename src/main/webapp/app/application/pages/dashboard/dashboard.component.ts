@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {getDashboardTab} from '../../redux/selectors';
 import {ApplicationState} from '../../redux/application-state';
 import {MatTabChangeEvent, MatTabGroup} from '@angular/material';
 import {Location} from '@angular/common';
-import {userRoles} from '../../../shared/redux/general.selectors';
 
 @Component({
     selector: 'otus-architect-dashboard',
@@ -23,8 +22,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     tabs: MatTabGroup;
 
     selectedTab: string;
-
-    userRoles: String[];
 
     constructor(private cd: ChangeDetectorRef,
                 private router: Router,
@@ -50,13 +47,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.changeTab(selectedTab);
                 }
             ));
-
-        this.all$.add(combineLatest(
-            this.store.pipe(select(userRoles))
-        ).subscribe(([userRoles]) => {
-            this.userRoles = userRoles;
-            this.cd.detectChanges();
-        }));
     }
 
     createNew() {

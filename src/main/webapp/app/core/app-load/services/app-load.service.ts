@@ -5,17 +5,7 @@ import * as CoreActions from '../../redux/core.actions';
 import {Store} from '@ngrx/store';
 import {AppConfigService} from './app-config.service';
 import {filter, take} from 'rxjs/operators';
-import {
-    LoadCompanyInfo,
-    LoadConfirmStayDocumentTypes,
-    LoadCountries,
-    LoadDocAbsenceReasons,
-    LoadIdentityDocumentTypes,
-    LoadProfileInfo,
-    LoadTaxationSystems,
-    LoadUserInfo,
-    LoadWorkspace
-} from '../../../shared/redux/general.actions';
+import {LoadCategories, LoadUserInfo, LoadWorkspace} from '../../../shared/redux/general.actions';
 
 @Injectable({
     providedIn: 'root'
@@ -35,15 +25,9 @@ export class AppLoadService<Payload extends CoreActions.InitializationPayload> {
                 filter(conf => !!conf),
                 take(1)).toPromise().then(() => {
                 resolve();
-                this.store.dispatch(new LoadProfileInfo());
                 this.store.dispatch(new LoadUserInfo());
-                this.store.dispatch(new LoadCompanyInfo());
                 this.store.dispatch(new LoadWorkspace());
-                this.store.dispatch(new LoadCountries());
-                this.store.dispatch(new LoadIdentityDocumentTypes());
-                this.store.dispatch(new LoadConfirmStayDocumentTypes());
-                this.store.dispatch(new LoadDocAbsenceReasons());
-                this.store.dispatch(new LoadTaxationSystems());
+                this.store.dispatch(new LoadCategories());
             });
         });
     }

@@ -9,7 +9,7 @@ import {
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ChangeFinApplicationFilter, GetFinApplicationStageGroups} from '../../redux/actions';
+import {ChangeFinApplicationFilter} from '../../redux/actions';
 import {combineLatest, Subscription} from 'rxjs';
 import {getUserInfo, userRoles} from '../../../shared/redux/general.selectors';
 import {finApplicationsFilter} from '../../redux/selectors';
@@ -111,8 +111,6 @@ export class ApplicationListFilterComponent implements OnInit, OnDestroy {
                     }
                 )
         );
-
-        this.store.dispatch(new GetFinApplicationStageGroups());
     }
 
     onSelectStageEvent($event) {

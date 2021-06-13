@@ -1,5 +1,5 @@
 {
-  "name": "otus-atchitect",
+  "name": "otus-architect",
   "version": "0.0.1",
   "description": "FrontEnd Application For Otus Architect UI",
   "private": true,
@@ -155,7 +155,7 @@
   },
   "config": {
     "host": "otus-architect-dev",
-    "baseHref": "/"
+    "baseHref": "/store"
   },
   "scripts": {
     "ng": "ng",

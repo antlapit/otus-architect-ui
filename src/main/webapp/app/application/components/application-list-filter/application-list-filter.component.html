@@ -9,15 +9,16 @@
         </div>
         <div class="row application-list-filters-row">
             <otus-architect-date-range-picker (onChangeDateRange)="onChangeDateRange($event)"
-                                   [datePickerType]="fg.controls.datePickerType.value"
-                                   [dateFrom]="fg.controls.dateFrom.value"
-                                   [dateTo]="fg.controls.dateTo.value"
+                                              [datePickerType]="fg.controls.datePickerType.value"
+                                              [dateFrom]="fg.controls.dateFrom.value"
+                                              [dateTo]="fg.controls.dateTo.value"
             ></otus-architect-date-range-picker>
             <otus-architect-limit-range-picker (onChangeLimitRange)="onChangeLimitRange($event)"
-                                    [from]="fg.controls.limitFrom.value"
-                                    [to]="fg.controls.limitTo.value"
-                                    [max]="maxLimit"
-                                    [min]="minLimit"
+                                               [from]="fg.controls.limitFrom.value"
+                                               [to]="fg.controls.limitTo.value"
+                                               [max]="maxLimit"
+                                               [min]="minLimit"
+                                               fieldTitle="Сумма заказа"
             ></otus-architect-limit-range-picker>
             <div class="application-query-filter-wrapper">
                 <mat-form-field floatLabel="never">

@@ -1,0 +1,50 @@
+<div class="main-top-padding">
+    <h3>Гарантия</h3>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid selectedProduct-view-card">
+                <div class="row" *ngIf="loading || !selectedProduct">
+                    <div class="col-md-12">
+                        <otus-architect-center-spinner></otus-architect-center-spinner>
+                    </div>
+                </div>
+                <ng-container *ngIf="!loading">
+                    <div class="row" *ngIf="!!selectedProduct">
+                        <div class="col-md-4">
+                            <span class="selectedProduct-field-title">Сумма гарантии</span>
+
+                            <p class="selectedProduct-field-value">{{selectedProduct.limit | number:'0.0-0'}} &#8381;</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="selectedProduct-field-title">Дата начала гарантии</span>
+
+                            <p class="selectedProduct-field-value">{{selectedProduct.startDate | date:'dd.MM.yyyy'}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="selectedProduct-field-title">Дата окончания гарантии</span>
+
+                            <p class="selectedProduct-field-value">{{selectedProduct.endDate | date:'dd.MM.yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="selectedProduct-field-title">Комиссия</span>
+                            <p class="selectedProduct-field-value">{{selectedProduct.commission | number:'0.2-2'}} &#8381;</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="selectedProduct-field-title">Фактическая ставка</span>
+                            <p class="selectedProduct-field-value">{{selectedProduct.rateFact| number:'0.2-2'}} %</p>
+                        </div>
+                        <div class="col-md-4" *ngIf="userRoles && (userRoles.includes('ROLE_AGENT') && userRoles.includes('ROLE_REWARD_VISIBLE'))">
+                            <span class="selectedProduct-field-title">Агентское вознаграждение</span>
+                            <p class="selectedProduct-field-value">{{selectedProduct.agentCommission | number:'0.2-2'}} &#8381;</p>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+    </div>
+</div>

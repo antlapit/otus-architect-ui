@@ -7,7 +7,6 @@
             <ng-template #userInteractive>
                 <otus-architect-application-buttons title="{{'Назад'}}"
                                          [application]="selectedFinApplication"
-                                         (onGoBack)="forceSave($event)"
                 ></otus-architect-application-buttons>
                 <otus-architect-processing-dots *ngIf="selectedFinApplication.processing"></otus-architect-processing-dots>
                 <div class="container-fluid no-padding">

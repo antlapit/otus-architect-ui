@@ -8,18 +8,11 @@ import {
     OnInit,
     Output
 } from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest, Subscription} from 'rxjs';
-import {
-    finApplicationCounters,
-    finApplicationStageGroups,
-    isLoadingFinApplicationCounters,
-    isLoadingFinApplicationStageGroups
-} from '../../redux/selectors';
+import {Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {FinApplicationCounters} from '../../models/fin-application.model';
 
 @Component({
     selector: 'otus-architect-application-stage-tabs',
@@ -38,9 +31,6 @@ export class ApplicationStageTabsComponent implements OnInit, OnDestroy {
     isLoadingApplicationStageGroups: boolean;
     tabs: any[];
 
-    finApplicationCounters: FinApplicationCounters;
-    isLoadingFinApplicationCounters: boolean;
-
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
                 private route: ActivatedRoute,
@@ -53,27 +43,6 @@ export class ApplicationStageTabsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(isLoadingFinApplicationStageGroups)),
-                this.store.pipe(select(finApplicationStageGroups)),
-            ).subscribe(([isLoadingApplicationStageGroups, applicationStageGroups]) => {
-                this.isLoadingApplicationStageGroups = isLoadingApplicationStageGroups;
-                this.tabs = applicationStageGroups;
-                this.cd.detectChanges();
-            })
-        );
-
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(isLoadingFinApplicationCounters)),
-                this.store.pipe(select(finApplicationCounters)),
-            ).subscribe(([isLoadingFinApplicationCounters, finApplicationCounters]) => {
-                this.isLoadingFinApplicationCounters = isLoadingFinApplicationCounters;
-                this.finApplicationCounters = finApplicationCounters;
-                this.cd.detectChanges();
-            })
-        );
     }
 
     isStageActive(stage: any) {
@@ -89,14 +58,6 @@ export class ApplicationStageTabsComponent implements OnInit, OnDestroy {
     }
 
     getStageCounter(stage: any): number {
-        if (!this.finApplicationCounters || !this.finApplicationCounters.counters) {
-            return 0;
-        }
-        for (const counter of this.finApplicationCounters.counters) {
-            if (stage.code === counter.stage) {
-                return counter.count;
-            }
-        }
         return 0;
     }
 }

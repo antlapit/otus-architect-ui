@@ -1,0 +1,39 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.dashboard-tab {
+    @include font-roboto-15(500, 0.5px);
+    text-transform: uppercase !important;
+}
+
+.otus-architect-dashboard-width {
+    width: 916px;
+}
+
+.dashboard-header-padding {
+    padding-top: 40px;
+    padding-bottom: 8px;
+}
+
+.dashboard-contract-label-padding {
+    padding-top: 58px;
+}
+
+.dashboard-tab-padding {
+    padding-top: 50px;
+}
+
+.dashboard-btn {
+    @include font-roboto-13(500);
+    width: 160px !important;
+    height: 54px !important;
+    border-radius: 6px !important;
+    line-height: 1.54 !important;
+    text-align: center !important;
+    padding: 0 !important;
+    text-transform: none !important;
+}
+
+.margin-dashboard-btn {
+    margin-left: 10px !important;
+}

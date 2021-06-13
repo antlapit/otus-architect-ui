@@ -1,0 +1,36 @@
+<div class="bg-white container-fluid row no-margin no-padding">
+    <div class="spacer-panel"></div>
+    <div class="application-form">
+        <otus-architect-go-to-welcome title="{{'Назад'}}" route="{{'/catalog'}}"></otus-architect-go-to-welcome>
+        <ng-container *ngIf="!isLoadingProduct && selectedProduct; else noFinApplication">
+            <div class="container-fluid no-padding">
+                <div class="row main-top-padding">
+                    <h1 class="card-title col-md-12">Товар №{{selectedProduct.productId}}</h1>
+                </div>
+                <div class="row main-top-padding" *ngIf="selectedProduct">
+                    <div class="col-md-12">
+                        <otus-architect-product-complete-view
+                                [product]="selectedProduct"
+                                [loading]="isLoadingProduct"
+                        ></otus-architect-product-complete-view>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #noFinApplication>
+            <div class="container-fluid main-top-padding">
+                <div class="row">
+                    <div class="spacer-panel"></div>
+                    <ng-container *ngIf="isLoadingProduct; else applicationNotFound">
+                        <mat-spinner mode="indeterminate" diameter="60"></mat-spinner>
+                    </ng-container>
+                    <ng-template #applicationNotFound>
+                        <span>Товар не найдена</span>
+                    </ng-template>
+                    <div class="spacer-panel"></div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="spacer-panel"></div>
+</div>

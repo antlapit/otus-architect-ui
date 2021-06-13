@@ -25,3 +25,10 @@ export const getSettingsTab = createSelector(
         return state.state.settingsTab;
     },
 );
+
+export const getSelectedProductId = createSelector(
+    getRouterState,
+    (state: fromRouter.RouterReducerState<RouterState>) => {
+        return state.state.selectedProductId;
+    },
+);

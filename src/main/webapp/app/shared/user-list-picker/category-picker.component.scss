@@ -1,0 +1,38 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.user-list-picker-btn {
+  @include font-roboto-13(500);
+  height: 54px !important;
+  color: $brand-gray;
+}
+
+.user-list-picker-btn-wrapper {
+  padding: .4375em 0;
+}
+
+.user-list-menu {
+  width: 200px !important;
+  box-shadow: 0 0 12px 0 rgba(80, 97, 140, 0.16);
+  background-color: #ffffff;
+}
+
+.user-list-menu-item {
+  height: 40px !important;
+}
+
+.user-list-menu-item-content .material-icons {
+  vertical-align: middle !important;
+}
+
+.user-list-item-title {
+  padding-left: 0;
+  @include font-roboto-15();
+  color: $brand-black-light;
+}
+
+.user-list-selected-item-icon {
+  margin-left: 18px;
+  font-size: 15px;
+  color: $brand-success;
+}

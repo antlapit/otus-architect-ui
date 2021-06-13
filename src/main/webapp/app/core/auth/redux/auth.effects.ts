@@ -3,7 +3,6 @@ import {AuthService} from '../auth.service';
 import {
     AuthActionTypes,
     Authenticate,
-    ConfirmMail,
     HandleAuthenticate,
     Login,
     Logout,
@@ -41,14 +40,6 @@ export class AuthEffects {
         switchMap(action => {
             const payload = action.formValues;
             return this.authService.login(payload);
-        }),
-        map((response: ServiceResponse) => new HandleAuthenticate(response))
-    );
-
-    @Effect() confirmMail$ = this.actions$.pipe(
-        ofType<ConfirmMail>(AuthActionTypes.ConfirmMail),
-        switchMap(action => {
-            return this.authService.confirmMail(action.code);
         }),
         map((response: ServiceResponse) => new HandleAuthenticate(response))
     );

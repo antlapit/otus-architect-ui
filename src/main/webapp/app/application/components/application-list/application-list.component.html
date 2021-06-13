@@ -80,7 +80,7 @@
                         </button>
                         <mat-menu #menu="matMenu" overlapTrigger="false">
                             <button mat-menu-item
-                                    *ngIf="finApplication.canRevoke"
+                                    *ngIf="finApplication.status == 'NEW'"
                                     (click)="revoke(finApplication.id)"
                                     class="otus-architect-menu-button">
                                 <span>Отозвать</span>

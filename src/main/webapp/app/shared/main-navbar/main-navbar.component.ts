@@ -8,7 +8,6 @@ import {select, Store} from "@ngrx/store";
 import * as GeneralSelectors from "../redux/general.selectors";
 import {GeneralState} from "../redux/general.reducer";
 import * as AuthActions from "../../core/auth/redux/auth.actions";
-import {Company} from "../../core/domain/Company";
 
 @Component({
     selector: 'otus-architect-main-navbar',
@@ -23,7 +22,6 @@ export class MainNavbarComponent implements OnInit, OnDestroy {
     public isLoadingWorkspace$: Observable<boolean>;
     public workspace$: Observable<Workspace>;
     public appName: string;
-    public companyInfo$: Observable<Company>;
 
     constructor(private router: Router, private configService: AppConfigService,
                 private store: Store<GeneralState>) {
@@ -38,7 +36,6 @@ export class MainNavbarComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.isLoadingWorkspace$ = this.store.pipe(select(GeneralSelectors.isLoadingWorkspace));
         this.userIdentity$ = this.store.pipe(select(GeneralSelectors.getUserInfo));
-        this.companyInfo$ = this.store.pipe(select(GeneralSelectors.getCompanyInfo));
         this.workspace$ = this.store.pipe(select(GeneralSelectors.getWorkspace));
     }
 

@@ -58,15 +58,14 @@ export class AuthService {
     }
 
     public login(formData): Observable<ServiceResponse> {
-        return this.http.post(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/authenticate`,
+        return this.http.post(`${((this.config || {}).backend || {}).host}/api/login`,
             formData,
             {observe: 'response'}
             ).pipe(
                 map((response: HttpResponse<Object>) => {
                     const body = response.body;
-                    const bearerToken = response.headers.get('Authorization');
-                    if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-                        const jwt = bearerToken.slice(7, bearerToken.length);
+                    const jwt = body['token'];
+                    if (!!jwt) {
                         this.storeAuthenticationToken(jwt);
                     }
                     return new ServiceResponse(response.ok, response.status, null, body);
@@ -80,26 +79,6 @@ export class AuthService {
                     return of(new ServiceResponse(response.ok, response.status, message));
                 })
             );
-    }
-
-    public confirmMail(code: string) {
-        return this.http.post(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/authenticate/confirm-mail`,
-            { code },
-            {observe: 'response'}
-        ).pipe(
-            map((response: HttpResponse<Object>) => {
-                const body = response.body;
-                return new ServiceResponse(response.ok, response.status, null, body);
-            }),
-            catchError((response: HttpErrorResponse) => {
-                const message = {
-                    severity: 'error',
-                    summary: 'Ошибка при подтверждении Email',
-                    detail: (!response || !response.error) ? null : (!response.error.extMessage ? response.error.title : response.error.extMessage)
-                };
-                return of(new ServiceResponse(response.ok, response.status, message));
-            })
-        );
     }
 
     storeAuthenticationToken(jwt) {

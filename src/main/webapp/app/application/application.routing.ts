@@ -1,23 +1,41 @@
 import {RouterModule, Routes} from '@angular/router';
-import {ApplicationFormComponent, DashboardComponent, NewApplicationComponent, SettingsComponent} from './pages';
+import {
+    ApplicationFormComponent,
+    DashboardComponent,
+    NewApplicationComponent,
+    ProductFormComponent,
+    SettingsComponent
+} from './pages';
 import {ApplicationComponent} from './application.component';
 import {MainViewContainerComponent} from '../shared/main-view-container/main-view-container.component';
 import {UnauthorizedContainerComponent} from '../shared/unauthorized-container/unauthorized-container.component';
 import {LoginComponent} from '../shared/login/login.component';
 import {AuthGuard} from '../core/auth/auth.guard';
 import {HasSessionGuard} from '../core/auth/has-session.guard';
+import {CatalogComponent} from "./pages";
 
-const SECURE_ROUTES: Routes = [
+const CATALOG_ROUTES: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'catalog',
         pathMatch: 'full'
     },
+    {
+        path: 'catalog',
+        pathMatch: 'full',
+        component: CatalogComponent,
+    },
+    {
+        path: 'catalog/:productId',
+        component: ProductFormComponent,
+    }
+];
+
+const ONLY_PRIVATE_ROUTES: Routes = [
     {
         path: 'dashboard',
         pathMatch: 'full',
         component: DashboardComponent,
-        canActivate: [AuthGuard]
     },
     {
         path: 'settings',
@@ -43,7 +61,7 @@ const SECURE_ROUTES: Routes = [
     }
 ];
 
-const PUBLIC_ROUTES: Routes = [
+const ONLY_PUBLIC_ROUTES: Routes = [
     {
         path: '',
         redirectTo: 'login',
@@ -58,20 +76,25 @@ const PUBLIC_ROUTES: Routes = [
 const applicationRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'catalog',
         pathMatch: 'full'
     },
     {
         path: '',
+        component: MainViewContainerComponent,
+        children: CATALOG_ROUTES,
+    },
+    {
+        path: '',
         component: UnauthorizedContainerComponent,
-        children: PUBLIC_ROUTES,
+        children: ONLY_PUBLIC_ROUTES,
         canActivate: [HasSessionGuard]
     },
     {
         path: '',
         component: MainViewContainerComponent,
-        children: SECURE_ROUTES,
-        canActivate: [AuthGuard]
+        children: ONLY_PRIVATE_ROUTES,
+        canActivate: [AuthGuard],
     }
 ];
 

@@ -1,11 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest, Subscription} from 'rxjs';
-import {LoadContract} from '../../redux/actions';
-import {Contract, FinApplication} from '../../models/fin-application.model';
-import {contract, isLoadingContract} from '../../redux/selectors';
+import {Subscription} from 'rxjs';
+import {FinApplication} from '../../models/fin-application.model';
 
 @Component({
     selector: 'otus-architect-application-wizard-default',
@@ -20,9 +18,6 @@ export class ApplicationWizardDefaultComponent implements OnInit, OnDestroy {
     @Input('finApplication')
     selectedFinApplication: FinApplication;
 
-    isLoadingContract: boolean;
-    contract: Contract;
-
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
                 private route: ActivatedRoute,
@@ -35,17 +30,5 @@ export class ApplicationWizardDefaultComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.all$.add(combineLatest(
-            this.store.pipe(select(isLoadingContract)),
-            this.store.pipe(select(contract)),
-        ).subscribe(([isLoadingContract, contract]) => {
-            this.isLoadingContract = isLoadingContract;
-            this.contract = contract;
-            this.cd.detectChanges();
-        }));
-
-        this.store.dispatch(new LoadContract({
-            id: this.selectedFinApplication.id
-        }));
     }
 }

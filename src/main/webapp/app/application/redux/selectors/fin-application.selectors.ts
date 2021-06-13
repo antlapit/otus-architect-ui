@@ -19,16 +19,6 @@ export const finApplications = createSelector(
     (state: ApplicationState) => state.finApplications
 );
 
-export const isLoadingFinApplicationCounters = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingFinApplicationCounters
-);
-
-export const finApplicationCounters = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.finApplicationCounters
-);
-
 export const finApplicationsFilter = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.finApplicationsFilter
@@ -44,16 +34,6 @@ export const selectedFinApplication = createSelector(
     (state: ApplicationState) => state.selectedFinApplication
 );
 
-export const isLoadingFinApplicationForm = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingFinApplicationForm
-);
-
-export const selectedFinApplicationForm = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.selectedFinApplicationForm
-);
-
 export const isLoadingFinApplicationPrototypes = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.isLoadingFinApplicationPrototypes
@@ -62,31 +42,6 @@ export const isLoadingFinApplicationPrototypes = createSelector(
 export const finApplicationPrototypes = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.finApplicationPrototypes
-);
-
-export const isLoadingFinApplicationPersons = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingFinApplicationPersons
-);
-
-export const finApplicationPersons = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.finApplicationPersons
-);
-
-export const isCreatingFinApplicationPersonsPerson = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isCreatingFinApplicationPerson
-);
-
-export const createdFinApplicationPersonForms = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.createdFinApplicationPersonForms
-);
-
-export const deletingFinApplicationPersonForms = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.deletingFinApplicationPersonForms
 );
 
 export const isRedirectToFinApplicationProcessedView = createSelector(
@@ -118,20 +73,6 @@ export const isSavingContactInfo = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.isSavingContactInfo
 );
-export const isLoadingContract = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingContract
-);
-
-export const contract = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.contract
-);
-
-export const isSavingContract = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isSavingContract
-);
 
 export const isLoadingDeliveryInfo = createSelector(
     getApplicationState,
@@ -151,11 +92,6 @@ export const isSavingDeliveryInfo = createSelector(
 export const isSavingFinApplicationForm = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.isSavingFinApplicationForm
-);
-
-export const savingFinApplicationPersonForms  = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.savingFinApplicationPersonForms
 );
 
 export const getFinApplicationCreatingErrorMessage = createSelector(

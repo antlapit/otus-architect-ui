@@ -1,0 +1,37 @@
+<form [formGroup]="fg">
+    <div class="container-fluid">
+        <div class="row application-list-filters-row">
+            <otus-architect-limit-range-picker (onChangeLimitRange)="onChangeLimitRange($event)"
+                                               [from]="fg.controls.minPrice.value"
+                                               [to]="fg.controls.maxPrice.value"
+                                               [max]="maxLimit"
+                                               [min]="minLimit"
+                                               fieldTitle="Цена"
+            ></otus-architect-limit-range-picker>
+            <otus-architect-category-picker title="Категория"
+                                  [categories]="categories"
+                                  [selectedCategories]="fg.controls.categoryId.value"
+                                  (onCategoryListChanged)="onCategoryListChanged($event)">
+            </otus-architect-category-picker>
+            <div class="application-query-filter-wrapper">
+                <mat-form-field floatLabel="never">
+                    <mat-label>Название</mat-label>
+                    <input matInput type="text" formControlName="nameInfix">
+                    <mat-icon matPrefix class="text-gray">search</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="application-query-filter-wrapper">
+                <mat-form-field floatLabel="never">
+                    <mat-label>Описание</mat-label>
+                    <input matInput type="text" formControlName="descriptionInfix">
+                    <mat-icon matPrefix class="text-gray">search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+    </div>
+</form>

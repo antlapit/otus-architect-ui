@@ -3,7 +3,6 @@ import {AuthModule} from '../auth/auth.module';
 import {AppLoadService} from './services/app-load.service';
 import * as CoreActions from '../redux/core.actions';
 import {AppConfigService} from './services/app-config.service';
-import {SigningModule} from "../signing/signing.module";
 
 export const APP_LOAD_CONFIGURATION = new InjectionToken<(path: string[]) => any>('APP_LOAD_CONFIGURATION');
 
@@ -23,7 +22,6 @@ export function factoryAppLoadService<Payload extends CoreActions.Initialization
 @NgModule({
   imports: [
     AuthModule,
-    SigningModule
   ]
 })
 export class AppLoadModule {

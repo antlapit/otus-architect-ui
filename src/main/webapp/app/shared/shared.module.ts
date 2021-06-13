@@ -65,16 +65,10 @@ import {TwoTitlesPanelComponent} from './two-titles-panel/two-titles-panel.compo
 import {UnauthorizedFooterComponent} from './unauthorized-footer/unauthorized-footer.component';
 import {HighlightPipe} from './pipes/highlight.pipe';
 import {PersonInitialsPipe} from './pipes/person-initials.pipe';
-import {FinApplicationViewCardComponent} from './fin-application-view-card/fin-application-view-card.component';
-import {PersonViewCardComponent} from './person-view-card/person-view-card.component';
-import {PersonFormEditComponent} from './person-form-edit/person-form-edit.component';
-import {AddressAutocompleteComponent} from './address-autocomplete/address-autocomplete.component';
 import {CenterSpinnerComponent} from './center-spinner/center-spinner.component';
 import {MomentUtcDateAdapter} from './date/moment-utc-date.adapter';
-import {SimpleFileComponent} from './simple-file/simple-file.component';
 import {ContactViewCardComponent} from './contact-view-card/contact-view-card.component';
 import {ContactFormEditComponent} from './contact-form-edit/contact-form-edit.component';
-import {FinApplicationFormEditComponent} from './fin-application-form-edit/fin-application-form-edit.component';
 import {ProgressBreadcrumbsComponent} from './progress-breadcrumbs/progress-breadcrumbs.component';
 import {DateRangePickerComponent} from './date-range-picker/date-range-picker.component';
 import {LimitRangePickerComponent} from './limit-range-picker/limit-range-picker.component';
@@ -85,6 +79,7 @@ import {InputWithSliderComponent} from './input-with-slider/input-with-slider.co
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {TextMaskModule} from 'angular2-text-mask';
 import {ProcessingDotsComponent} from './processing-dots/processing-dots.component';
+import {CategoryPickerComponent} from "./user-list-picker/category-picker.component";
 
 /**
  * Shared module.
@@ -149,7 +144,6 @@ import {ProcessingDotsComponent} from './processing-dots/processing-dots.compone
         HighlightPipe,
         PersonInitialsPipe,
         BusyIndicatorComponent,
-        AddressAutocompleteComponent,
         CenterSpinnerComponent,
         PlaceholderComponent,
         MainMenuComponent,
@@ -162,22 +156,17 @@ import {ProcessingDotsComponent} from './processing-dots/processing-dots.compone
         MainNavbarComponent,
         MainFooterComponent,
         TwoTitlesPanelComponent,
-        FinApplicationFormEditComponent,
-        FinApplicationViewCardComponent,
         ContactViewCardComponent,
         ContactFormEditComponent,
-        PersonViewCardComponent,
-        PersonFormEditComponent,
         ProgressBreadcrumbsComponent,
-        SimpleFileComponent,
         InputWithSliderComponent,
         LimitRangePickerComponent,
-        ProcessingDotsComponent
+        ProcessingDotsComponent,
+        CategoryPickerComponent
     ],
     exports: [
         IdentityPanelComponent,
         BusyIndicatorComponent,
-        AddressAutocompleteComponent,
         CenterSpinnerComponent,
         PlaceholderComponent,
         MainMenuComponent,
@@ -195,14 +184,10 @@ import {ProcessingDotsComponent} from './processing-dots/processing-dots.compone
         MainFooterComponent,
         TwoTitlesPanelComponent,
         GoToWelcomeComponent,
-        FinApplicationFormEditComponent,
-        FinApplicationViewCardComponent,
         ContactViewCardComponent,
         ContactFormEditComponent,
-        PersonViewCardComponent,
-        PersonFormEditComponent,
         ProgressBreadcrumbsComponent,
-        SimpleFileComponent,
+        CategoryPickerComponent,
         InputWithSliderComponent,
         LimitRangePickerComponent,
         ProcessingDotsComponent,

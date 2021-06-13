@@ -1,0 +1,28 @@
+<div class="user-list-picker-btn-wrapper">
+    <button mat-button [matMenuTriggerFor]="dateRangeMenu"
+            (onMenuOpen)="menuOpened = true"
+            (onMenuClose)="menuOpened = false"
+            class="user-list-picker-btn">
+        {{title}} {{_selectedCategories.length === 0 ? '' : '*'}}
+        <i class="material-icons">{{menuOpened ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+    </button>
+</div>
+<mat-menu #dateRangeMenu="matMenu" yPosition="below" overlapTrigger="false" class="user-list-menu">
+    <button mat-menu-item (click)="selectAll()" class="user-list-menu-item">
+        <span class="user-list-menu-item-content">
+            <span class="user-list-item-title">Все категории</span>
+            <i class="material-icons user-list-selected-item-icon"
+               *ngIf="_selectedCategories.length === 0">done</i>
+        </span>
+    </button>
+    <ng-container *ngFor="let item of categories">
+        <button mat-menu-item
+                (click)="changeSelectItem(item.categoryId)" class="user-list-menu-item">
+            <span class="user-list-menu-item-content">
+                <span class="user-list-item-title">{{item.name}}</span>
+                <i class="material-icons user-list-selected-item-icon"
+                   *ngIf="_selectedCategories.indexOf(item.categoryId) > -1">done</i>
+            </span>
+        </button>
+    </ng-container>
+</mat-menu>

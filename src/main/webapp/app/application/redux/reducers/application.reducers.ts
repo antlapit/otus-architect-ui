@@ -1,5 +1,6 @@
 import {ApplicationActionsUnion, FinApplicationReferencesTypes, FinApplicationTypes, MessageTypes,} from './../actions';
 import {ApplicationState, initialState} from './../application-state';
+import {ProductTypes} from "../actions/product.action";
 
 export function reducer(state: ApplicationState = initialState, action: ApplicationActionsUnion): ApplicationState {
     switch (action.type) {
@@ -36,31 +37,65 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 };
             }
         }
-        case FinApplicationTypes.GetFinApplicationCounters: {
-            return {
-                ...state,
-                isLoadingFinApplicationCounters: true,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationCounters: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationCounters: false,
-                    finApplicationCounters: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationCounters: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
         case FinApplicationTypes.ChangeFinApplicationFilter: {
             return {
                 ...state,
                 finApplicationsFilter: action.payload
+            };
+        }
+        case ProductTypes.GetProductList: {
+            return {
+                ...state,
+                isLoadingProducts: true,
+            };
+        }
+        case ProductTypes.HandleProductList: {
+            if (action.response.success) {
+                return {
+                    ...state,
+                    isLoadingProducts: false,
+                    products: !action.response.data ? [] : action.response.data.items
+                };
+            } else {
+                return {
+                    ...state,
+                    isLoadingProducts: false,
+                    applicationToastMessage: action.response.message
+                };
+            }
+        }
+        case ProductTypes.ChangeProductFilter: {
+            return {
+                ...state,
+                productsFilter: action.payload
+            };
+        }
+        case ProductTypes.LoadProduct: {
+            return {
+                ...state,
+                isLoadingProduct: true,
+            };
+        }
+        case ProductTypes.HandleProduct: {
+            if (action.response.success) {
+                return {
+                    ...state,
+                    isLoadingProduct: false,
+                    selectedProduct: action.response.data,
+                };
+            } else {
+                return {
+                    ...state,
+                    isLoadingProduct: false,
+                    applicationToastMessage: action.response.message
+                };
+            }
+        }
+        case ProductTypes.ClearProduct: {
+            return {
+                ...state,
+                isLoadingProduct: false,
+                selectedProduct: null,
             };
         }
         case FinApplicationTypes.CreateFinApplication: {
@@ -97,15 +132,11 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                     isLoadingFinApplication: false,
                     selectedFinApplication: action.response.data,
                     // tslint:disable-next-line:max-line-length
-                    selectedFinApplicationForm: !!state.selectedFinApplication && state.selectedFinApplication.id === action.response.data.id ? state.selectedFinApplicationForm : null,
                     // tslint:disable-next-line:max-line-length
-                    contract: !!state.selectedFinApplication && state.selectedFinApplication.id === action.response.data.id ? state.contract : null,
+                    deliveryInfo: !!state.selectedFinApplication && state.selectedFinApplication.orderId === action.response.data.id ? state.deliveryInfo : null,
                     // tslint:disable-next-line:max-line-length
-                    deliveryInfo: !!state.selectedFinApplication && state.selectedFinApplication.id === action.response.data.id ? state.deliveryInfo : null,
+                    contactInfo: !!state.selectedFinApplication && state.selectedFinApplication.orderId === action.response.data.id ? state.contactInfo : null,
                     // tslint:disable-next-line:max-line-length
-                    contactInfo: !!state.selectedFinApplication && state.selectedFinApplication.id === action.response.data.id ? state.contactInfo : null,
-                    // tslint:disable-next-line:max-line-length
-                    finApplicationPersons: !!state.selectedFinApplication && state.selectedFinApplication.id === action.response.data.id ? state.finApplicationPersons : null, // очистка ФЛ при смене заявки
                 };
             } else {
                 return {
@@ -121,64 +152,9 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 isLoadingFinApplication: false,
                 selectedFinApplication: null,
                 // tslint:disable-next-line:max-line-length
-                selectedFinApplicationForm: null,
-                // tslint:disable-next-line:max-line-length
-                contract: null,
-                // tslint:disable-next-line:max-line-length
                 deliveryInfo: null,
                 // tslint:disable-next-line:max-line-length
                 contactInfo: null,
-                // tslint:disable-next-line:max-line-length
-                finApplicationPersons: null, // очистка ФЛ при смене заявки
-            };
-        }
-        case FinApplicationTypes.LoadFinApplicationPrototypes: {
-            return {
-                ...state,
-                isLoadingFinApplicationPrototypes: true,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationPrototypes: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPrototypes: false,
-                    finApplicationPrototypes: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPrototypes: false,
-                    finApplicationPrototypes: []
-                };
-            }
-        }
-        case FinApplicationTypes.GetFinApplicationPrototype: {
-            return {
-                ...state,
-                isLoadingFinApplicationPrototypes: true,
-            };
-        }
-        case FinApplicationTypes.HandleGetFinApplicationPrototype: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPrototypes: false,
-                    finApplicationPrototypes: [action.response.data]
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPrototypes: false,
-                    finApplicationPrototypes: []
-                };
-            }
-        }
-        case FinApplicationTypes.ClearFinApplicationPrototypes: {
-            return {
-                ...state,
-                isLoadingFinApplicationPrototypes: false,
-                finApplicationPrototypes: []
             };
         }
         case FinApplicationReferencesTypes.GetFormStatuses: {
@@ -202,48 +178,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 };
             }
         }
-        case FinApplicationReferencesTypes.GetStageGroups: {
-            return {
-                ...state,
-                isLoadingFinApplicationStageGroups: true,
-            };
-        }
-        case FinApplicationReferencesTypes.HandleStageGroups: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationStageGroups: false,
-                    finApplicationStageGroups: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationStageGroups: false,
-                    finApplicationStageGroups: []
-                };
-            }
-        }
-        case FinApplicationReferencesTypes.GetDefaultStages: {
-            return {
-                ...state,
-                isLoadingDefaultFinApplicationStages: true,
-            };
-        }
-        case FinApplicationReferencesTypes.HandleDefaultStages: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingDefaultFinApplicationStages: false,
-                    defaultFinApplicationStages: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingDefaultFinApplicationStages: false,
-                    defaultFinApplicationStages: []
-                };
-            }
-        }
         case FinApplicationReferencesTypes.GetDeliveryTypes: {
             return {
                 ...state,
@@ -262,94 +196,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                     ...state,
                     isLoadingDeliveryTypes: false,
                     deliveryTypes: []
-                };
-            }
-        }
-        case FinApplicationReferencesTypes.GetKinds: {
-            return {
-                ...state,
-                isLoadingKinds: true,
-            };
-        }
-        case FinApplicationReferencesTypes.HandleKinds: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingKinds: false,
-                    kinds: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingKinds: false,
-                    kinds: []
-                };
-            }
-        }
-        case FinApplicationTypes.LoadFinApplicationForm: {
-            return {
-                ...state,
-                isLoadingFinApplicationForm: true,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationForm: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationForm: false,
-                    selectedFinApplicationForm: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationForm: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.LoadContract: {
-            return {
-                ...state,
-                isLoadingContract: true,
-            };
-        }
-        case FinApplicationTypes.HandleContract: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingContract: false,
-                    contract: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingContract: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.UpdateContract: {
-            return {
-                ...state,
-                isSavingContract: true,
-            };
-        }
-        case FinApplicationTypes.HandleContractUpdate: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isSavingContract: false,
-                    applicationToastMessage: {
-                        severity: '',
-                        summary: 'Изменения сохранены',
-                        detail: ''
-                    }
-                };
-            } else {
-                return {
-                    ...state,
-                    isSavingContract: false,
-                    applicationToastMessage: action.response.message
                 };
             }
         }
@@ -399,110 +245,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 };
             }
         }
-        case FinApplicationTypes.LoadFinApplicationPersonContainer: {
-            return {
-                ...state,
-                isLoadingFinApplicationPersons: true,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationPersonContainer: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPersons: false,
-                    finApplicationPersons: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingFinApplicationPersons: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.CreateBeneficiaryForm: {
-            return {
-                ...state,
-                isCreatingFinApplicationPerson: true,
-            };
-        }
-        case FinApplicationTypes.HandleCreateBeneficiaryForm: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isCreatingFinApplicationPerson: false,
-                    createdFinApplicationPersonForms: state.createdFinApplicationPersonForms.concat(action.response.data.id),
-                    finApplicationPersons: {
-                        ...state.finApplicationPersons,
-                        beneficiaries: state.finApplicationPersons.beneficiaries.concat(action.response.data)
-                    }
-                };
-            } else {
-                return {
-                    ...state,
-                    isCreatingFinApplicationPerson: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.DeleteBeneficiaryForm: {
-            return {
-                ...state,
-                deletingFinApplicationPersonForms: state.deletingFinApplicationPersonForms + 1,
-            };
-        }
-        case FinApplicationTypes.HandleDeleteBeneficiaryForm: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    deletingFinApplicationPersonForms: state.deletingFinApplicationPersonForms - 1,
-                    applicationToastMessage: state.deletingFinApplicationPersonForms === 1 ? {
-                        severity: '',
-                        summary: 'Анкета удалена',
-                        detail: ''
-                    } : null,
-                    finApplicationPersons: {
-                        ...state.finApplicationPersons,
-                        beneficiaries: state.finApplicationPersons.beneficiaries.filter(value => value.id !== action.response.data)
-                    }
-                };
-            } else {
-                return {
-                    ...state,
-                    deletingFinApplicationPersonForms: state.deletingFinApplicationPersonForms - 1,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.SaveFinApplication: {
-            return {
-                ...state,
-                isProcessingFinApplicationForm: !action.silent,
-                redirectToRoot: action.redirectToRoot,
-            };
-        }
-        case FinApplicationTypes.HandleSaveFinApplication: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isProcessingFinApplicationForm: false,
-                    selectedFinApplication: state.isProcessingFinApplicationForm ? action.response.data : state.selectedFinApplication,
-                    applicationToastMessage: {
-                        severity: '',
-                        summary: 'Изменения сохранены',
-                        detail: ''
-                    },
-                    redirectToRoot: false
-                };
-            } else {
-                return {
-                    ...state,
-                    isProcessingFinApplicationForm: false,
-                    redirectToRoot: false,
-                    applicationToastMessage: state.isProcessingFinApplicationForm ? action.response.message : null
-                };
-            }
-        }
         case FinApplicationTypes.ProcessFinApplication: {
             return {
                 ...state,
@@ -537,31 +279,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 ...state,
                 redirectToFinApplicationProcessedView: false,
             };
-        }
-        case FinApplicationTypes.UpdateFinApplicationPersonForm: {
-            return {
-                ...state,
-                savingFinApplicationPersonForms: state.savingFinApplicationPersonForms + 1,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationPersonUpdate: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    savingFinApplicationPersonForms: state.savingFinApplicationPersonForms - 1,
-                    applicationToastMessage: state.savingFinApplicationPersonForms === 1 ? {
-                        severity: '',
-                        summary: 'Изменения сохранены',
-                        detail: ''
-                    } : null
-                };
-            } else {
-                return {
-                    ...state,
-                    savingFinApplicationPersonForms: state.savingFinApplicationPersonForms - 1,
-                    applicationToastMessage: action.response.message
-                };
-            }
         }
         case FinApplicationTypes.LoadContactInfo: {
             return {
@@ -605,31 +322,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 return {
                     ...state,
                     isSavingContactInfo: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.UpdateFinApplicationForm: {
-            return {
-                ...state,
-                isSavingFinApplicationForm: true,
-            };
-        }
-        case FinApplicationTypes.HandleFinApplicationFormUpdate: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isSavingFinApplicationForm: false,
-                    applicationToastMessage: state.savingFinApplicationPersonForms === 1 ? {
-                        severity: '',
-                        summary: 'Изменения сохранены',
-                        detail: ''
-                    } : null
-                };
-            } else {
-                return {
-                    ...state,
-                    isSavingFinApplicationForm: false,
                     applicationToastMessage: action.response.message
                 };
             }

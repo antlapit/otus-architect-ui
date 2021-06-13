@@ -1,14 +1,11 @@
 import {ApplicationMessage} from '../../shared/domain/ApplicationMessage';
 import {
-    Contract,
     FinApplication,
-    FinApplicationCounters,
     FinApplicationFilter,
-    FinApplicationForm,
-    PersonFormContainer
 } from '../models/fin-application.model';
 import {ContactInfo, DeliveryInfo, ExternalChange} from '../models/general.model';
 import {DeliveryType} from '../models/references.model';
+import {Product, ProductsFilter} from "../models/product.model";
 
 export interface ApplicationState {
     applicationMessage: ApplicationMessage;
@@ -16,8 +13,6 @@ export interface ApplicationState {
     isCreatingFinApplication: boolean;
     isLoadingFinApplications: boolean;
     finApplications: FinApplication[];
-    isLoadingFinApplicationCounters: boolean;
-    finApplicationCounters: FinApplicationCounters;
     finApplicationsFilter: FinApplicationFilter;
     isLoadingFinApplication: boolean;
     selectedFinApplication: FinApplication;
@@ -31,25 +26,11 @@ export interface ApplicationState {
     isLoadingDefaultFinApplicationStages: boolean;
     deliveryTypes: DeliveryType[];
     isLoadingDeliveryTypes: boolean;
-    kinds: any[];
-    isLoadingKinds: boolean;
-    selectedFinApplicationForm: FinApplicationForm;
-    isLoadingFinApplicationForm: boolean;
-    contract: Contract;
-    isLoadingContract: boolean;
-    isSavingContract: boolean;
     deliveryInfo: DeliveryInfo;
     isLoadingDeliveryInfo: boolean;
     isSavingDeliveryInfo: boolean;
     createdFinApplicationPersonForms: string[];
-    finApplicationPersons: PersonFormContainer;
-    isLoadingFinApplicationPersons: boolean;
-    isCreatingFinApplicationPerson: boolean;
     isProcessingFinApplicationForm: boolean;
-    savingFinApplicationPersonForms: number;
-    deletingFinApplicationPersonForms: number;
-    isSendingForSigningFinApplication: boolean;
-    savingSignsFinApplication: number;
     redirectToFinApplicationProcessedView: boolean;
     redirectToRoot: boolean;
     isLoadingContactInfo: boolean;
@@ -61,6 +42,11 @@ export interface ApplicationState {
     isLoadingContractChanges: boolean;
     contractChanges: ExternalChange[];
     finApplicationCreatingErrorMessage: ApplicationMessage;
+    isLoadingProducts: boolean;
+    products: Product[];
+    isLoadingProduct: boolean;
+    selectedProduct: Product;
+    productsFilter: ProductsFilter
 }
 
 export const initialState: ApplicationState = {
@@ -69,8 +55,6 @@ export const initialState: ApplicationState = {
     isCreatingFinApplication: false,
     isLoadingFinApplications: false,
     finApplications: null,
-    isLoadingFinApplicationCounters: false,
-    finApplicationCounters: null,
     finApplicationsFilter: null,
     isLoadingFinApplication: false,
     selectedFinApplication: null,
@@ -84,25 +68,11 @@ export const initialState: ApplicationState = {
     isLoadingDefaultFinApplicationStages: false,
     deliveryTypes: [],
     isLoadingDeliveryTypes: false,
-    kinds: [],
-    isLoadingKinds: false,
-    selectedFinApplicationForm: null,
-    isLoadingFinApplicationForm: false,
-    contract: null,
-    isLoadingContract: false,
-    isSavingContract: false,
     deliveryInfo: null,
     isLoadingDeliveryInfo: false,
     isSavingDeliveryInfo: false,
     createdFinApplicationPersonForms: [],
-    finApplicationPersons: null,
-    isLoadingFinApplicationPersons: false,
-    isCreatingFinApplicationPerson: false,
     isProcessingFinApplicationForm: false,
-    savingFinApplicationPersonForms: 0,
-    deletingFinApplicationPersonForms: 0,
-    isSendingForSigningFinApplication: false,
-    savingSignsFinApplication: 0,
     redirectToFinApplicationProcessedView: false,
     redirectToRoot: false,
     isLoadingContactInfo: false,
@@ -114,4 +84,9 @@ export const initialState: ApplicationState = {
     isLoadingContractChanges: false,
     contractChanges: [],
     finApplicationCreatingErrorMessage: null,
+    isLoadingProducts: false,
+    products: [],
+    isLoadingProduct: false,
+    selectedProduct: null,
+    productsFilter: null,
 };

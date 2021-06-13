@@ -14,20 +14,26 @@ import * as Selectors from './redux/selectors';
 import {CustomRouterStateSerializer} from './redux/router-state';
 import {EscapeHtmlPipe, TrimPipe} from './pipes';
 import {ApiService} from './services/api.service';
-import {ApplicationFormComponent, DashboardComponent, NewApplicationComponent, SettingsComponent} from './pages';
+import {
+    ApplicationFormComponent,
+    CatalogComponent,
+    DashboardComponent,
+    NewApplicationComponent,
+    ProductFormComponent,
+    SettingsComponent,
+} from './pages';
 import {
     ApplicationButtonsComponent,
     ApplicationListComponent,
     ApplicationListFilterComponent,
     ApplicationProcessedViewComponent,
     ApplicationStageTabsComponent,
-    ApplicationWizardStepsComponent,
     ApplicationWizardViewComponent,
-    BgViewCardComponent,
-    ContractViewCardComponent,
+    OrderViewCardComponent,
+    ProductListComponent,
     UserProfilePanelComponent
 } from './components';
-import {FinApplicationEffects, FinApplicationReferencesEffects} from './redux/effects';
+import {FinApplicationEffects, FinApplicationReferencesEffects, ProductEffects} from './redux/effects';
 import {FinApplicationService} from './services/fin-application.service';
 import {FinApplicationReferencesService} from './services/fin-application-references.service';
 import {FileUploadModule} from 'ng2-file-upload';
@@ -36,17 +42,17 @@ import {MomentUtcDateAdapter} from '../shared/date/moment-utc-date.adapter';
 import {ApplicationComponent} from './application.component';
 import {ApplicationCompleteViewComponent} from './components/application-complete-view/application-complete-view.component';
 import {ApplicationWizardBgComponent} from './components/application-wizard-bg/application-wizard-bg.component';
-import {ApplicationWizardCompanyComponent} from './components/application-wizard-company/application-wizard-company.component';
 // tslint:disable-next-line:max-line-length
-import {ApplicationWizardBeneficiariesComponent} from './components/application-wizard-beneficiaries/application-wizard-beneficiaries.component';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig} from 'ng2-currency-mask/src/currency-mask.config';
 import {ApplicationWizardDefaultComponent} from './components/application-wizard-default/application-wizard-default.component';
-import {ContractFormEditComponent} from './components/contract-form-edit/contract-form-edit.component';
 // tslint:disable-next-line:max-line-length
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {TextMaskModule} from 'angular2-text-mask';
 import {DeliveryInfoFormEditComponent} from './components/delivery-info/delivery-info-form-edit.component';
+import {ProductService} from "./services/product.service";
+import {ProductListFilterComponent} from "./components/product-list-filter/product-list-filter.component";
+import {ProductCompleteViewComponent} from "./components/product-complete-view/product-complete-view.component";
 
 const COMPONENTS = [
     ApplicationButtonsComponent,
@@ -56,24 +62,24 @@ const COMPONENTS = [
     ApplicationListFilterComponent,
     ApplicationProcessedViewComponent,
     ApplicationStageTabsComponent,
-    ApplicationWizardBeneficiariesComponent,
     ApplicationWizardBgComponent,
-    ApplicationWizardCompanyComponent,
     ApplicationWizardDefaultComponent,
     ApplicationWizardViewComponent,
-    ApplicationWizardStepsComponent,
-    BgViewCardComponent,
-    ContractFormEditComponent,
-    ContractViewCardComponent,
+    OrderViewCardComponent,
+    ProductListComponent,
+    ProductCompleteViewComponent,
+    ProductListFilterComponent,
     DeliveryInfoFormEditComponent,
     UserProfilePanelComponent,
 ];
 
 const PAGES = [
     SettingsComponent,
+    CatalogComponent,
     DashboardComponent,
     NewApplicationComponent,
-    ApplicationFormComponent
+    ApplicationFormComponent,
+    ProductFormComponent
 ];
 
 const PIPES = [
@@ -91,6 +97,7 @@ const MODULES = [
     EffectsModule.forFeature([
         FinApplicationEffects,
         FinApplicationReferencesEffects,
+        ProductEffects,
     ]),
     CoreModule,
     SharedModule,
@@ -111,6 +118,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
 const PROVIDERS = [
     ApiService,
     FinApplicationService,
+    ProductService,
     FinApplicationReferencesService,
     {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer},
     {provide: DateAdapter, useClass: MomentUtcDateAdapter, deps: [MAT_DATE_LOCALE]},

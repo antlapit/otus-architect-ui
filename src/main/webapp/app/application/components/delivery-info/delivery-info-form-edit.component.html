@@ -64,9 +64,10 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-12" [ngClass]="{'hidden': !selectedDeliveryType?.addressRequired}">
-                        <otus-architect-address-autocomplete label="Адрес доставки"
-                                                  [group]="fg.controls.address"
-                                                  [ngClass]="{'width-percent-100': true}"></otus-architect-address-autocomplete>
+                        <mat-label>Адрес доставки</mat-label>
+                        <input matInput type="text" placeholder="+7(000) 000-00-00"
+                               [errorStateMatcher]="matcher"
+                               formControlName="address">
                     </div>
                 </div>
             </form>

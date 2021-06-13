@@ -17,7 +17,6 @@ export class IdentityPanelComponent implements OnInit, OnDestroy {
 
     @Input() userIdentity: UserIdentity;
 
-    @Input() companyInfo: Company;
     fullName = '';
     shortName = '';
 
@@ -49,16 +48,6 @@ export class IdentityPanelComponent implements OnInit, OnDestroy {
     public get name() {
         if (this.userIdentity) {
             return this.userIdentity.name;
-        } else {
-            return null;
-        }
-    }
-
-    public get company() {
-        if (!!this.companyInfo && !!this.companyInfo.name) {
-            return this.companyInfo.name;
-        } else if (!!this.userIdentity) {
-            return this.userIdentity.companyInn;
         } else {
             return null;
         }

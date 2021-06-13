@@ -18,7 +18,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {CustomErrorStateMatcher} from '../../../shared/form-validator/custom-error-state.matcher';
 import {ADDRESS_PATTERN, FIO_PATTERN} from '../../../app.constants';
-import {AddressAutocompleteComponent} from '../../../shared/address-autocomplete/address-autocomplete.component';
 import {FormValidatorService} from '../../../shared/form-validator/form-validator.service';
 import {deliveryTypes, isLoadingDeliveryTypes} from '../../redux/selectors';
 import {ApplicationState} from '../../redux/application-state';
@@ -72,9 +71,6 @@ export class DeliveryInfoFormEditComponent implements OnInit, OnDestroy {
     FILL_LATER_ADDRESS = 'Определится после выпуска';
 
     private all$: Subscription = new Subscription();
-
-    @ViewChildren(AddressAutocompleteComponent)
-    private addressAutocompleteComponents: QueryList<AddressAutocompleteComponent>;
 
     isLoadingDeliveryTypes: boolean;
     deliveryTypes: DeliveryType[];
@@ -165,9 +161,6 @@ export class DeliveryInfoFormEditComponent implements OnInit, OnDestroy {
         }
         this.formValidatorService.validateAllFormFields(this.fg);
         let allAddressesValid = true;
-        for (const autocomplete of this.addressAutocompleteComponents.toArray()) {
-            allAddressesValid = allAddressesValid && autocomplete.valid();
-        }
 
         this.cd.detectChanges();
         if (this.fg.valid && allAddressesValid) {

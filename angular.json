@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "otus-atchitect": {
+    "otus-architect": {
       "root": "",
       "sourceRoot": "src/main/webapp",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/otus-atchitect",
+            "outputPath": "dist/otus-architect",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",
             "polyfills": "src/main/webapp/polyfills.ts",
@@ -84,18 +84,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "otus-atchitect:build"
+            "browserTarget": "otus-architect:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "otus-atchitect:build:production"
+              "browserTarget": "otus-architect:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "otus-atchitect:build"
+            "browserTarget": "otus-architect:build"
           }
         },
         "lint": {
@@ -109,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "otus-atchitect"
+  "defaultProject": "otus-architect"
 }

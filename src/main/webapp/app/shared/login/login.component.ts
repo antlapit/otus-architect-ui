@@ -6,9 +6,8 @@ import {select, Store} from '@ngrx/store';
 import {combineLatest, Observable, Subscription, timer} from 'rxjs';
 import {LoginState} from '../../core/domain/LoginState';
 import {FIO_PATTERN, MAIL_PATTERN} from '../../app.constants';
-import {Authenticate, ConfirmMail, LoginSuccess, ReloadAuthenticate} from '../../core/auth/redux/auth.actions';
+import {Authenticate, LoginSuccess, ReloadAuthenticate} from '../../core/auth/redux/auth.actions';
 import {getLoginState, isAuthenticating} from '../../core/auth/redux/auth.selectors';
-import {getCaptcha} from '../redux/general.selectors';
 import {map, take} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {AppConfigService} from '../../core/app-load/services/app-config.service';
@@ -22,10 +21,6 @@ import {ShowGeneralToastMessage} from '../redux/general.actions';
 
 export class LoginComponent implements OnInit, OnDestroy {
 
-    captcha: string;
-    captchaRequired: boolean;
-    captchaKey: string;
-    captchaEnabled: boolean;
     fg: FormGroup;
     isAuthenticating: boolean;
     operation = 'LOGIN';
@@ -35,7 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     retryCounter$: Observable<number>;
 
     private all$: Subscription = new Subscription();
-    private emailConfirmationCode: string;
     private appName: any;
     private offerLink: any;
 
@@ -59,8 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             role: ['', []],
             name: ['', Validators.pattern(FIO_PATTERN)],
             email: ['', [Validators.email, Validators.pattern(MAIL_PATTERN)]],
-            loginCode: ['', []],
-            companyInn: ['', []]
+            loginCode: ['', []]
         });
         this.fg.patchValue({role: 'AGENT'});
 
@@ -80,7 +73,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             ).subscribe(([isAuthenticating, loginState]) => {
                 this.isAuthenticating = isAuthenticating;
                 this.loginState = loginState;
-                this.captcha = null;
                 this.processCurrentState(this.loginState);
                 if (!this.isAuthenticating && this.loginState
                     && (this.loginState.status === 'SMS' || this.loginState.status == 'EMAIL_CONFIRMATION')) {
@@ -110,19 +102,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             })
         );
 
-        this.all$.add(
-            this.store.pipe(select(getCaptcha)).subscribe(captcha => {
-                if (captcha) {
-                    this.captchaEnabled = captcha.enabled;
-                    this.captchaKey = captcha.clientKey;
-                }
-            })
-        );
-
-        this.emailConfirmationCode = this.route.snapshot.queryParams['key'];
-        if (!!this.emailConfirmationCode) {
-            this.store.dispatch(new ConfirmMail(this.emailConfirmationCode));
-        }
     }
 
     ngOnDestroy(): void {
@@ -131,18 +110,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    processCaptchaResponse(response) {
-        this.captcha = response;
-    }
-
     proceedLogin() {
         this.formValidatorService.validateAllFormFields(this.fg);
         if (this.fg.valid) {
-            this.captchaRequired = false;
             const formValues = this.fg.getRawValue();
             formValues['phoneNumber'] = formValues['phoneNumber'].replace(/[^0-9]/gi, '');
             formValues['operation'] = this.operation;
-            formValues['captcha'] = this.captcha;
             formValues['appName'] = this.appName;
             this.store.dispatch(new Authenticate(formValues));
         } else {

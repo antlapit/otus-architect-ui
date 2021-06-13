@@ -10,10 +10,7 @@ import {AppConfigService} from '../../core/app-load/services/app-config.service'
 export class ApiService {
 
     protected config: any = null;
-    protected personApi: string;
-    protected bgApi: string;
-    protected signingApi: string;
-    protected referencesApi: string;
+    protected api: string;
 
     constructor(
         protected http: HttpClient,
@@ -22,10 +19,7 @@ export class ApiService {
     ) {
         this.configService.config$.subscribe(config => {
             this.config = config;
-            this.personApi = `${((this.config || {}).backend || {}).host}/backend-bg/api/person`;
-            this.bgApi = `${((this.config || {}).backend || {}).host}/backend-bg/api/bg`;
-            this.signingApi = `${((this.config || {}).backend || {}).host}/backend-bg/api/sign`;
-            this.referencesApi = `${((this.config || {}).backend || {}).host}/backend-bg/api/references`;
+            this.api = `${((this.config || {}).backend || {}).host}/api`;
         });
     }
 }

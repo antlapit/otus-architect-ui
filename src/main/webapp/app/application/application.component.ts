@@ -7,7 +7,6 @@ import {getAuthToastMessage} from '../core/auth/redux/auth.selectors';
 import {ApplicationMessage} from '../shared/domain/ApplicationMessage';
 import {generalToastMessage, routingMessage} from '../shared/redux/general.selectors';
 import {combineLatest, Subscription} from 'rxjs';
-import {getSigningToastMessage} from '../core/signing/redux/signing.selectors';
 import {Router} from '@angular/router';
 
 @Component({
@@ -41,11 +40,6 @@ export class ApplicationComponent implements OnInit, OnDestroy {
             }
         }));
         this.all$.add(this.store.pipe(select(generalToastMessage)).subscribe(message => {
-            if (message) {
-                this.showToastMessage(message);
-            }
-        }));
-        this.all$.add(this.store.pipe(select(getSigningToastMessage)).subscribe(message => {
             if (message) {
                 this.showToastMessage(message);
             }

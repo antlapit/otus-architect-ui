@@ -17,7 +17,7 @@ export class UserService {
     }
 
     get(): Observable<HttpResponse<UserIdentity>> {
-        return this.http.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/backend-bg/api/person/user`, { observe: 'response' });
+        return this.http.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/profile`, { observe: 'response' });
     }
 
 }

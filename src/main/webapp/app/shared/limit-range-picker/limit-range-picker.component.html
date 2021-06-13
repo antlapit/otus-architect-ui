@@ -4,7 +4,7 @@
             (onMenuClose)="menuOpened = false"
             (menuOpened)="afterMenuOpened($event)"
             class="limit-range-picker-btn">
-        Сумма гарантии {{(_from > _min || _to < _max) ? '*' : ''}}
+        {{fieldTitle}} {{(_from > _min || _to < _max) ? '*' : ''}}
         <i class="material-icons">{{menuOpened ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
     </button>
 </div>

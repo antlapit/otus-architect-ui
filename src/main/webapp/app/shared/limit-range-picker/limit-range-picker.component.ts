@@ -58,6 +58,9 @@ export class LimitRangePickerComponent implements OnInit, OnDestroy {
         this.toControl.setValue(this._to, {emitEvent: false});
     }
 
+    @Input('fieldTitle')
+    fieldTitle: string;
+
     _max: number;
     _min: number;
     _from: number;

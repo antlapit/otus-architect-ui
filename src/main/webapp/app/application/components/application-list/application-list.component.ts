@@ -35,9 +35,6 @@ export class ApplicationListComponent implements OnInit, OnDestroy {
     kikMenuItem: WorkspaceMenuItem;
     filter: FinApplicationFilter;
 
-    @Input('userRoles')
-    userRoles: String[];
-
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
                 private route: ActivatedRoute,
@@ -108,7 +105,7 @@ export class ApplicationListComponent implements OnInit, OnDestroy {
 
     anyActionAvailable(finApplication: FinApplication) {
         // tslint:disable-next-line:max-line-length
-        return finApplication.canRevoke;
+        return finApplication.status === 'NEW';
     }
 
     private changeFilterUrl(filter: FinApplicationFilter) {

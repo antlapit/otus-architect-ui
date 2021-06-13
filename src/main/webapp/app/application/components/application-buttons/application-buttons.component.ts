@@ -63,7 +63,7 @@ export class ApplicationButtonsComponent implements OnInit, OnDestroy {
 
     revoke() {
         this.store.dispatch(new RevokeFinApplication({
-            id: this.application.id
+            id: this.application.orderId
         }));
     }
 }

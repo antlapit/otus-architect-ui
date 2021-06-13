@@ -92,10 +92,6 @@
                             </div>
                         </ng-container>
                     </div>
-                    <div class="input-group"
-                         *ngIf="loginState && loginState.captchaRequired && captchaEnabled && captchaKey && !isAuthenticating">
-                        <re-captcha (resolved)="processCaptchaResponse($event)" [siteKey]="captchaKey"></re-captcha>
-                    </div>
                 </form>
             </div>
             <div class="card-footer">

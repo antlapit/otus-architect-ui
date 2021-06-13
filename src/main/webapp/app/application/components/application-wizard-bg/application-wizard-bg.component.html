@@ -1,29 +1,3 @@
-<h3>Закупка</h3>
-<div class="container-fluid" *ngIf="!isLoadingContract; else loadingContract">
-    <ng-container *ngIf="!contract">
-        <p>Данные формы не найдены</p>
-    </ng-container>
-    <ng-container *ngIf="contract">
-        <div class="row">
-            <div class="col-md-12">
-                <otus-architect-contract-view-card [contract]="contract"
-                                        [loading]="isLoadingContract"
-                                        [editable]="true"
-                                        (changes)="onContractChange($event)"
-                                        *ngIf="!contract.contractFillingRequired"
-                ></otus-architect-contract-view-card>
-                <otus-architect-contract-form-edit [contract]="contract"
-                                        [loading]="isLoadingContract"
-                                        (changes)="onContractChange($event)"
-                                        *ngIf="contract.contractFillingRequired"
-                ></otus-architect-contract-form-edit>
-            </div>
-        </div>
-    </ng-container>
-</div>
-<ng-template #loadingContract>
-    <otus-architect-center-spinner></otus-architect-center-spinner>
-</ng-template>
 <div class="main-top-padding">
     <h3>Гарантия</h3>
 </div>

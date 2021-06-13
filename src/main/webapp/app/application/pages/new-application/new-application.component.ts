@@ -53,10 +53,8 @@ export class NewApplicationComponent implements OnInit, OnDestroy {
 
         this.all$.add(combineLatest(
             this.store.pipe(select(GeneralSelectors.getUserInfo)),
-            this.store.pipe(select(GeneralSelectors.getCompanyInfo))
         ).subscribe(([userInfo, companyInfo]) => {
             this.userInfo = userInfo;
-            this.companyInfo = companyInfo;
 
             if (this.userInfo) {
                 // определяем роль - Агент или Клиент

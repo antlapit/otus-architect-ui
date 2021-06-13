@@ -21,15 +21,17 @@ export class ServiceResponse {
 
 export class Page {
     constructor(
-    content: any[],
-    totalElements: number,
-    sort: any,
-    pageable: any,
+        items: any[],
+        page: PageInfo) {
+    }
+}
 
-    first: boolean,
-    last: boolean,
-    number: 0,
-    numberOfElements: number,
-    size: number,
-    totalPages: number) {}
+export class PageInfo {
+    constructor(
+        count: number,
+        pageNumber: number,
+        pageSize: number,
+        unpaged: boolean
+    ) {
+    }
 }
