@@ -7,17 +7,18 @@ import {combineLatest, Subscription} from 'rxjs';
 import {LoginState} from '../../core/domain/LoginState';
 import {Authenticate, LoginSuccess} from '../../core/auth/redux/auth.actions';
 import {getLoginState, isAuthenticating} from '../../core/auth/redux/auth.selectors';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AppConfigService} from '../../core/app-load/services/app-config.service';
 import {ShowGeneralToastMessage} from '../redux/general.actions';
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
-    selector: 'otus-architect-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    selector: 'otus-architect-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss']
 })
 
-export class LoginComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
 
     fg: FormGroup;
     isAuthenticating: boolean;
@@ -33,7 +34,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
                 private route: ActivatedRoute,
-                private configService: AppConfigService) {
+                private configService: AppConfigService,
+                public router: Router,
+                public authService: AuthService) {
         this.configService.config$.subscribe(config => {
             if (!!config && !!config.application) {
                 this.appName = config.application.name;
@@ -57,38 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }, 700);
 
 
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(isAuthenticating)),
-                this.store.pipe(select(getLoginState)),
-            ).subscribe(([isAuthenticating, loginState]) => {
-                this.isAuthenticating = isAuthenticating;
-                this.loginState = loginState;
-                this.processCurrentState(this.loginState);
-                if (this.isAuthenticating) {
-                    this.fg.disable({emitEvent: false});
-                } else if (!this.isAuthenticating) {
-                    this.fg.enable({emitEvent: false});
-                }
-                this.cd.detectChanges();
-            })
-        );
-
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(getLoginState)),
-            ).subscribe(([loginState]) => {
-                if (!!loginState && !!loginState.error) {
-                    this.store.dispatch(new ShowGeneralToastMessage({
-                        severity: 'error',
-                        summary: loginState.error,
-                        detail: loginState.error
-                    }));
-                }
-                this.cd.detectChanges();
-            })
-        );
-
     }
 
     ngOnDestroy(): void {
@@ -100,19 +71,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     proceedLogin() {
         this.formValidatorService.validateAllFormFields(this.fg);
         if (this.fg.valid) {
-            this.store.dispatch(new Authenticate( this.fg.getRawValue()));
+            this.all$.add(this.authService.register(this.fg.getRawValue())
+                .subscribe(resp => {
+                    if (resp.success) {
+                        this.router.navigate(['/login']);
+                    } else {
+                        this.store.dispatch(new ShowGeneralToastMessage(
+                            resp.message
+                        ));
+                    }
+                })
+            );
         } else {
             this.formValidatorService.scrollToError();
-        }
-    }
-
-    private processCurrentState(state: LoginState) {
-        if (!!state) {
-            this.store.dispatch(new LoginSuccess());
-
-            for (const controlsKey in this.fg.controls) {
-                this.fg.get(controlsKey).markAsUntouched({onlySelf: true});
-            }
         }
     }
 }

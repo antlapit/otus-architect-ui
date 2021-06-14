@@ -4,11 +4,7 @@
         <div class="navbar-wrapper">
             <a class="navbar-brand pointer" (click)="goToRoot()"> <img src="assets/img/logo.png"/></a>
         </div>
-        <otus-architect-main-menu [appName]="appName" [workspace]="this.workspace$ | async"
-                       *ngIf="!(isLoadingWorkspace$ | async); else busyWorkspace"></otus-architect-main-menu>
-        <ng-template #busyWorkspace>
-            <otus-architect-busy-indicator></otus-architect-busy-indicator>
-        </ng-template>
+        <otus-architect-main-menu [appName]="appName" [workspace]="this.workspace"></otus-architect-main-menu>
         <div style="flex-grow: 1;"></div>
         <otus-architect-identity-panel [userIdentity]="userIdentity$ | async"></otus-architect-identity-panel>
     </div>

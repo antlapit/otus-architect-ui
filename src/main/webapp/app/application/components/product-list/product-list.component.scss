@@ -9,7 +9,7 @@
   border-radius: 4px;
 }
 
-.mat-column-name {
+.mat-column-category {
   width: 120px !important;
 }
 
@@ -139,4 +139,9 @@ tr.application-row td:last-child {
 
 .app-btn-btn-action-icon .material-icons {
   vertical-align: bottom !important;
+}
+
+.td-padding {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

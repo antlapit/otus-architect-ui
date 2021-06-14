@@ -1,7 +1,8 @@
 <div class="justify-content-end navbar-no-grow height-54" id="navigation">
     <ul class="navbar-nav height-54">
         <li class="nav-item height-54 fio-padding">
-            <otus-architect-two-titles-panel [title]="name" [subTitle]="null" titleClass="font-otus-architect-roboto-medium-13"></otus-architect-two-titles-panel>
+            <otus-architect-two-titles-panel [title]="name" [subTitle]="null"
+                                             titleClass="font-otus-architect-roboto-medium-13"></otus-architect-two-titles-panel>
         </li>
         <li class="nav-item height-54 color-otus-architect-gray action-border">
             <div *ngIf="isSettingsRoute" class="settings-route-active"></div>
@@ -10,7 +11,7 @@
             </a>
         </li>
         <li class="nav-item height-54 color-otus-architect-gray action-border">
-            <a class="nav-link height-54 pointer" href="#" (click)="logout()">
+            <a class="nav-link height-54 pointer" href="#" (click)="logout()" *ngIf="!!userIdentity">
                 <i class="material-icons">logout</i>
             </a>
         </li>

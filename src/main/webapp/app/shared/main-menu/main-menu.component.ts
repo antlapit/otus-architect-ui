@@ -99,7 +99,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         } else if ($event.index === this.appSelectedIndex) {
             this.router.navigate(['']);
         } else {
-            window.open(this.menuItems[$event.index].url, '_self');
+            this.router.navigate([this.menuItems[$event.index].url]);
             this.tabs.selectedIndex = this.appSelectedIndex;
             this.cdRef.detectChanges();
         }

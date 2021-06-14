@@ -1,0 +1,134 @@
+@import "../scss/core/variables";
+@import "../scss/core/mixins";
+
+.person-data-label {
+    @include font-roboto-13(400);
+    color: $brand-black;
+}
+
+.login-form {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.login-form-width {
+    width: 480px !important;
+}
+
+.login-form .container-fluid {
+    padding: 0 !important;
+}
+
+.login-form .card {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.login-form .card .card-body {
+    padding: 0 !important;
+}
+
+.login-form .card-header {
+    padding: 0px !important;
+}
+
+.login-form .card-footer {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.login-next-btn {
+    width: 160px !important;
+    height: 54px !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: 1.6 !important;
+    letter-spacing: normal !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    padding: 0 !important;
+}
+
+
+.sms-sh {
+    @include font-roboto-13(400);
+    color: $brand-gray;
+}
+
+.sms-sh-black {
+    color: #2c2f38;
+    font-weight: 500;
+}
+
+.email-sh {
+    @include font-roboto-15(400);
+    color: $brand-gray;
+}
+
+.email-sh-black {
+    color: #2c2f38;
+    font-weight: 500;
+}
+
+.request-code-label {
+    @include font-roboto-13(400);
+    color: $brand-gray;
+    padding-top: 16px;
+}
+
+.request-new-code-wrapper {
+    padding-top: 16px;
+}
+
+.request-new-code {
+    @include font-roboto-13(500);
+    color: $brand-primary !important;
+}
+
+.padding-top-12 {
+    padding-top: 12px;
+}
+
+.mail-confirmed {
+    @include font-roboto-13(400);
+    color: $brand-black-light;
+}
+
+.confirm-icon {
+    color: $brand-success;
+}
+
+
+.go-to-welcome.row, .go-to-welcome .row {
+    margin: 0 !important;
+    height: 60px;
+}
+
+.go-back-btn-icon {
+    color: $brand-gray !important;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.go-back-btn-icon .material-icons {
+    vertical-align: bottom !important;
+}
+
+.mail-confirmed-wrapper .material-icons {
+    vertical-align: bottom !important;
+}
+
+.go-back-title {
+    @include font-roboto-13(500, 0.5px);
+    color: $brand-gray;
+    padding-left: 10px;
+}
+
+.go-back-column {
+    padding-left: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

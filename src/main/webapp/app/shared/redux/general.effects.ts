@@ -8,7 +8,6 @@ import {
     HandleWorkspace,
     LoadCategories,
     LoadUserInfo,
-    LoadWorkspace,
     ModifyUserInfo,
     RedirectAfterLogin,
     RedirectAfterLogout
@@ -41,7 +40,6 @@ export class GeneralEffects {
     @Effect() loginSuccess$ = this.actions$.pipe(
         ofType<LoginSuccess>(AuthActionTypes.LoginSuccess),
         switchMap(value => [
-            new LoadWorkspace(),
             new LoadUserInfo(),
             new LoadCategories(),
             new RedirectAfterLogin()
@@ -54,13 +52,6 @@ export class GeneralEffects {
             new DiscardWorkspace(),
             new RedirectAfterLogout()
         ])
-    );
-
-    @Effect() loadWorkspace$ = this.actions$.pipe(
-        ofType<LoadWorkspace>(GeneralActionTypes.LoadWorkspace),
-        filter(action => this.authService.isAuthenticated),
-        mergeMap(() => this.generalDataService.getUserWorkspace()),
-        map(workspace => new HandleWorkspace({ workspace }))
     );
 
     @Effect({dispatch: false}) handleError$ = this.actions$.pipe(

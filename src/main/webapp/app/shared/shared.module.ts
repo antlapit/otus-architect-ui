@@ -53,7 +53,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RecaptchaModule} from 'ng-recaptcha';
 import {BrowserUpdateComponent} from './browser-update/browser-update.component';
 import {CookieModule} from 'ngx-cookie';
-import {PromoPanelComponent} from './promo-panel/promo-panel.component';
 import {UnauthorizedNavbarComponent} from './unauthorized-navbar/unauthorized-navbar.component';
 import {RouterModule} from '@angular/router';
 import {GoToWelcomeComponent} from './go-to-welcome/go-to-welcome.component';
@@ -80,6 +79,7 @@ import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {TextMaskModule} from 'angular2-text-mask';
 import {ProcessingDotsComponent} from './processing-dots/processing-dots.component';
 import {CategoryPickerComponent} from "./user-list-picker/category-picker.component";
+import {RegisterComponent} from "./register/register.component";
 
 /**
  * Shared module.
@@ -148,8 +148,8 @@ import {CategoryPickerComponent} from "./user-list-picker/category-picker.compon
         PlaceholderComponent,
         MainMenuComponent,
         LoginComponent,
+        RegisterComponent,
         BrowserUpdateComponent,
-        PromoPanelComponent,
         UnauthorizedNavbarComponent,
         UnauthorizedFooterComponent,
         GoToWelcomeComponent,
@@ -177,7 +177,6 @@ import {CategoryPickerComponent} from "./user-list-picker/category-picker.compon
         HighlightPipe,
         PersonInitialsPipe,
         BrowserUpdateComponent,
-        PromoPanelComponent,
         UnauthorizedNavbarComponent,
         UnauthorizedFooterComponent,
         MainNavbarComponent,

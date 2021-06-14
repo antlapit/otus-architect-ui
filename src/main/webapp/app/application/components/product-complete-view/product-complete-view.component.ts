@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy,
 import {Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {Subscription} from 'rxjs';
-import {FinApplication} from '../../models/fin-application.model';
 import {AppConfigService} from '../../../core/app-load/services/app-config.service';
 import {PlatformLocation} from '@angular/common';
 import {Product} from "../../models/product.model";
@@ -34,5 +33,9 @@ export class ProductCompleteViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+    }
+
+    parseDetails(details: string) {
+        return JSON.parse(details);
     }
 }

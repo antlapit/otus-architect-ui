@@ -6,14 +6,14 @@ export interface AuthState {
     authMessage: ApplicationMessage;
     authToastMessage: ApplicationMessage;
     isAuthenticating: boolean;
-    loginState: LoginState;
+    authResponse: any;
 }
 
 export const initialState: AuthState = {
     authMessage: null,
     authToastMessage: null,
     isAuthenticating: false,
-    loginState: null,
+    authResponse: null,
 };
 
 export function reducer(state: AuthState = initialState, action: AuthActionsUnion): AuthState {
@@ -32,7 +32,7 @@ export function reducer(state: AuthState = initialState, action: AuthActionsUnio
                 return {
                     ...state,
                     isAuthenticating: false,
-                    loginState: action.response.data
+                    authResponse: action.response.data
                 };
             } else {
                 return {
@@ -46,10 +46,7 @@ export function reducer(state: AuthState = initialState, action: AuthActionsUnio
             return {
                 ...state,
                 isAuthenticating: false,
-                loginState: {
-                    phoneNumber: action.phoneNumber,
-                    status: 'INITIAL'
-                }
+                authResponse: null
             };
         }
         default: {

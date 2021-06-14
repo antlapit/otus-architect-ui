@@ -13,6 +13,7 @@ import {LoginComponent} from '../shared/login/login.component';
 import {AuthGuard} from '../core/auth/auth.guard';
 import {HasSessionGuard} from '../core/auth/has-session.guard';
 import {CatalogComponent} from "./pages";
+import {RegisterComponent} from "../shared/register/register.component";
 
 const CATALOG_ROUTES: Routes = [
     {
@@ -70,6 +71,10 @@ const ONLY_PUBLIC_ROUTES: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
     }
 ];
 

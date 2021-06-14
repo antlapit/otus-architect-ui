@@ -5,7 +5,7 @@
         <ng-container *ngIf="!isLoadingProduct && selectedProduct; else noFinApplication">
             <div class="container-fluid no-padding">
                 <div class="row main-top-padding">
-                    <h1 class="card-title col-md-12">Товар №{{selectedProduct.productId}}</h1>
+                    <h2 class="card-title col-md-12">{{selectedProduct.name}}</h2>
                 </div>
                 <div class="row main-top-padding" *ngIf="selectedProduct">
                     <div class="col-md-12">

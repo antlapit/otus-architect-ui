@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    Input,
     OnDestroy,
     OnInit,
     ViewEncapsulation
@@ -9,14 +10,12 @@ import {
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest, Subscription} from 'rxjs';
-import {categories, getUserInfo, userRoles} from '../../../shared/redux/general.selectors';
-import {finApplicationsFilter, productsFilter} from '../../redux/selectors';
+import {Subscription} from 'rxjs';
+import {productsFilter} from '../../redux/selectors';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import * as _ from 'lodash';
 import {AppConfigService} from '../../../core/app-load/services/app-config.service';
-import {UserIdentity} from '../../../core/domain/UserIdentity';
 import {ChangeProductFilter} from "../../redux/actions/product.action";
 import {Category} from "../../../shared/domain/Category";
 
@@ -30,13 +29,13 @@ import {Category} from "../../../shared/domain/Category";
 export class ProductListFilterComponent implements OnInit, OnDestroy {
 
     userRoles: String[];
-    userInfo: UserIdentity;
     fg: FormGroup;
 
     config: any;
     maxLimit: number;
     minLimit: number;
 
+    @Input('categories')
     categories: Category[];
 
     private all$: Subscription = new Subscription();
@@ -69,19 +68,6 @@ export class ProductListFilterComponent implements OnInit, OnDestroy {
             maxPrice: ['', []],
             categoryId: [[], []]
         });
-
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(categories)),
-                this.store.pipe(select(getUserInfo))
-            ).subscribe(([categories, userInfo]) => {
-                this.categories = categories;
-                this.userInfo = userInfo;
-                if (!!this.cd) {
-                    this.cd.detectChanges();
-                }
-            })
-        );
 
         this.all$.add(
             this.fg.valueChanges.pipe(

@@ -34,12 +34,12 @@ export class IdentityPanelComponent implements OnInit, OnDestroy {
             this.shortName = this.fullName[0] + '. ' + this.fullName[this.fullName.length - 4] + '.';
         }
         if (!!this.router.url) {
-            this.isSettingsRoute = this.router.url.indexOf('/settings') > -1 || this.router.url.indexOf('/agent-contracts/') > -1;
+            this.isSettingsRoute = this.router.url.indexOf('/settings') > -1;
         }
         this.event$ = this.router.events.subscribe(e => {
             if (e instanceof NavigationEnd) {
                 console.log(e);
-                this.isSettingsRoute = e.urlAfterRedirects.indexOf('/settings') > -1 || e.urlAfterRedirects.indexOf('/agent-contracts/') > -1;
+                this.isSettingsRoute = e.urlAfterRedirects.indexOf('/settings') > -1;
                 this.cd.detectChanges();
             }
         });
@@ -47,7 +47,7 @@ export class IdentityPanelComponent implements OnInit, OnDestroy {
 
     public get name() {
         if (this.userIdentity) {
-            return this.userIdentity.name;
+            return this.userIdentity.firstName + ' ' + this.userIdentity.lastName;
         } else {
             return null;
         }

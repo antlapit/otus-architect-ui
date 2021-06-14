@@ -2,7 +2,7 @@
     <form class="form" method="" action="" role="form" autocomplete="off" (keyup.enter)="proceedLogin()">
         <div class="card card-login card-hidden no-border">
             <div class="card-header">
-                <h2 class="card-title font-48">Вход</h2>
+                <h2 class="card-title font-48">Регистрация</h2>
             </div>
             <div class="card-body main-card ">
                 <form [formGroup]="fg" role="form" autocomplete="off">
@@ -36,7 +36,7 @@
             <div class="card-footer">
                 <button mat-raised-button class="btn btn-primary btn-lg login-next-btn" (click)="proceedLogin()"
                         [disabled]="!fg.valid">
-                    Войти
+                    Далее
                 </button>
             </div>
         </div>

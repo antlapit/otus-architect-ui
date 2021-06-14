@@ -3,7 +3,7 @@ import {AppAddress, AppCommunication, ContactInfo, DeliveryInfo, PersonForm, Sta
 export class ProductsFilter {
     constructor(
         public nameInfix?: string,
-        public descriptionInfix?: string;
+        public descriptionInfix?: string,
         public categoryId?: string[],
         public minPrice?: string,
         public maxPrice?: string,
@@ -17,7 +17,8 @@ export class Product {
         public description?: string,
         public minPrice?: number,
         public maxPrice?: number,
-        public categoryId?: string[]
+        public categoryId?: string[],
+        public details?: any
     ) {
     }
 }

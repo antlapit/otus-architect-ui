@@ -73,12 +73,31 @@ export class AuthService {
                 catchError((response: HttpErrorResponse) => {
                     const message = {
                         severity: 'error',
-                        summary: 'Ошибка при попытке войти в ЛК',
+                        summary: 'Ошибка при попытке войти в ЛК. Проверьте логин или пароль',
                         detail: (!response || !response.error) ? null : (!response.error.extMessage ? response.error.title : response.error.extMessage)
                     };
                     return of(new ServiceResponse(response.ok, response.status, message));
                 })
             );
+    }
+
+    public register(formData): Observable<ServiceResponse> {
+        return this.http.post(`${((this.config || {}).backend || {}).host}/api/register/init`,
+            formData,
+            {observe: 'response'}
+        ).pipe(
+            map((response: HttpResponse<Object>) => {
+                return new ServiceResponse(response.ok, response.status, null, response.body);
+            }),
+            catchError((response: HttpErrorResponse) => {
+                const message = {
+                    severity: 'error',
+                    summary: 'Ошибка при попытке зарегистрироваться',
+                    detail: (!response || !response.error) ? null : (!response.error.extMessage ? response.error.title : response.error.extMessage)
+                };
+                return of(new ServiceResponse(response.ok, response.status, message));
+            })
+        );
     }
 
     storeAuthenticationToken(jwt) {

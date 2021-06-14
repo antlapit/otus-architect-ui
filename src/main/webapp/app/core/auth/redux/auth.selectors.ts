@@ -22,5 +22,5 @@ export const isAuthenticating = createSelector(
 );
 export const getLoginState = createSelector(
     getAuthState,
-    (state: AuthState): LoginState => state.loginState
+    (state: AuthState): any => state.authResponse
 );

@@ -1,22 +1,16 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GetFinApplicationCounters, GetFinApplicationList, RevokeFinApplication} from '../../redux/actions';
 import {combineLatest, Subscription} from 'rxjs';
-import {
-    finApplications,
-    finApplicationsFilter,
-    isLoadingFinApplication,
-    isLoadingFinApplications, isLoadingProducts, products, productsFilter
-} from '../../redux/selectors';
+import {isLoadingProducts, products, productsFilter} from '../../redux/selectors';
 import {MatDialog, MatTableDataSource} from '@angular/material';
-import {FinApplication, FinApplicationFilter} from '../../models/fin-application.model';
-import {getWorkspace} from '../../../shared/redux/general.selectors';
-import {Workspace, WorkspaceMenuItem} from '../../../shared/domain/Workspace';
+import {categories} from '../../../shared/redux/general.selectors';
+import {Workspace} from '../../../shared/domain/Workspace';
 import {Location} from '@angular/common';
 import {GetProductList} from "../../redux/actions/product.action";
 import {Product, ProductsFilter} from "../../models/product.model";
+import {Category} from "../../../shared/domain/Category";
 
 @Component({
     selector: 'otus-architect-product-list',
@@ -26,7 +20,7 @@ import {Product, ProductsFilter} from "../../models/product.model";
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
-    displayedColumns: string[] = ['name', 'description', 'minPrice', 'maxPrice', 'quantity'];
+    displayedColumns: string[] = ['name', 'category', 'minPrice', 'maxPrice', 'quantity'];
     dataSource = new MatTableDataSource<Product>();
 
     all$: Subscription = new Subscription();
@@ -34,6 +28,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     products: Product[];
     workspace: Workspace;
     filter: ProductsFilter;
+    categories: Category[];
+    categoryMap: {};
 
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
@@ -55,7 +51,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         ).subscribe(([isLoadingProducts, products]) => {
             this.isLoadingProducts = isLoadingProducts;
             this.products = products;
-            console.log(this.products);
             this.dataSource.data = this.products;
             this.cd.detectChanges();
         }));
@@ -68,6 +63,23 @@ export class ProductListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new GetProductList(this.filter));
             this.cd.detectChanges();
         }));
+
+        this.all$.add(
+            combineLatest(
+                this.store.pipe(select(categories)),
+            ).subscribe(([categories]) => {
+                this.categories = categories;
+                if (!!this.categories) {
+                    this.categoryMap = {};
+                    for (let category of this.categories) {
+                        this.categoryMap[category.categoryId] = category.name;
+                    }
+                }
+                if (!!this.cd) {
+                    this.cd.detectChanges();
+                }
+            })
+        );
 
         this.store.dispatch(new GetProductList(this.filter));
     }
@@ -95,5 +107,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
             && (!this.filter.categoryId || this.filter.categoryId.length === 0)
             && !this.filter.minPrice && !this.filter.maxPrice
         );
+    }
+
+    getCategories(categoryId: string[]) {
+        if (!this.categoryMap) {
+            return categoryId;
+        }
+        const catNames = [];
+        for (const id of categoryId) {
+            const name = this.categoryMap[id];
+            catNames.push(!!name ? name : id)
+        }
+        return catNames;
     }
 }

@@ -1,12 +1,19 @@
 /** Представляет список доступных для перехода отделённых ФПС а также коллекцию прав на действия на клиенте для аутент. польз-ля */
 export class Workspace {
-    allowedActions: string[];
-    items: WorkspaceMenuItem[];
+    constructor(
+        public allowedActions?: string[],
+        public items?: WorkspaceMenuItem[]
+    ) {
+
+    }
 }
 
 /** Элемент дерева меню */
 export class WorkspaceMenuItem {
-    appName: string;
-    title: string;
-    url: string;
+    constructor(
+        public appName?: string,
+        public title?: string,
+        public url?: string
+    ) {
+    }
 }

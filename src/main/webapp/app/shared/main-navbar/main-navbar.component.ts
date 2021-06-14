@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AppConfigService} from "../../core/app-load/services/app-config.service";
 import {Observable} from "rxjs";
 import {UserIdentity} from "../../core/domain/UserIdentity";
-import {Workspace} from "../domain/Workspace";
+import {Workspace, WorkspaceMenuItem} from "../domain/Workspace";
 import {select, Store} from "@ngrx/store";
 import * as GeneralSelectors from "../redux/general.selectors";
 import {GeneralState} from "../redux/general.reducer";
@@ -19,8 +19,7 @@ export class MainNavbarComponent implements OnInit, OnDestroy {
 
     private config: any;
     public userIdentity$: Observable<UserIdentity>;
-    public isLoadingWorkspace$: Observable<boolean>;
-    public workspace$: Observable<Workspace>;
+    public workspace: Workspace;
     public appName: string;
 
     constructor(private router: Router, private configService: AppConfigService,
@@ -34,9 +33,22 @@ export class MainNavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.isLoadingWorkspace$ = this.store.pipe(select(GeneralSelectors.isLoadingWorkspace));
         this.userIdentity$ = this.store.pipe(select(GeneralSelectors.getUserInfo));
-        this.workspace$ = this.store.pipe(select(GeneralSelectors.getWorkspace));
+        this.workspace = new Workspace(
+            [],
+            [
+                new WorkspaceMenuItem(
+                    "",
+                    "Каталог",
+                    '/store'
+                ),
+                new WorkspaceMenuItem(
+                    "",
+                    "Заказы",
+                    '/dashboard'
+                )
+            ]
+        )
     }
 
     ngOnDestroy(): void {
