@@ -7,3 +7,4 @@ export * from './application-wizard-view/application-wizard-view.component';
 export * from './order-view-card/order-view-card.component';
 export * from './product-list/product-list.component';
 export * from './user-profile-panel/user-profile-panel.component';
+export * from './user-money-panel/user-money-panel.component';

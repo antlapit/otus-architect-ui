@@ -18,11 +18,12 @@ import {GeneralState} from './general.reducer';
 import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {filter, map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {filter, map, mapTo, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {ServiceResponse} from '../domain/ServiceResponse';
 import {ReferencesService} from '../references/references.service';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import {AuthService} from '../../core/auth/auth.service';
+import {timer} from "rxjs";
 
 @Injectable()
 export class GeneralEffects {
@@ -65,6 +66,9 @@ export class GeneralEffects {
 
     @Effect() loadUserInfo$ = this.actions$.pipe(
         ofType<LoadUserInfo>(GeneralActionTypes.LoadUserInfo),
+        switchMap(action =>
+            timer(0, 10000).pipe(mapTo(action))
+        ),
         filter(action => this.authService.isAuthenticated),
         mergeMap(() => this.generalDataService.getUserInfo()),
         map(userInfo => new HandleUserInfo({ userInfo }))

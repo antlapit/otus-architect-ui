@@ -40,4 +40,21 @@ export class GeneralDataService {
             );
     }
 
+    public addMoney(money: any) {
+        return this.httpClient.post<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/add-money`,
+            {
+                "money": money
+            },
+            {
+                headers: {
+                    'otus-architect-APP-NAME': this.config.application.name
+                }
+            })
+            .pipe(
+                catchError(err => {
+                    return of(null);
+                })
+            );
+    }
+
 }

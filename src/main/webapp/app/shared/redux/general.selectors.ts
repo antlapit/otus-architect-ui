@@ -30,7 +30,7 @@ export const isLoadingUserInfo = createSelector(
 );
 export const userRoles = createSelector(
     getUserInfo,
-    (userIdentity: UserIdentity): String[] => !!userIdentity ? userIdentity.roles : []
+    (userIdentity: UserIdentity): String[] => []
 );
 export const categories = createSelector(
     getGeneralState,

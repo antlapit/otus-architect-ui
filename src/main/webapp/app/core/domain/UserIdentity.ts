@@ -6,4 +6,6 @@ export interface UserIdentity {
     firstName: string;
     lastName: string;
     email: string;
+    accountId: string;
+    money: string;
 }

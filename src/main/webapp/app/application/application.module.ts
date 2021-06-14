@@ -31,7 +31,8 @@ import {
     ApplicationWizardViewComponent,
     OrderViewCardComponent,
     ProductListComponent,
-    UserProfilePanelComponent
+    UserProfilePanelComponent,
+    UserMoneyPanelComponent
 } from './components';
 import {FinApplicationEffects, FinApplicationReferencesEffects, ProductEffects} from './redux/effects';
 import {FinApplicationService} from './services/fin-application.service';
@@ -71,6 +72,7 @@ const COMPONENTS = [
     ProductListFilterComponent,
     DeliveryInfoFormEditComponent,
     UserProfilePanelComponent,
+    UserMoneyPanelComponent,
 ];
 
 const PAGES = [

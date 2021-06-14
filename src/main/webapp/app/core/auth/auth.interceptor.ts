@@ -5,6 +5,8 @@ import * as reducersFromAuth from './redux/auth.reducer';
 import {Observable, of} from "rxjs";
 import {Store} from "@ngrx/store";
 import {catchError} from "rxjs/operators";
+import {AuthActionTypes, Logout, LogoutSuccess} from "./redux/auth.actions";
+import {RedirectAfterLogout} from "../../shared/redux/general.actions";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -39,10 +41,11 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     handleAuthError(err: HttpErrorResponse): Observable<any> {
+        console.log(err);
         if (err.status === 401) {
-            // FIXME вернуть this.store.dispatch(new AuthActions.Login());
+            this.store.dispatch(new Logout());
             // нужно добавить проверку, что запрос может упасть по 401 на публичных ресурсах
-            // return of(err.message);
+            return of(err.message);
         }
         throw err;
     }

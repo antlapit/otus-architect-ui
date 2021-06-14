@@ -47,7 +47,19 @@ export class IdentityPanelComponent implements OnInit, OnDestroy {
 
     public get name() {
         if (this.userIdentity) {
-            return this.userIdentity.firstName + ' ' + this.userIdentity.lastName;
+            if (!this.userIdentity.firstName) {
+                return this.userIdentity.username;
+            } else {
+                return this.userIdentity.firstName + ' ' + this.userIdentity.lastName;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public get money() {
+        if (this.userIdentity) {
+            return this.userIdentity.money + ' ₽';
         } else {
             return null;
         }

@@ -35,6 +35,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
             {
                 name: 'profile',
                 index: 0
+            },
+            {
+                name: 'money',
+                index: 1
             }
         ];
     }
