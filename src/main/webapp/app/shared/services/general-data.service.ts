@@ -17,7 +17,8 @@ export class GeneralDataService {
     }
 
     public getUserInfo(): Observable<UserIdentity> {
-        return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/profile`)
+        const noCacheKey = new Date().getTime();
+        return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/profile?noCacheKey=${noCacheKey}`)
             .pipe(
                 catchError(err => {
                     return of(null);

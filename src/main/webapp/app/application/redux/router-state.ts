@@ -39,14 +39,13 @@ export class CustomRouterStateSerializer implements RouterStateSerializer<Router
                 if (!!filterData) {
                     this.store.dispatch(
                         new ChangeFinApplicationFilter({
-                            query: filterData.query,
-                            stage: filterData.stage,
-                            contactIds: filterData.contactIds,
+                            orderId: filterData.orderId,
+                            status: filterData.status,
                             datePickerType: filterData.datePickerType,
                             dateFrom: filterData.dateFrom,
                             dateTo: filterData.dateTo,
-                            limitFrom: filterData.limitFrom,
-                            limitTo: filterData.limitTo
+                            totalFrom: filterData.totalFrom,
+                            totalTo: filterData.totalTo
                         })
                     );
                 } else {

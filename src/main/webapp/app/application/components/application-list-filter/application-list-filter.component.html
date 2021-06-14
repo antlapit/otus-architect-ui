@@ -3,7 +3,7 @@
         <div class="row application-list-filters-row">
             <div class="col-md-12">
                 <otus-architect-application-stage-tabs
-                        [activeStage]="fg.controls.stage"
+                        [activeStage]="fg.controls.status"
                         (selectStageEvent)="onSelectStageEvent($event)"></otus-architect-application-stage-tabs>
             </div>
         </div>
@@ -13,9 +13,9 @@
                                               [dateFrom]="fg.controls.dateFrom.value"
                                               [dateTo]="fg.controls.dateTo.value"
             ></otus-architect-date-range-picker>
-            <otus-architect-limit-range-picker (onChangeLimitRange)="onChangeLimitRange($event)"
-                                               [from]="fg.controls.limitFrom.value"
-                                               [to]="fg.controls.limitTo.value"
+            <otus-architect-limit-range-picker (onChangeLimitRange)="onChangeTotalRange($event)"
+                                               [from]="fg.controls.totalFrom.value"
+                                               [to]="fg.controls.totalTo.value"
                                                [max]="maxLimit"
                                                [min]="minLimit"
                                                fieldTitle="Сумма заказа"
@@ -23,7 +23,7 @@
             <div class="application-query-filter-wrapper">
                 <mat-form-field floatLabel="never">
                     <mat-label>Поиск</mat-label>
-                    <input matInput type="text" formControlName="query">
+                    <input matInput type="text" formControlName="orderId">
                     <mat-icon matPrefix class="text-gray">search</mat-icon>
                 </mat-form-field>
             </div>

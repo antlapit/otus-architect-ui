@@ -2,7 +2,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {
     ApplicationFormComponent,
     DashboardComponent,
-    NewApplicationComponent,
     ProductFormComponent,
     SettingsComponent
 } from './pages';
@@ -36,6 +35,7 @@ const ONLY_PRIVATE_ROUTES: Routes = [
     {
         path: 'dashboard',
         pathMatch: 'full',
+        canActivate: [AuthGuard],
         component: DashboardComponent,
     },
     {
@@ -48,11 +48,6 @@ const ONLY_PRIVATE_ROUTES: Routes = [
         path: 'applications',
         canActivate: [AuthGuard],
         children: [
-            {
-                path: 'new',
-                component: NewApplicationComponent,
-                canActivate: [AuthGuard]
-            },
             {
                 path: ':finApplicationId',
                 component: ApplicationFormComponent,

@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GetFinApplicationCounters, GetFinApplicationList, RevokeFinApplication} from '../../redux/actions';
+import {GetFinApplicationList, RevokeFinApplication} from '../../redux/actions';
 import {combineLatest, Subscription} from 'rxjs';
 import {
     finApplications,
@@ -12,8 +12,6 @@ import {
 } from '../../redux/selectors';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {FinApplication, FinApplicationFilter} from '../../models/fin-application.model';
-import {getWorkspace} from '../../../shared/redux/general.selectors';
-import {Workspace, WorkspaceMenuItem} from '../../../shared/domain/Workspace';
 import {Location} from '@angular/common';
 
 @Component({
@@ -24,15 +22,13 @@ import {Location} from '@angular/common';
 })
 export class ApplicationListComponent implements OnInit, OnDestroy {
 
-    displayedColumns: string[] = ['number', 'clientName', 'limit', 'commissionSum', 'status', 'author', 'kik', 'menu'];
+    displayedColumns: string[] = ['orderId', 'total', 'date', 'status', 'menu'];
     dataSource = new MatTableDataSource<FinApplication>();
 
     all$: Subscription = new Subscription();
     isLoadingFinApplications: boolean;
     finApplications: FinApplication[];
     isLoadingFinApplication: boolean;
-    workspace: Workspace;
-    kikMenuItem: WorkspaceMenuItem;
     filter: FinApplicationFilter;
 
     constructor(private cd: ChangeDetectorRef,
@@ -64,19 +60,8 @@ export class ApplicationListComponent implements OnInit, OnDestroy {
         ).subscribe(([newIsLoadingFinApplication]) => {
             if (this.isLoadingFinApplication && !newIsLoadingFinApplication) {
                 this.store.dispatch(new GetFinApplicationList(this.filter));
-                this.store.dispatch(new GetFinApplicationCounters(this.filter));
             }
             this.isLoadingFinApplication = newIsLoadingFinApplication;
-        }));
-
-        this.all$.add(combineLatest(
-            this.store.pipe(select(getWorkspace))
-        ).subscribe(([workspace]) => {
-            this.workspace = workspace;
-            if (!!this.workspace) {
-                this.kikMenuItem = this.workspace.items.find(w => w.appName === 'KIK');
-            }
-            this.cd.detectChanges();
         }));
 
         this.all$.add(combineLatest(
@@ -85,12 +70,10 @@ export class ApplicationListComponent implements OnInit, OnDestroy {
             this.filter = filter;
             this.changeFilterUrl(this.filter);
             this.store.dispatch(new GetFinApplicationList(this.filter));
-            this.store.dispatch(new GetFinApplicationCounters(this.filter));
             this.cd.detectChanges();
         }));
 
         this.store.dispatch(new GetFinApplicationList(this.filter));
-        this.store.dispatch(new GetFinApplicationCounters(this.filter));
     }
 
     goToFinApplication(id: string) {
@@ -123,10 +106,43 @@ export class ApplicationListComponent implements OnInit, OnDestroy {
     }
 
     isFilterEmpty() {
-        return !this.filter || (!this.filter.query && !this.filter.stage
-            && (!this.filter.contactIds || this.filter.contactIds.length === 0)
+        return !this.filter || (!this.filter.orderId && !this.filter.status
             && !this.filter.datePickerType && !this.filter.dateFrom && !this.filter.dateTo
-            && !this.filter.limitFrom && !this.filter.limitTo
+            && !this.filter.totalFrom && !this.filter.totalTo
         );
+    }
+
+    getStatusTitle(status: string) {
+        switch (status) {
+            case 'NEW':
+                return 'Черновик';
+            case 'REJECTED':
+                return 'Отменен';
+            case 'ROLLED_BACK':
+                return 'Отказ';
+            case 'PREPARED':
+                return 'В обработке';
+            case 'CONFIRMED':
+                return 'Ожидает оплаты';
+            case 'COMPLETED':
+                return 'Завершен';
+        }
+        return null;
+    }
+
+    isErrorStatus(status: any) {
+        return status === 'REJECTED' || status === 'ROLLED_BACK';
+    }
+
+    isUserStatus(status: any) {
+        return status === 'NEW';
+    }
+
+    isProcessingStatus(status: any) {
+        return status === 'CONFIRMED' || status === 'PREPARED';
+    }
+
+    isCompletedStatus(status: any) {
+        return status === 'COMPLETED';
     }
 }

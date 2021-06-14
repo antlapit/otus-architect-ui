@@ -29,7 +29,28 @@ export class ApplicationStageTabsComponent implements OnInit, OnDestroy {
 
     all$: Subscription = new Subscription();
     isLoadingApplicationStageGroups: boolean;
-    tabs: any[];
+    tabs = [
+        {
+            code: 'NEW',
+            title: 'Черновик'
+        }, {
+            code: 'REJECTED',
+            title: 'Отменен'
+        }, {
+            code: 'ROLLED_BACK',
+            title: 'Отказ'
+        }, {
+            code: 'PREPARED',
+            title: 'В обработке'
+        }, {
+            code: 'CONFIRMED',
+            title: 'Ожидает оплаты'
+        },
+        {
+            code: 'COMPLETED',
+            title: 'Завершен'
+        }
+    ]
 
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
@@ -57,7 +78,4 @@ export class ApplicationStageTabsComponent implements OnInit, OnDestroy {
         this.selectStageEvent.emit(!stage ? null : stage.code);
     }
 
-    getStageCounter(stage: any): number {
-        return 0;
-    }
 }

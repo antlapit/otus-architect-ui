@@ -60,14 +60,13 @@ export class ApplicationListFilterComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.fg = this._fb.group({
-            query: ['', []],
-            stage: ['', []],
+            orderId: ['', []],
+            status: ['', []],
             datePickerType: ['', []],
             dateFrom: ['', []],
             dateTo: ['', []],
-            limitFrom: ['', []],
-            limitTo: ['', []],
-            contactIds: [[], []]
+            totalFrom: ['', []],
+            totalTo: ['', []]
         });
 
         this.all$.add(
@@ -97,14 +96,13 @@ export class ApplicationListFilterComponent implements OnInit, OnDestroy {
                 .subscribe(filter => {
                         if (filter && !_.isEqual(filter, this.lastFilterData)) {
                             this.fg.patchValue({
-                                stage: filter.stage ? filter.stage : null,
-                                query: filter.query ? filter.query : null,
+                                status: filter.status && filter.status.length > 0 ? filter.status[0] : null,
+                                orderId: filter.orderId ? filter.orderId : null,
                                 datePickerType: filter.datePickerType ? filter.datePickerType : null,
                                 dateFrom: filter.dateFrom ? filter.dateFrom : null,
                                 dateTo: filter.dateTo ? filter.dateTo : null,
-                                limitFrom: filter.limitFrom ? filter.limitFrom : null,
-                                limitTo: filter.limitTo ? filter.limitTo : null,
-                                contactIds: filter.contactIds ? filter.contactIds : []
+                                totalFrom: filter.totalFrom ? filter.totalFrom : null,
+                                totalTo: filter.totalTo ? filter.totalTo : null
                             });
                             this.cd.detectChanges();
                         }
@@ -115,20 +113,31 @@ export class ApplicationListFilterComponent implements OnInit, OnDestroy {
 
     onSelectStageEvent($event) {
         this.fg.patchValue({
-            stage: $event
+            status: $event
         });
     }
 
     private onChangeFilter(values: any) {
+        const orderId = [];
+        if (!!values['orderId']) {
+            const parsedId = parseInt(values['orderId']);
+            if (!!parsedId) {
+                orderId.push(parsedId);
+            }
+        }
+
+        const statuses = [];
+        if (!!values['status']) {
+            statuses.push(values['status']);
+        }
         this.lastFilterData = {
-            query: values['query'],
-            stage: values['stage'],
+            orderId: orderId.length > 0 ? orderId : null,
+            status: statuses.length > 0 ? statuses : null,
             datePickerType: values['datePickerType'],
             dateFrom: values['dateFrom'],
             dateTo: values['dateTo'],
-            limitFrom: values['limitFrom'],
-            limitTo: values['limitTo'],
-            contactIds: values['contactIds']
+            totalFrom: !!values['totalFrom'] ? values['totalFrom'] + '' : null,
+            totalTo: !!values['totalTo'] ? values['totalTo'] + '' : null
         };
         this.store.dispatch(new ChangeFinApplicationFilter(this.lastFilterData));
     }
@@ -141,16 +150,11 @@ export class ApplicationListFilterComponent implements OnInit, OnDestroy {
         });
     }
 
-    onChangeLimitRange($event: any) {
+    onChangeTotalRange($event: any) {
         this.fg.patchValue({
-            limitFrom: $event['from'],
-            limitTo: $event['to']
+            totalFrom: $event['from'],
+            totalTo: $event['to']
         });
     }
 
-    onUserListChanged($event: string[]) {
-        this.fg.patchValue({
-            contactIds: $event
-        });
-    }
 }

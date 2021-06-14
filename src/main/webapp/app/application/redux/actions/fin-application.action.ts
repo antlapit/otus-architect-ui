@@ -1,15 +1,13 @@
 import {Action} from '@ngrx/store';
 import {CreateFinApplicationRequest, FinApplicationFilter} from '../../models/fin-application.model';
 import {ServiceResponse} from '../../../shared/domain/ServiceResponse';
-import {ContactInfo, DeliveryInfo} from '../../models/general.model';
+import {DeliveryInfo} from '../../models/general.model';
 
 export enum FinApplicationTypes {
     CreateFinApplication = '[FinApplication] CreateFinApplication',
     HandleCreateFinApplication = '[FinApplication] HandleCreateFinApplication',
     GetFinApplicationList = '[FinApplication] GetFinApplicationList',
     HandleFinApplicationList = '[FinApplication] HandleFinApplicationList',
-    GetFinApplicationCounters = '[FinApplication] GetFinApplicationCounters',
-    HandleFinApplicationCounters = '[FinApplication] HandleFinApplicationCounters',
     ChangeFinApplicationFilter = '[FinApplication] ChangeFinApplicationFilter',
     LoadFinApplication = '[FinApplication] LoadFinApplication',
     HandleFinApplication = '[FinApplication] HandleFinApplication',
@@ -17,10 +15,6 @@ export enum FinApplicationTypes {
     HandleProcessFinApplication = '[FinApplication] HandleProcessFinApplication',
     MarkApplicationProcessed = '[FinApplication] MarkApplicationProcessed',
     ClearApplicationProcessed = '[FinApplication] ClearApplicationProcessed',
-    LoadContactInfo = '[FinApplication] LoadContactInfo',
-    HandleContactInfo = '[FinApplication] HandleContactInfo',
-    UpdateContactInfo = '[FinApplication] UpdateContactInfo',
-    HandleContactInfoUpdate = '[FinApplication] HandleContactInfoUpdate',
     LoadDeliveryInfo = '[FinApplication] LoadDeliveryInfo',
     HandleDeliveryInfo = '[FinApplication] HandleDeliveryInfo',
     UpdateDeliveryInfo = '[FinApplication] UpdateDeliveryInfo',
@@ -46,16 +40,6 @@ export class GetFinApplicationList implements Action {
 
 export class HandleFinApplicationList implements Action {
     readonly type = FinApplicationTypes.HandleFinApplicationList;
-    constructor(public response: ServiceResponse) {}
-}
-
-export class GetFinApplicationCounters implements Action {
-    readonly type = FinApplicationTypes.GetFinApplicationCounters;
-    constructor(public payload: FinApplicationFilter) {}
-}
-
-export class HandleFinApplicationCounters implements Action {
-    readonly type = FinApplicationTypes.HandleFinApplicationCounters;
     constructor(public response: ServiceResponse) {}
 }
 
@@ -122,31 +106,6 @@ export class ClearApplicationProcessed implements  Action {
     readonly type = FinApplicationTypes.ClearApplicationProcessed;
 }
 
-export class LoadContactInfo implements Action {
-    readonly type = FinApplicationTypes.LoadContactInfo;
-    constructor(public payload: {
-        id: string
-    }) {}
-}
-
-export class HandleContactInfo implements Action {
-    readonly type = FinApplicationTypes.HandleContactInfo;
-    constructor(public response: ServiceResponse) {}
-}
-
-export class UpdateContactInfo implements Action {
-    readonly type = FinApplicationTypes.UpdateContactInfo;
-    constructor(public payload: {
-        id: string,
-        contactInfo: ContactInfo
-    }) {}
-}
-
-export class HandleContactInfoUpdate implements Action {
-    readonly type = FinApplicationTypes.HandleContactInfoUpdate;
-    constructor(public response: ServiceResponse) {}
-}
-
 export class RevokeFinApplication implements Action {
     readonly type = FinApplicationTypes.RevokeFinApplication;
     constructor(public payload: {
@@ -163,8 +122,6 @@ export type FinApplicationActionUnion =
     | HandleCreateFinApplication
     | GetFinApplicationList
     | HandleFinApplicationList
-    | GetFinApplicationCounters
-    | HandleFinApplicationCounters
     | ChangeFinApplicationFilter
     | LoadFinApplication
     | HandleFinApplication
@@ -172,10 +129,6 @@ export type FinApplicationActionUnion =
     | HandleProcessFinApplication
     | MarkApplicationProcessed
     | ClearApplicationProcessed
-    | LoadContactInfo
-    | HandleContactInfo
-    | UpdateContactInfo
-    | HandleContactInfoUpdate
     | LoadDeliveryInfo
     | HandleDeliveryInfo
     | UpdateDeliveryInfo

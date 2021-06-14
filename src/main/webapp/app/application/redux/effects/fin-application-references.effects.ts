@@ -29,12 +29,4 @@ export class FinApplicationReferencesEffects {
         map((response: ServiceResponse) => new HandleFinApplicationFormStatuses(response))
     );
 
-    @Effect() getDeliveryTypes$ = this.actions$.pipe(
-        ofType<GetDeliveryTypes>(FinApplicationReferencesTypes.GetDeliveryTypes),
-        switchMap(action => {
-            return this.finApplicationReferencesService.getDeliveryTypes();
-        }),
-        map((response: ServiceResponse) => new HandleDeliveryTypes(response))
-    );
-
 }

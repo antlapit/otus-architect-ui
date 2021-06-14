@@ -35,6 +35,7 @@ export class FinApplicationService extends ApiService {
         return this.http.get<FinApplication>(`${this.api}/me/orders/${id}`, {observe: 'response'})
             .pipe(
                 map((response: HttpResponse<Object>) => {
+                    console.log(response.body);
                     return new ServiceResponse(response.ok, response.status, null, response.body);
                 }),
                 catchError((response: HttpErrorResponse) => {
@@ -66,7 +67,7 @@ export class FinApplicationService extends ApiService {
     }
 
     queryApplications(filters: FinApplicationFilter): Observable<ServiceResponse> {
-        return this.http.post<any>(`${this.api}/me/orders-by-filter`, filters, {
+        return this.http.post<any>(`${this.api}/me/orders-by-filter`, !!filters ? filters : {}, {
             observe: 'response'
         })
             .pipe(
@@ -102,8 +103,8 @@ export class FinApplicationService extends ApiService {
             );
     }
 
-    updateDeliveryInfo(id: any, deliveryInfo: DeliveryInfo) {
-        return this.http.put<DeliveryInfo>(`${this.api}/applications/${id}/delivery-info`,
+    updateDeliveryInfo(orderId: any, deliveryInfo: DeliveryInfo) {
+        return this.http.post<DeliveryInfo>(`${this.api}/me/orders/${orderId}/delivery`,
             deliveryInfo,
             {observe: 'response'})
             .pipe(
@@ -174,4 +175,43 @@ export class FinApplicationService extends ApiService {
             );
     }
 
+    addProduct(orderId: string, productId: string, quantity: number) {
+        return this.http.post<FinApplication>(`${this.api}/me/orders/${orderId}/add-items`, {
+            productId: productId,
+            quantity: quantity
+        }, {observe: 'response'})
+            .pipe(
+                map((response: HttpResponse<Object>) => {
+                    return new ServiceResponse(response.ok, response.status, null, response.body);
+                }),
+                catchError((response: HttpErrorResponse) => {
+                    const message = {
+                        severity: 'error',
+                        summary: 'Ошибка при сохранении заявки',
+                        detail: (!response || !response.error) ? null : (!response.error.extMessage ? response.error.title : response.error.extMessage)
+                    };
+                    return of(new ServiceResponse(response.ok, response.status, message));
+                })
+            );
+    }
+
+    removeProduct(orderId: string, productId: number, quantity: number) {
+        return this.http.post<FinApplication>(`${this.api}/me/orders/${orderId}/remove-items`, {
+            productId: productId,
+            quantity: quantity
+        }, {observe: 'response'})
+            .pipe(
+                map((response: HttpResponse<Object>) => {
+                    return new ServiceResponse(response.ok, response.status, null, response.body);
+                }),
+                catchError((response: HttpErrorResponse) => {
+                    const message = {
+                        severity: 'error',
+                        summary: 'Ошибка при сохранении заявки',
+                        detail: (!response || !response.error) ? null : (!response.error.extMessage ? response.error.title : response.error.extMessage)
+                    };
+                    return of(new ServiceResponse(response.ok, response.status, message));
+                })
+            );
+    }
 }

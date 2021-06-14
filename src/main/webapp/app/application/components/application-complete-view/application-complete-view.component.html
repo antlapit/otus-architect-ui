@@ -1,13 +1,125 @@
-<div class="main-top-padding">
-    <h3>Гарантия</h3>
-</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <otus-architect-order-view-card [application]="selectedFinApplication"
-                                            [loading]="isLoadingDeliveryInfo"
-                                            [deliveryInfo]="deliveryInfo"
-            ></otus-architect-order-view-card>
+            <table mat-table [dataSource]="dataSource" class="width-percent-100"
+                   *ngIf="!!items && items.length > 0; else noFinApplications;">
+                <ng-container matColumnDef="rowNum">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+                    <td mat-cell *matCellDef="let item; let i = index" class="rowNum-width no-border"
+                        (click)="goToProduct(item.productId)">
+                        <span class="number-wrapper">#{{i + 1}}</span></td>
+                </ng-container>
+                <ng-container matColumnDef="productId">
+                    <th mat-header-cell *matHeaderCellDef>Номер заказа</th>
+                    <td mat-cell *matCellDef="let item" class="no-border"
+                        (click)="goToProduct(item.productId)">
+                        <span class="name-wrapper">{{getProductName(item.productId)}}</span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>Сумма</th>
+                    <td mat-cell *matCellDef="let item" align="right" class="no-border"
+                        (click)="goToProduct(item.productId)" nowrap>
+                        <span class="limit-wrapper">{{item.calcPrice | number:'0.2-2'}} &#8381;</span>
+                        <br>
+                        <span class="limit-wrapper-base"
+                              *ngIf="item.basePrice !== item.calcPrice"><s>{{item.basePrice | number:'0.2-2'}}
+                            &#8381;</s></span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>Сумма</th>
+                    <td mat-cell *matCellDef="let item" align="right" class="no-border" nowrap>
+                        <span class="limit-wrapper">{{item.quantity | number:'0.0-0'}} шт.</span>
+                        <span class="number-wrapper" *ngIf="selectedFinApplication.status == 'NEW'"
+                              (click)="increase(item)">+</span>
+                        <span class="number-wrapper" *ngIf="selectedFinApplication.status == 'NEW'"
+                              (click)="decrease(item)">-</span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef>Сумма</th>
+                    <td mat-cell *matCellDef="let item" align="right" class="no-border"
+                        (click)="goToProduct(item.productId)" nowrap>
+                        <span class="limit-wrapper">{{item.total | number:'0.2-2'}} &#8381;</span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="menu">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell class="no-border"
+                        *matCellDef="let item">
+                        <button mat-icon-button [matMenuTriggerFor]="menu"
+                                class="application-actions-menu"
+                                aria-label="Доступные действия" *ngIf="selectedFinApplication.status === 'NEW'">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" overlapTrigger="false">
+                            <button mat-menu-item
+                                    *ngIf="selectedFinApplication.status == 'NEW'"
+                                    (click)="delete(item)"
+                                    class="otus-architect-menu-button">
+                                <span>Удалить</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    class="pointer no-border application-row"
+                    [ngClass]="{'has-changes': row.hasChanges}"></tr>
+            </table>
+            <ng-template #noFinApplications>
+                <p class="no-applications">
+                    Ваш заказ пуст
+                </p>
+            </ng-template>
+        </div>
+        <div class="col-md-12" *ngIf="items.length > 0">
+            <h4>Итого: {{selectedFinApplication.total | number:'0.2-2'}} &#8381;</h4>
+        </div>
+
+        <div class="col-md-12" *ngIf="items.length > 0">
+            <div class="card">
+                <h4>Данные доставки</h4>
+                <div class="container-fluid" *ngIf="fg">
+                    <form [formGroup]="fg" role="form" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Дата доставки</mat-label>
+                                    <input matInput type="date" placeholder=""
+                                           [errorStateMatcher]="matcher"
+                                           formControlName="date">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Адрес</mat-label>
+                                    <input matInput type="text" placeholder=""
+                                           [errorStateMatcher]="matcher"
+                                           formControlName="address">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="selectedFinApplication.status === 'NEW' && items.length > 0">
+            <button mat-raised-button class="btn btn-primary btn-lg login-next-btn" (click)="confirm()">
+                Оформить
+            </button>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+

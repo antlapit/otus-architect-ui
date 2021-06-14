@@ -1,7 +1,6 @@
 <mat-tab-group class="full-height mat-tab-top main-tabs"
                (selectedTabChange)="navigateTo($event)"
-               #tabs
-               (click)="navigateOnClick(appSelectedIndex)">
+               #tabs>
     <mat-tab [label]="item.title"
              *ngFor="let item of menuItems; let i = index;"
              class="main-menu-item" [disabled]=""></mat-tab>

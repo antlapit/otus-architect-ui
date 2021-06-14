@@ -39,11 +39,6 @@ export const isLoadingFinApplicationPrototypes = createSelector(
     (state: ApplicationState) => state.isLoadingFinApplicationPrototypes
 );
 
-export const finApplicationPrototypes = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.finApplicationPrototypes
-);
-
 export const isRedirectToFinApplicationProcessedView = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.redirectToFinApplicationProcessedView
@@ -57,26 +52,6 @@ export const isRedirectFinApplicationToRoot = createSelector(
 export const isProcessingFinApplicationForm = createSelector(
     getApplicationState,
     (state: ApplicationState) => state.isProcessingFinApplicationForm
-);
-
-export const isLoadingContactInfo = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingContactInfo
-);
-
-export const contactInfo = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.contactInfo
-);
-
-export const isSavingContactInfo = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isSavingContactInfo
-);
-
-export const isLoadingDeliveryInfo = createSelector(
-    getApplicationState,
-    (state: ApplicationState) => state.isLoadingDeliveryInfo
 );
 
 export const deliveryInfo = createSelector(

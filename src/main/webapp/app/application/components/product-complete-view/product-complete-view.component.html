@@ -27,7 +27,8 @@
                 <ng-container *ngIf="!loading">
                     <div class="row" *ngIf="!!selectedProduct.prices && !!selectedProduct.prices.basePrice">
                         <div class="col-md-4">
-                            <span class="selectedProduct-field-title">Базовая цена ({{selectedProduct.prices.basePrice.quantity}} шт.)</span>
+                            <span class="selectedProduct-field-title">Базовая цена ({{selectedProduct.prices.basePrice.quantity}}
+                                шт.)</span>
 
                             <p class="selectedProduct-field-value">{{selectedProduct.prices.basePrice.value | number:'0.0-0'}}
                                 &#8381;</p>
@@ -75,3 +76,7 @@
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="selectedProduct">
+    <otus-architect-add-product-to-order-panel [product]="selectedProduct"></otus-architect-add-product-to-order-panel>
+</ng-container>

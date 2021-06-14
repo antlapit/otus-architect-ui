@@ -14,3 +14,27 @@
 .application-info {
   @include font-roboto-13(400);
 }
+
+.stage-name-label {
+  @include font-roboto-11(500);
+  border-radius: 4px;
+  background-color: $brand-primary-light;
+  padding: 6px 20px;
+  white-space: nowrap !important;
+}
+
+.stage-red {
+  color: $brand-danger;
+}
+
+.stage-gray {
+  color: $brand-gray-dark;
+}
+
+.stage-blue {
+  color: $brand-primary;
+}
+
+.stage-green {
+  color: $brand-success;
+}

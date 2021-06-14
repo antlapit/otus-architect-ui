@@ -29,26 +29,12 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
     isSettingsRoute: boolean;
 
-    @Input('appName') set appName(value: string) {
-        if (!!value) {
-            this.app = value;
-            if (!!this.menuItems) {
-                this.calcSelectedIndex();
-            }
-        }
-    }
-
     @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
-
-    app: string;
-    appSelectedIndex: number;
 
     @Input() set workspace(value: Workspace) {
         if (!!value) {
             this.menuItems = value.items;
-            if (!!this.app) {
-                this.calcSelectedIndex();
-            }
+            this.calcSelectedIndex();
         }
     }
 
@@ -83,39 +69,28 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
 
     private calcSelectedIndex() {
-        this.menuItems.forEach((v, index) => {
-            if (v.appName === this.app) {
-                this.appSelectedIndex = index;
-                this.tabs.selectedIndex = index;
-            }
-        });
-
         this.calcLocalRoute(this.router.url);
     }
 
     navigateTo($event: any) {
         if ($event.index === this.menuItems.length) {
             // игнорируем
-        } else if ($event.index === this.appSelectedIndex) {
-            this.router.navigate(['']);
         } else {
+            console.log(this.menuItems[$event.index].url);
             this.router.navigate([this.menuItems[$event.index].url]);
-            this.tabs.selectedIndex = this.appSelectedIndex;
+            this.tabs.selectedIndex = $event.index;
             this.cdRef.detectChanges();
         }
     }
 
     private calcLocalRoute(url: any) {
-        this.isSettingsRoute = url.indexOf('/settings') > -1 || url.indexOf('/agent-contracts/') > -1;
-        if (this.isSettingsRoute) {
+        if (url.indexOf('/settings') > -1) {
             this.tabs.selectedIndex = this.menuItems.length;
-            this.cdRef.detectChanges();
+        } else if (url.indexOf('/catalog') > -1) {
+            this.tabs.selectedIndex = 0;
+        } else if (url.indexOf('/dashboard') > -1 || url.indexOf('/applications') > -1) {
+            this.tabs.selectedIndex = 1;
         }
-    }
-
-    navigateOnClick(index: number) {
-        if (index === this.appSelectedIndex) {
-            this.router.navigate(['']);
-        }
+        this.cdRef.detectChanges();
     }
 }

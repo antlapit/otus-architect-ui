@@ -6,62 +6,31 @@
                     *ngIf="isRedirectToProcessedView; else userInteractive"></otus-architect-application-processed-view>
             <ng-template #userInteractive>
                 <otus-architect-application-buttons title="{{'Назад'}}"
-                                         [application]="selectedFinApplication"
+                                                    [application]="selectedFinApplication"
+                                                    (onGoBack)="this.router.navigate(['dashboard'])"
                 ></otus-architect-application-buttons>
-                <otus-architect-processing-dots *ngIf="selectedFinApplication.processing"></otus-architect-processing-dots>
                 <div class="container-fluid no-padding">
-                    <div class="row main-top-padding" *ngIf="selectedFinApplication.stage.code !== 'NEW'">
+                    <div class="row main-top-padding">
                         <div class="col-md-12">
-                            <span class="application-info">{{selectedFinApplication.createdOn |  date:'dd.MM.yyyy'}}</span>
+                            <span class="application-info">{{selectedFinApplication.date |  date:'dd.MM.yyyy'}}</span>
+                            <span class="stage-name-label" [ngClass]="{
+                                        'stage-red': isErrorStatus(selectedFinApplication.status),
+                                        'stage-gray': isUserStatus(selectedFinApplication.status),
+                                        'stage-blue': isProcessingStatus(selectedFinApplication.status),
+                                        'stage-green': isCompletedStatus(selectedFinApplication.status)
+                                    }">
+                                        {{getStatusTitle(selectedFinApplication.status)}}
+                                    </span>
                         </div>
                     </div>
                     <div class="row main-top-padding">
-                        <h1 class="card-title col-md-12">Банковская гарантия №{{selectedFinApplication.number}}</h1>
+                        <h2 class="card-title col-md-12">Заказ №{{selectedFinApplication.orderId}}</h2>
                     </div>
-                    <div class="row">
+                    <div class="row main-top-padding" *ngIf="selectedFinApplication && selectedFinApplication.status">
                         <div class="col-md-12">
-                            <otus-architect-progress-breadcrumbs
-                                    [stage]="selectedFinApplication.stage"
-                                    [stages]="defaultApplicationStages"></otus-architect-progress-breadcrumbs>
-                        </div>
-                    </div>
-                    <div class="row main-top-padding" *ngIf="(!isProcessingForm
-                                                              && !isLoadingFinApplication
-                                                              && !selectedFinApplication.processing
-                                                             ) || selectedFinApplication.status.forceMessage">
-                        <div class="col-md-12">
-                            <p class="base-comment"
-                               *ngIf="!!selectedFinApplication.stage.message">
-                                {{selectedFinApplication.stage.message}}
-                            </p>
-                            <p class="base-comment"
-                               *ngIf="!selectedFinApplication.stage.final && !!selectedFinApplication.status.message">
-                                {{selectedFinApplication.status.message}}
-                            </p>
-                            <p class="base-comment"
-                               *ngIf="!!selectedFinApplication.comment">
-                                {{selectedFinApplication.comment}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row main-top-padding" *ngIf="selectedFinApplication && selectedFinApplication.stage">
-                        <div class="col-md-12">
-                            <ng-container *ngIf="!isProcessingForm; else processingLoader">
-                                <otus-architect-application-wizard-view
-                                        *ngIf="selectedFinApplication.stage.code === 'NEW'; else fullview"
-                                        [finApplication]="selectedFinApplication"
-                                >
-                                </otus-architect-application-wizard-view>
-                                <ng-template #fullview>
-                                    <otus-architect-application-complete-view
-                                            *ngIf="selectedFinApplication.stage.code !== 'NEW'"
-                                            [finApplication]="selectedFinApplication"
-                                    ></otus-architect-application-complete-view>
-                                </ng-template>
-                            </ng-container>
-                            <ng-template #processingLoader>
-                                <otus-architect-center-spinner></otus-architect-center-spinner>
-                            </ng-template>
+                            <otus-architect-application-complete-view
+                                    [finApplication]="selectedFinApplication"
+                            ></otus-architect-application-complete-view>
                         </div>
                     </div>
                 </div>
@@ -76,7 +45,7 @@
                         <mat-spinner mode="indeterminate" diameter="60"></mat-spinner>
                     </ng-container>
                     <ng-template #applicationNotFound>
-                        <span>Гарантия не найдена</span>
+                        <span>Заказ не найден</span>
                     </ng-template>
                     <div class="spacer-panel"></div>
                 </div>

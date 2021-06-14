@@ -4,5 +4,5 @@
     <span *ngFor="let stage of tabs" class="stage generic-stage pointer"
           [ngClass]="{'active': isStageActive(stage)}"
           (click)="selectStage(stage)"
-    >{{stage.title}} <ng-container *ngIf="finApplicationCounters">{{getStageCounter(stage)}}</ng-container></span>
+    >{{stage.title}}</span>
 </ng-container>

@@ -7,6 +7,7 @@ export class ProductsFilter {
         public categoryId?: string[],
         public minPrice?: string,
         public maxPrice?: string,
+        public productId?: number[],
     ) {}
 }
 

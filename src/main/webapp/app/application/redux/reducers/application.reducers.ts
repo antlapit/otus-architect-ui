@@ -27,7 +27,7 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 return {
                     ...state,
                     isLoadingFinApplications: false,
-                    finApplications: !action.response.data ? [] : action.response.data.content
+                    finApplications: !action.response.data.items ? [] : action.response.data.items
                 };
             } else {
                 return {
@@ -132,11 +132,7 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                     isLoadingFinApplication: false,
                     selectedFinApplication: action.response.data,
                     // tslint:disable-next-line:max-line-length
-                    // tslint:disable-next-line:max-line-length
-                    deliveryInfo: !!state.selectedFinApplication && state.selectedFinApplication.orderId === action.response.data.id ? state.deliveryInfo : null,
-                    // tslint:disable-next-line:max-line-length
-                    contactInfo: !!state.selectedFinApplication && state.selectedFinApplication.orderId === action.response.data.id ? state.contactInfo : null,
-                    // tslint:disable-next-line:max-line-length
+                    deliveryInfo: !!state.selectedFinApplication && state.selectedFinApplication.orderId === action.response.data.orderId ? state.deliveryInfo : null,
                 };
             } else {
                 return {
@@ -153,8 +149,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 selectedFinApplication: null,
                 // tslint:disable-next-line:max-line-length
                 deliveryInfo: null,
-                // tslint:disable-next-line:max-line-length
-                contactInfo: null,
             };
         }
         case FinApplicationReferencesTypes.GetFormStatuses: {
@@ -279,52 +273,6 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 ...state,
                 redirectToFinApplicationProcessedView: false,
             };
-        }
-        case FinApplicationTypes.LoadContactInfo: {
-            return {
-                ...state,
-                isLoadingContactInfo: true,
-            };
-        }
-        case FinApplicationTypes.HandleContactInfo: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isLoadingContactInfo: false,
-                    contactInfo: action.response.data
-                };
-            } else {
-                return {
-                    ...state,
-                    isLoadingContactInfo: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
-        }
-        case FinApplicationTypes.UpdateContactInfo: {
-            return {
-                ...state,
-                isSavingContactInfo: true,
-            };
-        }
-        case FinApplicationTypes.HandleContactInfoUpdate: {
-            if (action.response.success) {
-                return {
-                    ...state,
-                    isSavingContactInfo: false,
-                    applicationToastMessage: {
-                        severity: '',
-                        summary: 'Изменения сохранены',
-                        detail: ''
-                    }
-                };
-            } else {
-                return {
-                    ...state,
-                    isSavingContactInfo: false,
-                    applicationToastMessage: action.response.message
-                };
-            }
         }
         case FinApplicationTypes.RevokeFinApplication: {
             return {

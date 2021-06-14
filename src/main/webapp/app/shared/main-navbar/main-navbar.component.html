@@ -4,7 +4,7 @@
         <div class="navbar-wrapper">
             <a class="navbar-brand pointer" (click)="goToRoot()"> <img src="assets/img/logo.png"/></a>
         </div>
-        <otus-architect-main-menu [appName]="appName" [workspace]="this.workspace"></otus-architect-main-menu>
+        <otus-architect-main-menu [workspace]="this.workspace"></otus-architect-main-menu>
         <div style="flex-grow: 1;"></div>
         <otus-architect-identity-panel [userIdentity]="userIdentity$ | async"></otus-architect-identity-panel>
     </div>

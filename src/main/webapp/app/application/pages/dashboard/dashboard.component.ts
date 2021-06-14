@@ -6,6 +6,7 @@ import {getDashboardTab} from '../../redux/selectors';
 import {ApplicationState} from '../../redux/application-state';
 import {MatTabChangeEvent, MatTabGroup} from '@angular/material';
 import {Location} from '@angular/common';
+import {CreateFinApplication} from "../../redux/actions";
 
 @Component({
     selector: 'otus-architect-dashboard',
@@ -50,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     createNew() {
-        this.router.navigate(['/applications/new']);
+        this.store.dispatch(new CreateFinApplication({}));
     }
 
     navigateTo($event: MatTabChangeEvent) {

@@ -1,12 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChildren
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../../redux/application-state';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -19,10 +11,9 @@ import {
     selectedFinApplication
 } from '../../redux/selectors';
 import {FinApplication} from '../../models/fin-application.model';
-import {ClearApplicationProcessed, ClearFinApplication} from '../../redux/actions';
+import {ClearApplicationProcessed, ClearFinApplication, ProcessFinApplication} from '../../redux/actions';
 import {MatSnackBar} from '@angular/material';
 import {Location} from '@angular/common';
-import {ApplicationWizardViewComponent} from '../../components';
 
 @Component({
     selector: 'otus-architect-application-form',
@@ -43,9 +34,6 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
     savedRedirectToFinApplicationRoot: boolean;
 
     userRoles: String[];
-
-    @ViewChildren(ApplicationWizardViewComponent)
-    private wizardViewList: QueryList<ApplicationWizardViewComponent>;
 
     constructor(private cd: ChangeDetectorRef,
                 private store: Store<ApplicationState>,
@@ -93,4 +81,40 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
         this.store.dispatch(new ClearFinApplication());
     }
+
+    getStatusTitle(status: string) {
+        switch (status) {
+            case 'NEW':
+                return 'Черновик';
+            case 'REJECTED':
+                return 'Отменен';
+            case 'ROLLED_BACK':
+                return 'Отказ';
+            case 'PREPARED':
+                return 'В обработке';
+            case 'CONFIRMED':
+                return 'Ожидает оплаты';
+            case 'COMPLETED':
+                return 'Завершен';
+        }
+        return null;
+    }
+
+    isErrorStatus(status: any) {
+        return status === 'REJECTED' || status === 'ROLLED_BACK';
+    }
+
+    isUserStatus(status: any) {
+        return status === 'NEW';
+    }
+
+    isProcessingStatus(status: any) {
+        return status === 'CONFIRMED' || status === 'PREPARED';
+    }
+
+    isCompletedStatus(status: any) {
+        return status === 'COMPLETED';
+    }
+
+
 }

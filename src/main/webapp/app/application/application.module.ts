@@ -18,7 +18,6 @@ import {
     ApplicationFormComponent,
     CatalogComponent,
     DashboardComponent,
-    NewApplicationComponent,
     ProductFormComponent,
     SettingsComponent,
 } from './pages';
@@ -28,11 +27,9 @@ import {
     ApplicationListFilterComponent,
     ApplicationProcessedViewComponent,
     ApplicationStageTabsComponent,
-    ApplicationWizardViewComponent,
-    OrderViewCardComponent,
     ProductListComponent,
-    UserProfilePanelComponent,
-    UserMoneyPanelComponent
+    UserMoneyPanelComponent,
+    UserProfilePanelComponent
 } from './components';
 import {FinApplicationEffects, FinApplicationReferencesEffects, ProductEffects} from './redux/effects';
 import {FinApplicationService} from './services/fin-application.service';
@@ -42,11 +39,9 @@ import {DateAdapter, GestureConfig, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@an
 import {MomentUtcDateAdapter} from '../shared/date/moment-utc-date.adapter';
 import {ApplicationComponent} from './application.component';
 import {ApplicationCompleteViewComponent} from './components/application-complete-view/application-complete-view.component';
-import {ApplicationWizardBgComponent} from './components/application-wizard-bg/application-wizard-bg.component';
 // tslint:disable-next-line:max-line-length
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig} from 'ng2-currency-mask/src/currency-mask.config';
-import {ApplicationWizardDefaultComponent} from './components/application-wizard-default/application-wizard-default.component';
 // tslint:disable-next-line:max-line-length
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {TextMaskModule} from 'angular2-text-mask';
@@ -54,6 +49,7 @@ import {DeliveryInfoFormEditComponent} from './components/delivery-info/delivery
 import {ProductService} from "./services/product.service";
 import {ProductListFilterComponent} from "./components/product-list-filter/product-list-filter.component";
 import {ProductCompleteViewComponent} from "./components/product-complete-view/product-complete-view.component";
+import {AddProductToOrderPanelComponent} from "./components/add-product-to-order/add-product-to-order-panel.component";
 
 const COMPONENTS = [
     ApplicationButtonsComponent,
@@ -63,23 +59,19 @@ const COMPONENTS = [
     ApplicationListFilterComponent,
     ApplicationProcessedViewComponent,
     ApplicationStageTabsComponent,
-    ApplicationWizardBgComponent,
-    ApplicationWizardDefaultComponent,
-    ApplicationWizardViewComponent,
-    OrderViewCardComponent,
     ProductListComponent,
     ProductCompleteViewComponent,
     ProductListFilterComponent,
     DeliveryInfoFormEditComponent,
     UserProfilePanelComponent,
     UserMoneyPanelComponent,
+    AddProductToOrderPanelComponent,
 ];
 
 const PAGES = [
     SettingsComponent,
     CatalogComponent,
     DashboardComponent,
-    NewApplicationComponent,
     ApplicationFormComponent,
     ProductFormComponent
 ];

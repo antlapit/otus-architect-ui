@@ -14,56 +14,8 @@
         </ng-container>
         <ng-container *ngIf="_deliveryInfo">
             <form [formGroup]="fg" role="form" autocomplete="off">
-                <div class="row fin-app-delivery-info-view-card" *ngIf="typeEditable">
+                <div class="row main-top-padding">
                     <div class="col-md-12">
-                        <mat-radio-group aria-label="Способ получения"
-                                         formControlName="type">
-                            <mat-radio-button value="{{deliveryType.value}}" *ngFor="let deliveryType of deliveryTypes">
-                                {{!!deliveryType.displayValue ? deliveryType.displayValue : deliveryType.title}}
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div class="row" *ngIf="!typeEditable">
-                    <div class="col-md-12">
-                        <span class="delivery-type-label">Способ получения: </span>
-                        <span class="delivery-type-value">
-                            {{(!!selectedDeliveryType && !!selectedDeliveryType.displayValue) ? selectedDeliveryType.displayValue : selectedDeliveryType?.title}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row" [ngClass]="{'hidden': !_enableFillLater}">
-                    <div class="col-md-12 checkbox-wrapper">
-                        <div class="form-check equal-address">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value=""
-                                       formControlName="fillLater">Заполнить данные позже
-                                <span class="form-check-sign">
-                                                <span class="check"></span>
-                                            </span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row main-top-padding" [ngClass]="{'hidden': fg.controls.fillLater.value}">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>ФИО получателя</mat-label>
-                            <input matInput type="text" placeholder=""
-                                   [errorStateMatcher]="matcher"
-                                   formControlName="fio">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Телефон</mat-label>
-                            <input matInput type="text" placeholder="+7(000) 000-00-00"
-                                   [errorStateMatcher]="matcher"
-                                   formControlName="tel"
-                                   [imask]="{mask: '+{7}(000) 000-00-00'}">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-12" [ngClass]="{'hidden': !selectedDeliveryType?.addressRequired}">
                         <mat-label>Адрес доставки</mat-label>
                         <input matInput type="text" placeholder="+7(000) 000-00-00"
                                [errorStateMatcher]="matcher"

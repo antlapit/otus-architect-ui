@@ -33,14 +33,7 @@ export interface ApplicationState {
     isProcessingFinApplicationForm: boolean;
     redirectToFinApplicationProcessedView: boolean;
     redirectToRoot: boolean;
-    isLoadingContactInfo: boolean;
-    contactInfo: ContactInfo;
-    isSavingContactInfo: boolean;
     isSavingFinApplicationForm: boolean;
-    isLoadingApplicationChanges: boolean;
-    applicationChanges: ExternalChange[];
-    isLoadingContractChanges: boolean;
-    contractChanges: ExternalChange[];
     finApplicationCreatingErrorMessage: ApplicationMessage;
     isLoadingProducts: boolean;
     products: Product[];
@@ -75,14 +68,7 @@ export const initialState: ApplicationState = {
     isProcessingFinApplicationForm: false,
     redirectToFinApplicationProcessedView: false,
     redirectToRoot: false,
-    isLoadingContactInfo: false,
-    contactInfo: null,
-    isSavingContactInfo: false,
     isSavingFinApplicationForm: false,
-    isLoadingApplicationChanges: false,
-    applicationChanges: [],
-    isLoadingContractChanges: false,
-    contractChanges: [],
     finApplicationCreatingErrorMessage: null,
     isLoadingProducts: false,
     products: [],

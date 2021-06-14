@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {catchError} from "rxjs/operators";
 import {AuthActionTypes, Logout, LogoutSuccess} from "./redux/auth.actions";
 import {RedirectAfterLogout} from "../../shared/redux/general.actions";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -14,7 +15,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private authService: AuthService;
 
     constructor(private store: Store<reducersFromAuth.AuthState>,
-                private injector: Injector) {
+                private injector: Injector,
+                private router: Router) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -44,6 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
         console.log(err);
         if (err.status === 401) {
             this.store.dispatch(new Logout());
+            this.router.navigate(['catalog']);
             // нужно добавить проверку, что запрос может упасть по 401 на публичных ресурсах
             return of(err.message);
         }

@@ -33,7 +33,8 @@ export class ProductService extends ApiService {
             "descriptionInfix": filters.descriptionInfix,
             "minPrice": !!filters.minPrice ? filters.minPrice + "" : null,
             "maxPrice": !!filters.maxPrice ? filters.maxPrice + "" : null,
-            "categoryId": filters.categoryId
+            "categoryId": filters.categoryId,
+            "productId": filters.productId
         } : {}, {
             observe: 'response'
         })

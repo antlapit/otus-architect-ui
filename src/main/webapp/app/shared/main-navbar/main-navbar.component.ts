@@ -40,7 +40,7 @@ export class MainNavbarComponent implements OnInit, OnDestroy {
                 new WorkspaceMenuItem(
                     "",
                     "Каталог",
-                    '/store'
+                    '/catalog'
                 ),
                 new WorkspaceMenuItem(
                     "",

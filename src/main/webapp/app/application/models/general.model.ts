@@ -24,11 +24,8 @@ export class Status {
 
 export class DeliveryInfo {
     constructor(
-        public type?: string,
-        public address?: AppAddress,
-        public tel?: string,
-        public fio?: string,
-        public fillLater?: boolean) {}
+        public address?: string,
+        public date?: string) {}
 }
 
 export class AppCommunication {

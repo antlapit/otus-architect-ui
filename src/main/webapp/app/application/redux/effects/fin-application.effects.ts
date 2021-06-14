@@ -5,57 +5,52 @@ import {
     CreateFinApplication,
     FinApplicationTypes,
     GetFinApplicationList,
-    HandleContactInfo,
-    HandleContactInfoUpdate,
     HandleCreateFinApplication,
     HandleDeliveryInfo,
     HandleDeliveryInfoUpdate,
     HandleFinApplication,
     HandleFinApplicationList,
     HandleProcessFinApplication,
-    LoadContactInfo,
     LoadDeliveryInfo,
     LoadFinApplication,
     ProcessFinApplication,
     RevokeFinApplication,
-    UpdateContactInfo,
     UpdateDeliveryInfo
 } from '../actions';
-import {map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {filter, map, mapTo, switchMap} from 'rxjs/operators';
 import {ServiceResponse} from '../../../shared/domain/ServiceResponse';
 import {FinApplicationService} from '../../services/fin-application.service';
+import {timer} from "rxjs";
+import {AuthService} from "../../../core/auth/auth.service";
 
 @Injectable()
 export class FinApplicationEffects {
     constructor(
         private actions$: Actions,
         private finApplicationService: FinApplicationService,
-        private router: Router
+        private router: Router,
+        private authService: AuthService,
     ) {
     }
 
     @Effect() createNewApplication$ = this.actions$.pipe(
         ofType<CreateFinApplication>(FinApplicationTypes.CreateFinApplication),
+        filter(action => this.authService.isAuthenticated),
         switchMap(action => {
             const payload = action.payload;
             return this.finApplicationService.createFinApplication(
                 payload
             );
         }),
-        tap((response: ServiceResponse) => {
-            if (response.success) {
-                this.router.navigate([
-                    'applications', response.data.id
-                ]);
-            }
-
-            return response;
-        }),
         map((response: ServiceResponse) => new HandleCreateFinApplication(response))
     );
 
     @Effect() getFinApplicationList$ = this.actions$.pipe(
         ofType<GetFinApplicationList>(FinApplicationTypes.GetFinApplicationList),
+        switchMap(action =>
+            timer(0, 10000).pipe(mapTo(action))
+        ),
+        filter(action => this.authService.isAuthenticated),
         switchMap(action => {
             return this.finApplicationService.queryApplications(action.payload);
         }),
@@ -64,6 +59,7 @@ export class FinApplicationEffects {
 
     @Effect() loadFinApplication$ = this.actions$.pipe(
         ofType<LoadFinApplication>(FinApplicationTypes.LoadFinApplication),
+        filter(action => this.authService.isAuthenticated),
         switchMap(action => {
             return this.finApplicationService.findApplication(action.payload.id);
         }),
@@ -88,23 +84,12 @@ export class FinApplicationEffects {
 
     @Effect() processApplication$ = this.actions$.pipe(
         ofType<ProcessFinApplication>(FinApplicationTypes.ProcessFinApplication),
+        filter(action => this.authService.isAuthenticated),
         switchMap(action => {
             const payload = action.payload;
             return this.finApplicationService.confirm(payload.id);
         }),
         map((response: ServiceResponse) => new HandleProcessFinApplication(response))
-    );
-
-    @Effect() loadContactInfo$ = this.actions$.pipe(
-        ofType<LoadContactInfo>(FinApplicationTypes.LoadContactInfo),
-        mergeMap((action) => this.finApplicationService.findContactInfo(action.payload.id)),
-        map((response: ServiceResponse) => new HandleContactInfo(response))
-    );
-
-    @Effect() updateContactInfo$ = this.actions$.pipe(
-        ofType<UpdateContactInfo>(FinApplicationTypes.UpdateContactInfo),
-        mergeMap((action) => this.finApplicationService.updateContactInfo(action.payload.id, action.payload.contactInfo)),
-        map((response: ServiceResponse) => new HandleContactInfoUpdate(response))
     );
 
     @Effect() revokeFinApplication$ = this.actions$.pipe(
