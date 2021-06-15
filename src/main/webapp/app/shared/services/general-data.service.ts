@@ -16,6 +16,16 @@ export class GeneralDataService {
         this.configService.config$.subscribe(config => this.config = config);
     }
 
+    public getNotifications(): Observable<any[]> {
+        const noCacheKey = new Date().getTime();
+        return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/notifications?noCacheKey=${noCacheKey}`)
+            .pipe(
+                catchError(err => {
+                    return of(null);
+                })
+            );
+    }
+
     public getUserInfo(): Observable<UserIdentity> {
         const noCacheKey = new Date().getTime();
         return this.httpClient.get<UserIdentity>(`${((this.config || {}).backend || {}).host}/api/me/profile?noCacheKey=${noCacheKey}`)

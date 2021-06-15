@@ -13,8 +13,7 @@ import {ProductService} from "../../services/product.service";
 import {Product} from "../../models/product.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CustomErrorStateMatcher} from "../../../shared/form-validator/custom-error-state.matcher";
-import {DeliveryInfo} from "../../models/general.model";
-import {debounce, throttle} from "rxjs/operators";
+import {debounce} from "rxjs/operators";
 
 @Component({
     selector: 'otus-architect-application-complete-view',
@@ -32,6 +31,7 @@ export class ApplicationCompleteViewComponent implements OnInit, OnDestroy {
     productIds: number[];
     private products: Product[];
     private productsMap: any = {};
+    minDeliveryDate = new Date();
 
     fg: FormGroup;
     matcher = new CustomErrorStateMatcher();
@@ -97,7 +97,7 @@ export class ApplicationCompleteViewComponent implements OnInit, OnDestroy {
         if (!!this.selectedFinApplication && !!this.selectedFinApplication.delivery) {
             this.fg.patchValue({
                 address: this.selectedFinApplication.delivery.address,
-                date: Date.parse(this.selectedFinApplication.delivery.date),
+                date: this.selectedFinApplication.delivery.date,
             }, {emitEvent: false});
         }
     }

@@ -11,7 +11,8 @@ import {ProductsFilter} from "../models/product.model";
 export class ProductService extends ApiService {
 
     findProduct(id): Observable<ServiceResponse> {
-        return this.http.get<FinApplication>(`${this.api}/products/${id}`, {observe: 'response'})
+        const noCacheKey = new Date().getTime();
+        return this.http.get<FinApplication>(`${this.api}/products/${id}?noCacheKey=${noCacheKey}`, {observe: 'response'})
             .pipe(
                 map((response: HttpResponse<Object>) => {
                     return new ServiceResponse(response.ok, response.status, null, response.body);

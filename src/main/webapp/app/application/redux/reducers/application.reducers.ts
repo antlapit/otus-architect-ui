@@ -109,13 +109,13 @@ export function reducer(state: ApplicationState = initialState, action: Applicat
                 return {
                     ...state,
                     isCreatingFinApplication: false,
-                    finApplicationCreatingErrorMessage: null
+                    applicationToastMessage:  action.response.message
                 };
             } else {
                 return {
                     ...state,
                     isCreatingFinApplication: false,
-                    finApplicationCreatingErrorMessage: action.response.message
+                    applicationToastMessage: action.response.message
                 };
             }
         }

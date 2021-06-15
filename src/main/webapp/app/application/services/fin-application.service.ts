@@ -18,7 +18,11 @@ export class FinApplicationService extends ApiService {
             {observe: 'response'}
         ).pipe(
             map((response: HttpResponse<Object>) => {
-                return new ServiceResponse(response.ok, response.status, null, response.body);
+                return new ServiceResponse(response.ok, response.status, {
+                    severity: 'info',
+                    summary: 'Заказ будет создан через несколько секунд',
+                    detail: ''
+                }, response.body);
             }),
             catchError((response: HttpErrorResponse) => {
                 const message = {
@@ -32,7 +36,8 @@ export class FinApplicationService extends ApiService {
     }
 
     findApplication(id): Observable<ServiceResponse> {
-        return this.http.get<FinApplication>(`${this.api}/me/orders/${id}`, {observe: 'response'})
+        const noCacheKey = new Date().getTime();
+        return this.http.get<FinApplication>(`${this.api}/me/orders/${id}?noCacheKey=${noCacheKey}`, {observe: 'response'})
             .pipe(
                 map((response: HttpResponse<Object>) => {
                     console.log(response.body);
@@ -67,7 +72,19 @@ export class FinApplicationService extends ApiService {
     }
 
     queryApplications(filters: FinApplicationFilter): Observable<ServiceResponse> {
-        return this.http.post<any>(`${this.api}/me/orders-by-filter`, !!filters ? filters : {}, {
+        const body = !!filters ? filters : {};
+        body['paging'] = {
+            "pageNumber": 0,
+            "pageSize": 10000,
+            "sort": [
+                {
+                    "property": "orderId",
+                    "ascending": false
+                }
+            ]
+        };
+
+        return this.http.post<any>(`${this.api}/me/orders-by-filter`, body, {
             observe: 'response'
         })
             .pipe(
@@ -162,7 +179,11 @@ export class FinApplicationService extends ApiService {
         return this.http.post<FinApplication>(`${this.api}/me/orders/${id}/reject`, {}, {observe: 'response'})
             .pipe(
                 map((response: HttpResponse<Object>) => {
-                    return new ServiceResponse(response.ok, response.status, null, response.body);
+                    return new ServiceResponse(response.ok, response.status, {
+                        severity: 'info',
+                        summary: 'Заказ будет отменен через несколько секунд',
+                        detail: ''
+                    }, response.body);
                 }),
                 catchError((response: HttpErrorResponse) => {
                     const message = {

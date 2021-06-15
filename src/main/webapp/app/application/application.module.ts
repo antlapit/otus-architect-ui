@@ -50,6 +50,7 @@ import {ProductService} from "./services/product.service";
 import {ProductListFilterComponent} from "./components/product-list-filter/product-list-filter.component";
 import {ProductCompleteViewComponent} from "./components/product-complete-view/product-complete-view.component";
 import {AddProductToOrderPanelComponent} from "./components/add-product-to-order/add-product-to-order-panel.component";
+import {UserNotificationPanelComponent} from "./components/user-notification-panel/user-notification-panel.component";
 
 const COMPONENTS = [
     ApplicationButtonsComponent,
@@ -66,6 +67,7 @@ const COMPONENTS = [
     UserProfilePanelComponent,
     UserMoneyPanelComponent,
     AddProductToOrderPanelComponent,
+    UserNotificationPanelComponent,
 ];
 
 const PAGES = [

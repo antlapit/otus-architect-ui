@@ -1,3 +1,5 @@
+import {DeliveryInfo} from "./general.model";
+
 export class CreateFinApplicationRequest {
     constructor(
     ) {}
@@ -26,7 +28,9 @@ export class FinApplication {
         public userId?: string,
         public items?: {
             items: OrderItem[]
-        }
+        },
+        public delivery?: DeliveryInfo,
+        public billing?: BillingInfo,
     ) {
     }
 }
@@ -39,6 +43,11 @@ export class OrderItem {
         public productId?: number,
         public quantity?: number,
         public total?: string
+    ) {
+    }
+}
+export class BillingInfo {
+    constructor(
     ) {
     }
 }

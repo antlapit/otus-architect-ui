@@ -39,6 +39,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
             {
                 name: 'money',
                 index: 1
+            },
+            {
+                name: 'notification',
+                index: 2
             }
         ];
     }
@@ -48,16 +52,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.all$.add(
-            combineLatest(
-                this.store.pipe(select(userRoles)),
-            ).subscribe(([userRoles, companyUsers]) => {
-                this.userRoles = userRoles;
-                this.cd.detectChanges();
 
-                this.addRouteListener();
-            })
-        );
     }
 
     navigateTo($event: MatTabChangeEvent) {
@@ -83,6 +78,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 ([selectedTab]) => {
                     this.selectedTab = selectedTab;
                     if (!!this.selectedTab) {
+                        console.log(this.selectedTab);
                         const refTab = this.tabKeys.find(key => {
                             return key.name === this.selectedTab;
                         });
