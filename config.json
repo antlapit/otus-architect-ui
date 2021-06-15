@@ -1,0 +1,19 @@
+{
+  "application": {
+    "name": "BG",
+    "bank": {
+      "title": "Anton Lapitskii",
+      "contacts": {
+        "phone": "antlapit@gmail.com"
+      }
+    },
+    "order": {
+      "minLimit": 0,
+      "maxLimit": 10000000
+    }
+  },
+  "backend": {
+    "host": "http://localhost:10000"
+  },
+  "stickHeader": "DEV"
+}

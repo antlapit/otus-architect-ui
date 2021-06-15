@@ -62,7 +62,9 @@ export class UserProfilePanelComponent implements OnInit, OnDestroy {
                             this.fg.enable();
                         }
                     } else {
-                        this.fg.patchValue(this.user);
+                        if (!this.fg.dirty) {
+                            this.fg.patchValue(this.user);
+                        }
                     }
                 }
                 this.cd.detectChanges();
