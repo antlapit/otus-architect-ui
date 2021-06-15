@@ -8,7 +8,7 @@
                 </a>
             </div>
             <div class="col-md-8 action-buttons">
-                <a class="pointer app-btn-btn-action-icon" matTooltip="Отозвать" *ngIf="application.canRevoke"
+                <a class="pointer app-btn-btn-action-icon" matTooltip="Отозвать" *ngIf="application.status === 'NEW'"
                    (click)="revoke()">
                     <img src="assets/img/backpay.svg">
                 </a>

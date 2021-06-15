@@ -27,14 +27,15 @@ export class ApplicationCompleteViewComponent implements OnInit, OnDestroy {
     dataSource = new MatTableDataSource<OrderItem>();
 
     private all$: Subscription = new Subscription();
-    private items: OrderItem[];
+    items: OrderItem[];
     productIds: number[];
-    private products: Product[];
-    private productsMap: any = {};
+    products: Product[];
+    productsMap: any = {};
     minDeliveryDate = new Date();
 
     fg: FormGroup;
     matcher = new CustomErrorStateMatcher();
+    changes: string[];
 
     @Input('finApplication')
     set finApplication(finApplication) {
@@ -47,6 +48,9 @@ export class ApplicationCompleteViewComponent implements OnInit, OnDestroy {
                 this.productIds.push(item.productId);
             }
             this.loadProducts(this.productIds);
+
+            this.changes = this.parseChanges(this.selectedFinApplication.changes);
+            console.log(this.changes);
         }
         this.cd.detectChanges();
     }
@@ -163,5 +167,12 @@ export class ApplicationCompleteViewComponent implements OnInit, OnDestroy {
         } else {
             return product.name;
         }
+    }
+
+    parseChanges(changes: string | undefined) {
+        if (!changes) {
+            return [];
+        }
+        return changes.split('<br>');
     }
 }

@@ -26,6 +26,7 @@ export class FinApplication {
         public warehouseConfirmed?: string,
         public total?: string,
         public userId?: string,
+        public changes?: string,
         public items?: {
             items: OrderItem[]
         },
